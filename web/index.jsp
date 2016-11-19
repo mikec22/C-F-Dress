@@ -12,6 +12,6 @@
         <title>INDEX</title>
     </head>
     <body>
-        <h1>Test</h1>
+        <h1><a href="login.jsp">Login</a></h1>
     </body>
 </html>
