@@ -59,7 +59,7 @@ DROP TABLE IF EXISTS `item`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `item` (
   `item_id` int(11) NOT NULL AUTO_INCREMENT,
-  `item_name` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `category` varchar(20) NOT NULL,
   `designer` varchar(45) NOT NULL,
   `price` decimal(7,2) NOT NULL,
@@ -168,4 +168,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-20  0:35:26
+-- Dump completed on 2016-11-20  0:56:22
