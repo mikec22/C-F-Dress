@@ -6,6 +6,7 @@
 package com.bean;
 
 import java.sql.Date;
+import java.util.Vector;
 
 /**
  *
@@ -16,6 +17,7 @@ public class Order {
     private Client client;
     private Date delivery_datetime, order_datetime;
     private String address, status;
+    private Vector<Item> order_line;
 
     public Order() {
     }
@@ -68,4 +70,12 @@ public class Order {
         this.status = status;
     }
     
+        public Vector<Item> getOrder_line() {
+        return order_line;
+    }
+
+    public void setOrder_line(Vector<Item> order_line) {
+        this.order_line = order_line;
+    }
+
 }
