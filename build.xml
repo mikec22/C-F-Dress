@@ -7,8 +7,8 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="C&amp;F_Dress" default="default" basedir=".">
-    <description>Builds, tests, and runs the project C&amp;F Dress.</description>
+<project name="CF_Dress" default="default" basedir=".">
+    <description>Builds, tests, and runs the project CF Dress.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
 
