@@ -55,10 +55,9 @@ public class LoginController extends HttpServlet {
             Client client = new Client();
             client.setLogin_id(username);
             client.setPassword(password);
-            
 
             session.setAttribute("userInfo", client);
-            targetURL = "/welcome.jsp";
+            targetURL = "/index.jsp";
         } else {
             targetURL = "/loginError.jsp";
         }
@@ -73,6 +72,7 @@ public class LoginController extends HttpServlet {
         if (session.getAttribute("userInfo") != null) {
             result = true;
         }
+        System.out.print(result);
         return result;
     }
 
@@ -138,13 +138,13 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (!isAuthenticated(request)
-                && !("authenticate".equals(action))) {
+        if (!isAuthenticated(request) && !("authenticate".equals(action))) {
             doLogin(request, response);
+            System.out.print("");
             return;
         }
         if ("authenticate".equals(action)) {
-            doAuthenticate(request, response);
+            doAuthenticate(request, response);   
         } else if ("logout".equals(action)) {
             doLogout(request, response);
         } else {

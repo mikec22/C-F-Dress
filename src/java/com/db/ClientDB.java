@@ -49,8 +49,9 @@ public class ClientDB {
             pStmnt.setString(2, pwd);
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
-            if (rs.next()) {
+            if (rs.next() && rs.getBoolean("verified")) {
                 isValid = true;
+                System.out.print(rs.getBoolean("verified"));
             }
             pStmnt.close();
             cnnct.close();
