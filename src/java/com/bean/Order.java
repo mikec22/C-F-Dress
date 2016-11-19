@@ -5,11 +5,67 @@
  */
 package com.bean;
 
+import java.sql.Date;
+
 /**
  *
  * @author Mike
  */
 public class Order {
     private int order_id;
-    private 
+    private Client client;
+    private Date delivery_datetime, order_datetime;
+    private String address, status;
+
+    public Order() {
+    }
+
+    public int getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(int order_id) {
+        this.order_id = order_id;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Date getDelivery_datetime() {
+        return delivery_datetime;
+    }
+
+    public void setDelivery_datetime(Date delivery_datetime) {
+        this.delivery_datetime = delivery_datetime;
+    }
+
+    public Date getOrder_datetime() {
+        return order_datetime;
+    }
+
+    public void setOrder_datetime(Date order_datetime) {
+        this.order_datetime = order_datetime;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
 }
