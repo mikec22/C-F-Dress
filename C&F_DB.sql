@@ -87,7 +87,7 @@ DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `order_id` int(11) NOT NULL,
   `client_id` int(11) NOT NULL,
-  `delivery_date` datetime NOT NULL,
+  `delivery_datetime` datetime NOT NULL,
   `order_datetime` datetime NOT NULL,
   `address` varchar(255) NOT NULL,
   `status` varchar(10) NOT NULL,
@@ -168,4 +168,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-20  0:56:22
+-- Dump completed on 2016-11-20  1:19:07

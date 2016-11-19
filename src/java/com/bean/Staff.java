@@ -9,12 +9,12 @@ package com.bean;
  *
  * @author Mike
  */
-public class staff {
+public class Staff {
 
     private int staff_id;
     private String login_id, password, name, gender;
 
-    public staff() {
+    public Staff() {
     }
 
     public int getStaff_id() {

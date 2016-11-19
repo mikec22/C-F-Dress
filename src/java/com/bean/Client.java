@@ -11,14 +11,14 @@ import java.sql.Date;
  *
  * @author Mike
  */
-public class client {
+public class Client {
 
     private int client_id, bonus_point;
     private String login_id, password, name, email, phone, gender;
     private double balance;
     private Date dob;
 
-    public client() {
+    public Client() {
     }
 
     public int getClient_id() {

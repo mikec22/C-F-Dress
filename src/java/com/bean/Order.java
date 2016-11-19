@@ -9,6 +9,7 @@ package com.bean;
  *
  * @author Mike
  */
-public class order {
-    
+public class Order {
+    private int order_id;
+    private 
 }

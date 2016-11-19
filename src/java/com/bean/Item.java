@@ -9,13 +9,13 @@ package com.bean;
  *
  * @author Mike
  */
-public class item {
+public class Item {
 
     private int item_id;
     private String name, category, designer, description;
     private double price;
 
-    public item() {
+    public Item() {
     }
 
     public int getItem_id() {
