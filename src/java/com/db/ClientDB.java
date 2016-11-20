@@ -40,6 +40,33 @@ public class ClientDB {
         }
         return null;
     }
+    
+    public boolean isExistClient(String login_id, String email){
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isExist = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM client WHERE login_id=? or email=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, login_id);
+            pStmnt.setString(2, email);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                isExist = true;
+            }
+            pStmnt.close();
+            cnnct.close();
+
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return isExist;
+    }
 
     public boolean isValidClient(String login_id, String pwd) {
         Connection cnnct = null;
