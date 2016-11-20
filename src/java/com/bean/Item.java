@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class Item implements Serializable {
 
     private int item_id;
-    private String name, category, designer, description;
+    private String name, category, designer, description ,img;
     private double price;
 
     public Item() {
@@ -66,6 +66,14 @@ public class Item implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
 }
