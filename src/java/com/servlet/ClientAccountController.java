@@ -58,7 +58,7 @@ public class ClientAccountController extends HttpServlet {
             Client client = new Client();
             client.setLogin_id(username);
             client.setPassword(password);
-            session.setAttribute("client", client);
+            session.setAttribute("clientInfo", client);
             targetURL = "index.jsp";
         } else {
             targetURL = "loginError.jsp";
@@ -71,7 +71,7 @@ public class ClientAccountController extends HttpServlet {
     private boolean isAuthenticated(HttpServletRequest request) {
         boolean result = false;
         HttpSession session = request.getSession();
-        if (session.getAttribute("userInfo") != null) {
+        if (session.getAttribute("clientInfo") != null) {
             result = true;
         }
         System.out.print(result);
@@ -90,7 +90,7 @@ public class ClientAccountController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            session.removeAttribute("userInfo");
+            session.removeAttribute("clientInfo");
             session.invalidate();
         }
         doLogin(request, response);
@@ -164,5 +164,5 @@ public class ClientAccountController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
 }
