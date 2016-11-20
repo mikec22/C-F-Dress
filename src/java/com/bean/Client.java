@@ -39,6 +39,21 @@ public class Client implements Serializable {
         this.dob = dob;
         this.verified = verified;
     }
+    
+    public Client(String login_id, String name, 
+            String gender, String email,String password,String phone, Date dob, String address) {
+        this.bonus_point = 1000;
+        this.login_id = login_id;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.gender = gender;
+        this.balance = 0;
+        this.dob = dob;
+        this.verified = false;
+    }
 
     public boolean isVerified() {
         return verified;

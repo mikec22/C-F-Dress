@@ -22,24 +22,25 @@
                 <h3>Sign up to start shopping.<br>
                 <span class="signupDivider">Sign up with your email address</span>
                 <!-- <span class="divider"></span> -->
-                <form>
+                <form method="post" action="Register">
+                    <input type="hidden" name="action" value="register"/>
                     <div class="signupForm">
-                    <input type="text" name="login_id" placeholder="Your Login Id">
+                        <input type="text" name="login_id" placeholder="Your Login Id" required>
                     <input type="text" name="name" placeholder="Your Preferred Name">
                     </div>
                     <div id="radiogp">
                         <span>Gender : </span>
-                        <input type="radio" name="gender" value="M">  Male
+                        <input type="radio" name="gender" value="M" checked>  Male
                         <input type="radio" name="gender" value="F">  Female<br>
                     </div>
                     <div class="signupForm">
                     <input type="email" name="email" placeholder="Email">
-                    <input type="password" class="half" placeholder="Password">
-                    <input type="password" class="half confirmpass" placeholder="Confirm Password">
-                    <input type="text" name="phone" placeholder="Telephone Number">
-                    <input type="date" name="dob" >
-                    <textarea id="noresize" name="address" placeholder="Your Delivery Address"></textarea>
-                    <button type="submit" class="signupBtn">Sign Up</button>
+                    <input type="password" name="password" class="half" placeholder="Password" required>
+                    <input type="password" name="cpassword" class="half confirmpass" placeholder="Confirm Password" required>
+                    <input type="number" name="phone" placeholder="Telephone Number" required>
+                    <input type="date" name="dob" required>
+                    <textarea id="noresize" name="address" rows="5" placeholder="Your Delivery Address" required></textarea>
+                    <input type="submit" class="signupBtn" value="signup">
                     </div>
                 </form>
             </div>

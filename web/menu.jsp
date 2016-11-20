@@ -15,7 +15,7 @@
     </head>
     <body>
             <nav class="stroke">
-                <img src="img/cf_logo.png" style="display: block;margin: 0 auto; width: 23%; height: 23%">
+                <img src="img/cf_logo.png" style="display: block;margin: 0 auto; width: 15%; height: 15%">
                 <ul>
                     <li><a href="index.jsp">Home</a></li>
                     <li><a href="item.jsp">Dress</a></li>
