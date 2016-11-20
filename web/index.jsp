@@ -16,7 +16,7 @@
             <jsp:include page="menu.jsp" />
         </div>
         <div id="context">
-            
+            <jsp:include page="item.jsp" />
         </div>
     </body>
 </html>

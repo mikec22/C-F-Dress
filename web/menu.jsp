@@ -19,8 +19,8 @@
                 <ul>
                     <li><a href="index.jsp">Home</a></li>
                     <li><a href="item.jsp">Dress</a></li>
-                    <li><a href="signup.jsp">Sign Up</a></li>
-                    <li><a href="login.jsp">Login</a></li>
+                    <li><a href="signup.jsp">Sign up</a></li>
+                    <li><a href="login.jsp">Sign in</a></li>
                 </ul>
             </nav>
     </body>
