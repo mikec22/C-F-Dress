@@ -9,26 +9,26 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Log in</title>
+        <link rel="stylesheet" href="css/signup.css">
+        <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,400italic' rel='stylesheet' type='text/css'>
     </head>
     <body>
-        <div style="text-align: center;">
-            <h1>Login</h1>
-            <form method="post" action="main">
-                <input type="hidden" name="action" value="authenticate"/>
-                <table align="center">
-                    <tr>
-                        <td style="text-align: right;"><b>Login :</b></td>
-                        <td><input type="text" required="required" name="username"></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: right;"><b>Password :</b></td>
-                        <td><input type="password" required="required" name="password"></td>
-                    </tr>
-                </table>
-                <input type="hidden" name="action" value="login"/>
-                <input type="submit" value="Login">
-            </form>
+        <div id="menu">
+            <jsp:include page="menu.jsp" />
+        </div>
+        <div class="container">
+            <div class="signup">
+                    <span class="signupDivider">Login to start shopping.</span>
+                    <!-- <span class="divider"></span> -->
+                    <form method="post" action="main" class="signupForm">
+                        <input type="hidden" name="action" value="authenticate"/>
+                        <input type="text" required="required" name="username" placeholder="Username">
+                        <input type="password" name="password" placeholder="Password" required>
+                        <input type="hidden" name="action" value="login"/>
+                        <input type="submit" class="signupBtn" value="Login">
+                    </form>
+            </div>
         </div>
     </body>
 </html>

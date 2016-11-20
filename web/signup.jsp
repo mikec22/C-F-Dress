@@ -20,7 +20,7 @@
         <div class="container">
             <div class="signup">
                 <h3>Sign up to start shopping.<br>
-                <span class="signupDivider">Sign up with your email address</span>
+                    <span class="signupDivider">Sign up with your email address</span></h3>
                 <!-- <span class="divider"></span> -->
                 <form method="post" action="Register">
                     <input type="hidden" name="action" value="register"/>
@@ -29,9 +29,10 @@
                     <input type="text" name="name" placeholder="Your Preferred Name">
                     </div>
                     <div id="radiogp">
-                        <span>Gender : </span>
+                        <h4>
+                            <span>Gender : </span>
                         <input type="radio" name="gender" value="M" checked>  Male
-                        <input type="radio" name="gender" value="F">  Female<br>
+                        <input type="radio" name="gender" value="F">  Female</h4>
                     </div>
                     <div class="signupForm">
                     <input type="email" name="email" placeholder="Email">
