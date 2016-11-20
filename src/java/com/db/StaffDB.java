@@ -18,7 +18,7 @@ import java.sql.SQLException;
  */
 public class StaffDB {
 
-    String dburl, dbUser, dbPassword;
+    private String dburl, dbUser, dbPassword;
 
     public StaffDB() {
     }

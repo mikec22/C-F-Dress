@@ -14,10 +14,21 @@ import java.io.Serializable;
 public class Item implements Serializable {
 
     private int item_id;
-    private String name, category, designer, description ,img;
+    private String name, category, designer, description, img;
     private double price;
 
     public Item() {
+    }
+
+    public Item(int item_id, String name, String category, String designer,
+            double price, String description, String img) {
+        this.item_id = item_id;
+        this.name = name;
+        this.category = category;
+        this.designer = designer;
+        this.description = description;
+        this.img = img;
+        this.price = price;
     }
 
     public int getItem_id() {
@@ -74,6 +85,11 @@ public class Item implements Serializable {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" + "item_id=" + item_id + ", name=" + name + ", category=" + category + ", designer=" + designer + ", img=" + img + ", price=" + price + "}\n";
     }
 
 }
