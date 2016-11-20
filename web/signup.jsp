@@ -29,8 +29,8 @@
                     </div>
                     <div id="radiogp">
                         <span>Gender : </span>
-                        <input type="radio" name="gender" value="m">  Male
-                        <input type="radio" name="gender" value="f">  Famale<br>
+                        <input type="radio" name="gender" value="M">  Male
+                        <input type="radio" name="gender" value="F">  Female<br>
                     </div>
                     <div class="signupForm">
                     <input type="email" name="email" placeholder="Email">

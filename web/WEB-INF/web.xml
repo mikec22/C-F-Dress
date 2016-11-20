@@ -13,7 +13,7 @@
         <param-value>root</param-value>
     </context-param>
     <servlet>
-        <servlet-name>LoginController</servlet-name>
+        <servlet-name>ClientAccountController</servlet-name>
         <servlet-class>com.servlet.ClientAccountController</servlet-class>
     </servlet>
     <servlet-mapping>

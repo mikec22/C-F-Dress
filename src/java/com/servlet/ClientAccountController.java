@@ -75,13 +75,13 @@ public class ClientAccountController extends HttpServlet {
         System.out.print(result);
         return result;
     }
-    private boolean doRegester(HttpServletRequest request){
-        boolean result = false;
-        
-
-        System.out.print(result);
-        return result;
-    }
+//    private boolean doRegester(HttpServletRequest request){
+//        boolean result = false;
+//        
+//
+//        System.out.print(result);
+//        return result;
+//    }
     private void doLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String targetURL = "login.jsp";
