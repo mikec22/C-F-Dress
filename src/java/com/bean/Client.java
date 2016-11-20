@@ -5,13 +5,14 @@
  */
 package com.bean;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
  *
  * @author Mike
  */
-public class Client {
+public class Client implements Serializable {
 
     private int client_id, bonus_point;
     private String login_id, password, name, email, phone, address, gender;

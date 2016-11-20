@@ -5,11 +5,13 @@
  */
 package com.bean;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Mike
  */
-public class Item {
+public class Item implements Serializable {
 
     private int item_id;
     private String name, category, designer, description;

@@ -13,8 +13,8 @@ import com.db.ClientDB;
  */
 public class TestGetClient {
     public static void main(String[] args){
-        ClientDB db = new ClientDB("jdbc:mysql://localhost:3306/CF_DB", "root", "");
-        System.out.print(db.getClient("Chris"));
-        System.out.print(db.getClient("Peter"));
+        ClientDB db = new ClientDB("jdbc:mysql://dev16.asuscomm.com:3306/CF_DB", "root", "root");
+        System.out.println(db.getClient(1));
+        System.out.println(db.getClient(2));
     }
 }

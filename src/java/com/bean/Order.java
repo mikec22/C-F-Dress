@@ -5,6 +5,7 @@
  */
 package com.bean;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Vector;
 
@@ -12,7 +13,8 @@ import java.util.Vector;
  *
  * @author Mike
  */
-public class Order {
+public class Order implements Serializable {
+
     private int order_id;
     private Client client;
     private Date delivery_datetime, order_datetime;
@@ -77,6 +79,5 @@ public class Order {
     public void setOrder_line(Vector<OrderLine> order_line) {
         this.order_line = order_line;
     }
-    
 
 }

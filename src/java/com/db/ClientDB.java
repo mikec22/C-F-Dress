@@ -76,7 +76,7 @@ public class ClientDB {
         try {
             cnnct = getConnection();
             String preQueryStatement = "SELECT * FROM client"
-                    + " WHERE client_id = ?";
+                    + " WHERE login_id = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, login_id);
             ResultSet rs = null;
@@ -108,19 +108,95 @@ public class ClientDB {
         }
         return client;
     }
-//    public CustomerBean queryCustByID(String id) {
+
+    public Client getClient(int client_id) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        Client client = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM client"
+                    + " WHERE client_id = ?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, client_id);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                //int client_id = rs.getInt("client_id");
+                String login_id = rs.getString("login_id");
+                String password = rs.getString("password");
+                String name = rs.getString("name");
+                String gender = rs.getString("gender");
+                Date dob = rs.getDate("dob");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                int bonus_point = rs.getInt("bonus_point");
+                boolean verified = rs.getBoolean("verified");
+                double balance = rs.getDouble("balance");
+                client = new Client(client_id, login_id, password, name,
+                        gender, dob, email, phone, address,
+                        bonus_point, verified, balance);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return client;
+    }
+
+    //For Client Register
+    public boolean addClient(Client client) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "INSERT INTO client (`login_id`, `password`, `name`, `gender`, "
+                    + "`dob`, `email`, `phone`, `address`)"
+                    + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, client.getLogin_id());
+            pStmnt.setString(2, client.getPassword());
+            pStmnt.setString(3, client.getName());
+            pStmnt.setString(4, client.getGender());
+            pStmnt.setDate(5, client.getDob());
+            pStmnt.setString(6, client.getEmail());
+            pStmnt.setString(7, client.getPhone());
+            pStmnt.setString(8, client.getAddress());
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount == 1) {
+                isSuccess = true;
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return isSuccess;
+    }
+//    public boolean addRecord(String custId, String name, String tel, int age) {
 //        Connection cnnct = null;
 //        PreparedStatement pStmnt = null;
-//        CustomerBean cb = null;
+//        boolean isSuccess = false;
 //        try {
 //            cnnct = getConnection();
-//            String preQueryStatement = "SELECT * FROM CUSTOMER WHERE CUSTID = ?";
+//            String preQueryStatement = "INSERT INTO CUSTOMER VALUES (?,?,?,?)";
 //            pStmnt = cnnct.prepareStatement(preQueryStatement);
-//            pStmnt.setString(1, id);
-//            ResultSet rs = null;
-//            rs = pStmnt.executeQuery();
-//            if (rs.next()) {
-//                cb = new CustomerBean(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+//            pStmnt.setString(1, custId);
+//            pStmnt.setString(2, name);
+//            pStmnt.setString(3, tel);
+//            pStmnt.setInt(4, age);
+//            int rowCount = pStmnt.executeUpdate();
+//            if (rowCount >= 1) {
+//                isSuccess = true;
 //            }
 //            pStmnt.close();
 //            cnnct.close();
@@ -132,6 +208,6 @@ public class ClientDB {
 //        } catch (IOException ex) {
 //            ex.printStackTrace();
 //        }
-//        return cb;
+//        return isSuccess;
 //    }
 }

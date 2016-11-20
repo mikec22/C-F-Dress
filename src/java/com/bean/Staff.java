@@ -5,11 +5,13 @@
  */
 package com.bean;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Mike
  */
-public class Staff {
+public class Staff implements Serializable {
 
     private int staff_id;
     private String login_id, password, name, gender;
