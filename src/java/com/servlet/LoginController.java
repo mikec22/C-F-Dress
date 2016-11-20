@@ -49,14 +49,14 @@ public class LoginController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String targetURL;
-        boolean isValid = db.isValidUser(username, password);
+        boolean isValid = db.isValidClient(username, password);
         if (isValid) {
             HttpSession session = request.getSession(true);
             Client client = new Client();
             client.setLogin_id(username);
             client.setPassword(password);
 
-            session.setAttribute("userInfo", client);
+            session.setAttribute("client", client);
             targetURL = "/index.jsp";
         } else {
             targetURL = "/loginError.jsp";

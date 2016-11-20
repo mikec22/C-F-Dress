@@ -17,7 +17,7 @@ public class Order {
     private Client client;
     private Date delivery_datetime, order_datetime;
     private String address, status;
-    private Vector<Item> order_line;
+    private Vector<OrderLine> order_line;
 
     public Order() {
     }
@@ -69,13 +69,14 @@ public class Order {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-        public Vector<Item> getOrder_line() {
+
+    public Vector<OrderLine> getOrder_line() {
         return order_line;
     }
 
-    public void setOrder_line(Vector<Item> order_line) {
+    public void setOrder_line(Vector<OrderLine> order_line) {
         this.order_line = order_line;
     }
+    
 
 }

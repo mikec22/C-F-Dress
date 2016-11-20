@@ -15,7 +15,7 @@ public class Test {
 
     public static void main(String[] args){
         ClientDB db = new ClientDB("jdbc:mysql://localhost:3306/CF_DB", "root", "");
-        System.out.print(db.isValidUser("Chris", "123"));
-        System.out.print(db.isValidUser("Peter", "123"));
+        System.out.print(db.isValidClient("Chris", "123"));
+        System.out.print(db.isValidClient("Peter", "123"));
     }
 }

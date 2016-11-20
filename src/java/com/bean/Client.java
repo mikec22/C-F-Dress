@@ -14,11 +14,45 @@ import java.sql.Date;
 public class Client {
 
     private int client_id, bonus_point;
-    private String login_id, password, name, email, phone, gender;
+    private String login_id, password, name, email, phone, address, gender;
     private double balance;
     private Date dob;
+    private boolean verified;
 
     public Client() {
+    }
+
+    public Client(int client_id, String login_id, String password, String name, 
+            String gender, Date dob, String email, String phone, String address, 
+            int bonus_point, boolean verified, double balance) {
+        this.client_id = client_id;
+        this.bonus_point = bonus_point;
+        this.login_id = login_id;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.gender = gender;
+        this.balance = balance;
+        this.dob = dob;
+        this.verified = verified;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getClient_id() {
