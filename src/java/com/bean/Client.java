@@ -134,4 +134,9 @@ public class Client {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" + "client_id=" + client_id + ", bonus_point=" + bonus_point + ", login_id=" + login_id + ", password=" + password + ", name=" + name + ", email=" + email + ", phone=" + phone + ", address=" + address + ", gender=" + gender + ", balance=" + balance + ", dob=" + dob + ", verified=" + verified + '}';
+    }
 }
