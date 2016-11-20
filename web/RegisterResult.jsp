@@ -12,10 +12,7 @@
         <title>Register Success</title>
     </head>
     <body>
-<<<<<<< HEAD:web/RegisterResult.jsp
-        <h1>Please wait for verifying.</h1>
-=======
         <h1>Register Success!</h1>
->>>>>>> origin/master:web/RegisterSuccess.jsp
+        <h1>Please wait for verifying.</h1>
     </body>
 </html>

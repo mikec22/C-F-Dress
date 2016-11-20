@@ -37,10 +37,10 @@
                     <input type="email" name="email" placeholder="Email">
                     <input type="password" name="password" class="half" placeholder="Password" required>
                     <input type="password" name="cpassword" class="half confirmpass" placeholder="Confirm Password" required>
-                    <input type="number" name="phone" placeholder="Telephone Number" required>
+                    <input type="tel" name="phone" placeholder="Phone Number" required>
                     <input type="date" name="dob" required>
                     <textarea id="noresize" name="address" rows="5" placeholder="Your Delivery Address" required></textarea>
-                    <input type="submit" class="signupBtn" value="signup">
+                    <input type="submit" class="signupBtn" value="Sign up">
                     </div>
                 </form>
             </div>

@@ -8,13 +8,9 @@ package com.servlet;
 import com.bean.Client;
 import com.db.ClientDB;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Enumeration;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -66,7 +62,7 @@ public class RegistrationController extends HttpServlet {
         String targetURL;
         Client client;
         ArrayList<String> clientData = new ArrayList();
-        java.util.Enumeration eParams = request.getParameterNames();
+        Enumeration eParams = request.getParameterNames();
         while (eParams.hasMoreElements()) {
             String strParam = (String) eParams.nextElement();
             String data;
@@ -91,7 +87,7 @@ public class RegistrationController extends HttpServlet {
         } else {
             client = new Client(login_id, name, gender, email, password, phone, dob, address);
             db.addClient(client);
-            targetURL = "/RegisterSuccess.jsp";
+            targetURL = "/RegisterResult.jsp";
         }
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
