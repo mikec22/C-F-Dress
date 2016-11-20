@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Log in</title>
+        <title>Sign in</title>
         <link rel="stylesheet" href="css/signup.css">
         <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,400italic' rel='stylesheet' type='text/css'>
     </head>
@@ -25,8 +25,7 @@
                         <input type="hidden" name="action" value="authenticate"/>
                         <input type="text" required="required" name="username" placeholder="Username">
                         <input type="password" name="password" placeholder="Password" required>
-                        <input type="hidden" name="action" value="login"/>
-                        <input type="submit" class="signupBtn" value="Login">
+                        <input type="submit" class="signupBtn1" value="Sign in">
                     </form>
             </div>
         </div>

@@ -193,6 +193,23 @@ a {
   
 }
 
+.signupBtn1 {
+  display: block;
+  margin: 10px 0;
+  width: 100%;
+  padding: 15px;
+  background-color: #ff6c00;
+  border: none;
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: 600;
+  border-radius: 3px;
+  font-family: 'Source Sans Pro', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  cursor: pointer;
+  
+}
+
 #radiogp {
   padding: 15px;
   margin-bottom: 10px;
