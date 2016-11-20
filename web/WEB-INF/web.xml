@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <context-param>
-        <param-name>dbUrl</param-name> 
+        <param-name>dbUrl</param-name>
         <param-value>jdbc:mysql://dev16.asuscomm.com:3306/CF_DB</param-value>
     </context-param>
     <context-param>
         <param-name>dbUser</param-name>
-        <param-value>root</param-value> 
+        <param-value>root</param-value>
     </context-param>
     <context-param>
         <param-name>dbPassword</param-name>
-        <param-value>root</param-value> 
-    </context-param> 
+        <param-value>root</param-value>
+    </context-param>
     <servlet>
         <servlet-name>LoginController</servlet-name>
-        <servlet-class>com.servlet.LoginController</servlet-class>
+        <servlet-class>com.servlet.ClientAccountController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>LoginController</servlet-name>
+        <servlet-name>ClientAccountController</servlet-name>
         <url-pattern>/main</url-pattern>
     </servlet-mapping>
     <session-config>

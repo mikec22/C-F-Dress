@@ -21,8 +21,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Mike
  */
-@WebServlet(name = "LoginController", urlPatterns = {"/main"})
-public class LoginController extends HttpServlet {
+@WebServlet(name = "ClientAccountController", urlPatterns = {"/main"})
+public class ClientAccountController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -75,7 +75,13 @@ public class LoginController extends HttpServlet {
         System.out.print(result);
         return result;
     }
+    private boolean doRegester(HttpServletRequest request){
+        boolean result = false;
+        
 
+        System.out.print(result);
+        return result;
+    }
     private void doLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String targetURL = "login.jsp";
@@ -147,6 +153,8 @@ public class LoginController extends HttpServlet {
             doAuthenticate(request, response);   
         } else if ("logout".equals(action)) {
             doLogout(request, response);
+        } else if("register".equals(action)){
+            
         } else {
             response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED);
         }

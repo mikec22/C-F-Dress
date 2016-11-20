@@ -182,32 +182,5 @@ public class ClientDB {
         }
         return isSuccess;
     }
-//    public boolean addRecord(String custId, String name, String tel, int age) {
-//        Connection cnnct = null;
-//        PreparedStatement pStmnt = null;
-//        boolean isSuccess = false;
-//        try {
-//            cnnct = getConnection();
-//            String preQueryStatement = "INSERT INTO CUSTOMER VALUES (?,?,?,?)";
-//            pStmnt = cnnct.prepareStatement(preQueryStatement);
-//            pStmnt.setString(1, custId);
-//            pStmnt.setString(2, name);
-//            pStmnt.setString(3, tel);
-//            pStmnt.setInt(4, age);
-//            int rowCount = pStmnt.executeUpdate();
-//            if (rowCount >= 1) {
-//                isSuccess = true;
-//            }
-//            pStmnt.close();
-//            cnnct.close();
-//        } catch (SQLException ex) {
-//            while (ex != null) {
-//                ex.printStackTrace();
-//                ex = ex.getNextException();
-//            }
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
-//        return isSuccess;
-//    }
+
 }
