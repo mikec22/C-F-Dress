@@ -19,6 +19,14 @@ public class Staff implements Serializable {
     public Staff() {
     }
 
+    public Staff(int staff_id, String login_id, String password, String name, String gender) {
+        this.staff_id = staff_id;
+        this.login_id = login_id;
+        this.password = password;
+        this.name = name;
+        this.gender = gender;
+    }
+
     public int getStaff_id() {
         return staff_id;
     }
@@ -57,6 +65,11 @@ public class Staff implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Staff{" + "staff_id=" + staff_id + ", login_id=" + login_id + ", password=" + password + ", name=" + name + ", gender=" + gender + '}';
     }
 
 }

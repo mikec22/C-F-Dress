@@ -20,6 +20,7 @@
         <servlet-name>ClientAccountController</servlet-name>
         <url-pattern>/main</url-pattern>
     </servlet-mapping>
+
     <session-config>
         <session-timeout>
             30

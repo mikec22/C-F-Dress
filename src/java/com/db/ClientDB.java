@@ -20,7 +20,7 @@ import java.sql.SQLException;
  */
 public class ClientDB {
 
-    String dburl, dbUser, dbPassword;
+    private String dburl, dbUser, dbPassword;
 
     public ClientDB() {
     }

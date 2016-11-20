@@ -1,5 +1,5 @@
 
-import com.db.ClientDB;
+import com.db.StaffDB;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,8 +13,8 @@ import com.db.ClientDB;
  */
 public class TestGetClient {
     public static void main(String[] args){
-        ClientDB db = new ClientDB("jdbc:mysql://dev16.asuscomm.com:3306/CF_DB", "root", "root");
-        System.out.println(db.getClient(1));
-        System.out.println(db.getClient(2));
+        StaffDB db = new StaffDB("jdbc:mysql://dev16.asuscomm.com:3306/CF_DB", "root", "root");
+        //System.out.println(db.getClient(1));
+        System.out.println(db.isValidStaff("MaryAdmin", "123"));
     }
 }

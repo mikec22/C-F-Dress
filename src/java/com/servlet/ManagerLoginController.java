@@ -5,13 +5,10 @@
  */
 package com.servlet;
 
-import com.bean.Client;
-import com.db.ClientDB;
+import com.bean.Staff;
+import com.db.StaffDB;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,8 +21,19 @@ import javax.servlet.http.HttpSession;
  *
  * @author Mike
  */
-@WebServlet(name = "ClientAccountController", urlPatterns = {"/main"})
-public class ClientAccountController extends HttpServlet {
+@WebServlet(name = "ManagerLoginController", urlPatterns = {"/ManagerLogin"})
+public class ManagerLoginController extends HttpServlet {
+
+    private StaffDB db;
+
+    @Override
+    public void init() throws ServletException {
+        super.init(); //To change body of generated methods, choose Tools | Templates.
+        String dbUrl = this.getServletContext().getInitParameter("dbUrl");
+        String dbUser = this.getServletContext().getInitParameter("dbUser");
+        String dbPassword = this.getServletContext().getInitParameter("dbPassword");
+        db = new StaffDB(dbUrl, dbUser, dbPassword);
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,66 +44,6 @@ public class ClientAccountController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private ClientDB db;
-
-    @Override
-    public void init() throws ServletException {
-        super.init(); //To change body of generated methods, choose Tools | Templates.
-        String dbUrl = this.getServletContext().getInitParameter("dbUrl");
-        String dbUser = this.getServletContext().getInitParameter("dbUser");
-        String dbPassword = this.getServletContext().getInitParameter("dbPassword");
-        db = new ClientDB(dbUrl, dbUser, dbPassword);
-    }
-
-    private void doAuthenticate(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String targetURL;
-        boolean isValid = db.isValidClient(username, password);
-        if (isValid) {
-            HttpSession session = request.getSession(true);
-            Client client = new Client();
-            client.setLogin_id(username);
-            client.setPassword(password);
-            session.setAttribute("client", client);
-            targetURL = "index.jsp";
-        } else {
-            targetURL = "loginError.jsp";
-        }
-        RequestDispatcher rd;
-        rd = getServletContext().getRequestDispatcher("/" + targetURL);
-        rd.forward(request, response);
-    }
-
-    private boolean isAuthenticated(HttpServletRequest request) {
-        boolean result = false;
-        HttpSession session = request.getSession();
-        if (session.getAttribute("userInfo") != null) {
-            result = true;
-        }
-        System.out.print(result);
-        return result;
-    }
-
-    private void doLogin(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String targetURL = "login.jsp";
-        RequestDispatcher rd;
-        rd = getServletContext().getRequestDispatcher("/" + targetURL);
-        rd.forward(request, response);
-    }
-
-    private void doLogout(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.removeAttribute("userInfo");
-            session.invalidate();
-        }
-        doLogin(request, response);
-    }
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -112,6 +60,52 @@ public class ClientAccountController extends HttpServlet {
             out.println("</html>");
         }
     }
+    private void doAuthenticate(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String username = request.getParameter("login_id");
+        String password = request.getParameter("password");
+        String targetURL;
+        boolean isValid = db.isValidStaff(username, password);
+        if (isValid) {
+            HttpSession session = request.getSession(true);
+            Staff staff = db.getStaff(username);
+            session.setAttribute("ManagerInfo", staff);
+            targetURL = "RegisterResult.jsp";
+        } else {
+            targetURL = "loginError.jsp";
+        }
+        RequestDispatcher rd;
+        rd = getServletContext().getRequestDispatcher("/" + targetURL);
+        rd.forward(request, response);
+    }
+    
+    private boolean isAuthenticated(HttpServletRequest request) {
+        boolean result = false;
+        HttpSession session = request.getSession();
+        if (session.getAttribute("ManagerInfo") != null) {
+            result = true;
+        }
+        return result;
+    }
+    
+    private void doLogin(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String targetURL = "ManagerLogin.jsp";
+        RequestDispatcher rd;
+        rd = getServletContext().getRequestDispatcher("/" + targetURL);
+        rd.forward(request, response);
+    }
+    
+    private void doLogout(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.removeAttribute("ManagerInfo");
+            session.invalidate();
+        }
+        doLogin(request, response);
+    }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -140,16 +134,14 @@ public class ClientAccountController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (!isAuthenticated(request) && "login".equals(action)) {
+        if (!isAuthenticated(request)
+                && !("authenticate".equals(action))) {
             doLogin(request, response);
             return;
-        }
-        if ("authenticate".equals(action)) {
+        }else if ("authenticate".equals(action)) {
             doAuthenticate(request, response);
-            System.out.print(action);
         } else if ("logout".equals(action)) {
             doLogout(request, response);
-            System.out.print(action);
         } else {
             response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED);
         }
