@@ -6,6 +6,7 @@
 package com.db;
 
 import com.bean.Item;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,7 +18,7 @@ import java.util.Vector;
  *
  * @author Mike
  */
-public class ItemDB {
+public class ItemDB implements Serializable {
 
     private String dburl, dbUser, dbPassword;
 
@@ -93,8 +94,8 @@ public class ItemDB {
         }
         return items;
     }
-    
-    public Vector<String> getAllCategories(){
+
+    public Vector<String> getAllCategories() {
         Vector<String> categories = new Vector();
         try {
             Connection cnnct = getConnection();
@@ -115,8 +116,8 @@ public class ItemDB {
         }
         return categories;
     }
-    
-    public Vector<String> getAllDesigners(){
+
+    public Vector<String> getAllDesigners() {
         Vector<String> designers = new Vector();
         try {
             Connection cnnct = getConnection();
