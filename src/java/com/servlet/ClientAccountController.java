@@ -9,6 +9,9 @@ import com.bean.Client;
 import com.db.ClientDB;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -55,7 +58,6 @@ public class ClientAccountController extends HttpServlet {
             Client client = new Client();
             client.setLogin_id(username);
             client.setPassword(password);
-
             session.setAttribute("client", client);
             targetURL = "/index.jsp";
         } else {
@@ -75,13 +77,38 @@ public class ClientAccountController extends HttpServlet {
         System.out.print(result);
         return result;
     }
-//    private boolean doRegester(HttpServletRequest request){
-//        boolean result = false;
-//        
-//
-//        System.out.print(result);
-//        return result;
-//    }
+
+    private boolean doRegester(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        boolean result = false;
+        String targetURL;
+        String login_id = request.getParameter("login_id");
+        String name = request.getParameter("name");
+        String password = request.getParameter("password");
+        String confirmPassword = request.getParameter("confirmPassword");
+        String gender = request.getParameter("gender");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("address");
+        String[] dob = (request.getParameter("dob")).split("-");
+        Date dateValue = new Date(1900 - Integer.parseInt(dob[0]),
+                Integer.parseInt(dob[1]) - 1, Integer.parseInt(dob[2]));
+        if (isValidEmail(email) && phone.length() == 8
+                && password.equals(confirmPassword)) {
+            Client newClient = new Client(0, login_id, password, name, gender,
+                    dateValue, email, phone, address, 0, false, 0);
+            db.addClient(newClient);
+            targetURL = "/RegisterSuccess.jsp";
+            result = true;
+        } else {
+            targetURL = "/index.jsp";
+        }
+        RequestDispatcher rd;
+        rd = getServletContext().getRequestDispatcher("/" + targetURL);
+        rd.forward(request, response);
+        return result;
+    }
+
     private void doLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String targetURL = "login.jsp";
@@ -98,6 +125,17 @@ public class ClientAccountController extends HttpServlet {
             session.invalidate();
         }
         doLogin(request, response);
+    }
+
+    private static boolean isValidEmail(String email) {
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -144,17 +182,19 @@ public class ClientAccountController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (!isAuthenticated(request) && !("authenticate".equals(action))) {
+        if (!isAuthenticated(request) && "login".equals(action)) {
             doLogin(request, response);
-            System.out.print("");
             return;
         }
         if ("authenticate".equals(action)) {
-            doAuthenticate(request, response);   
+            doAuthenticate(request, response);
+            System.out.print(action);
         } else if ("logout".equals(action)) {
             doLogout(request, response);
-        } else if("register".equals(action)){
-            
+            System.out.print(action);
+        } else if ("register".equals(action)) {
+            doRegester(request, response);
+            System.out.print(action);
         } else {
             response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED);
         }

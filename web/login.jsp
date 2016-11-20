@@ -26,6 +26,7 @@
                         <td><input type="password" required="required" name="password"></td>
                     </tr>
                 </table>
+                <input type="hidden" name="action" value="login"/>
                 <input type="submit" value="Login">
             </form>
         </div>
