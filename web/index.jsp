@@ -9,9 +9,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>INDEX</title>
+        <title>Classic and Fashion Dress</title>
     </head>
     <body>
-        <h1><a href="login.jsp">Login</a></h1>
+        <div id="menu">
+            <jsp:include page="menu.jsp" />
+        </div>
+        <div id="context">
+            
+        </div>
     </body>
 </html>

@@ -10,7 +10,7 @@
     </context-param>
     <context-param>
         <param-name>dbPassword</param-name>
-        <param-value></param-value> 
+        <param-value>root</param-value> 
     </context-param> 
     <servlet>
         <servlet-name>LoginController</servlet-name>
