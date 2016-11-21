@@ -14,15 +14,25 @@ import java.io.Serializable;
 public class OrderLine implements Serializable {
     private Order order;
     private Item item;
+    private double price;
     private int quantity;
 
-    public OrderLine(Order order, Item item, int quantity) {
+    public OrderLine(Order order, Item item, double price, int quantity) {
         this.order = order;
         this.item = item;
+        this.price = price;
         this.quantity = quantity;
     }
 
     public OrderLine() {
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public Order getOrder() {

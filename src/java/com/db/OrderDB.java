@@ -87,7 +87,7 @@ public class OrderDB implements Serializable {
             while (rs.next()) {
                 ItemDB itemDB = new ItemDB();
                 OrderLine orderLine = new OrderLine(order,
-                        itemDB.getItem(rs.getInt(2)), rs.getInt(3));
+                        itemDB.getItem(rs.getInt(2)), rs.getDouble(3),rs.getInt(4));
                 orderLines.add(orderLine);
             }
             pStmnt.close();

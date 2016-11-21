@@ -122,6 +122,7 @@ DROP TABLE IF EXISTS `order_line`;
 CREATE TABLE `order_line` (
   `order_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
+  `price` decimal(7,2) NOT NULL,
   `quantity` int(3) NOT NULL,
   PRIMARY KEY (`order_id`,`item_id`),
   KEY `order_line_item_id_idx` (`item_id`),
@@ -175,4 +176,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-21 15:40:29
+-- Dump completed on 2016-11-21 21:45:09
