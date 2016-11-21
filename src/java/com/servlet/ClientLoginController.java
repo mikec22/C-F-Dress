@@ -9,9 +9,6 @@ import com.bean.Client;
 import com.db.ClientDB;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,8 +21,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Mike
  */
-@WebServlet(name = "ClientAccountController", urlPatterns = {"/main"})
-public class ClientAccountController extends HttpServlet {
+@WebServlet(name = "ClientLoginController", urlPatterns = {"/main"})
+public class ClientLoginController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -74,16 +71,13 @@ public class ClientAccountController extends HttpServlet {
         if (session.getAttribute("clientInfo") != null) {
             result = true;
         }
-        System.out.print(result);
         return result;
     }
 
     private void doLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String targetURL = "login.jsp";
-        RequestDispatcher rd;
-        rd = getServletContext().getRequestDispatcher("/" + targetURL);
-        rd.forward(request, response);
+        response.sendRedirect(targetURL);
     }
 
     private void doLogout(HttpServletRequest request, HttpServletResponse response)

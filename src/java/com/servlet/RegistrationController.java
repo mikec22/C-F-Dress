@@ -49,13 +49,13 @@ public class RegistrationController extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getParameter("action");
         if ("register".equals(action)) {
-            doRegistering(request, response);
+            doRegisteration(request, response);
         } else {
             response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED);
         }
     }
 
-    private void doRegistering(HttpServletRequest request, HttpServletResponse response)
+    private void doRegisteration(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String login_id, name, gender, email, password, phone, address;
         Date dob;
@@ -81,16 +81,19 @@ public class RegistrationController extends HttpServlet {
         phone = clientData.get(7);
         dob = java.sql.Date.valueOf(clientData.get(8));
         address = clientData.get(9);
-        boolean isExist = db.isExistClient(login_id, email);
-        if (isExist || !clientData.get(5).equals(clientData.get(6))){
-            targetURL = "/loginError.jsp";
+        //boolean isExist = db.isExistClient(login_id, email);
+        if (!clientData.get(5).equals(clientData.get(6))) {
+            request.setAttribute("msg", "Password not match");
         } else {
             client = new Client(login_id, name, gender, email, password, phone, dob, address);
-            db.addClient(client);
-            targetURL = "/RegisterResult.jsp";
+            if (db.addClient(client)) {
+                request.setAttribute("msg", "Your registeration successful!");
+            } else {
+                request.setAttribute("msg", "The account already existed!");
+            }
         }
-        RequestDispatcher rd;
-        rd = getServletContext().getRequestDispatcher("/" + targetURL);
+        targetURL = "/RegisterResult.jsp";
+        RequestDispatcher rd = getServletContext().getRequestDispatcher(targetURL);
         rd.forward(request, response);
 
     }

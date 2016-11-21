@@ -1,5 +1,5 @@
 <%-- 
-    Document   : RegisterSuccess
+    Document   : RegisterResult
     Created on : Nov 20, 2016, 5:55:29 PM
     Author     : Mike
 --%>
@@ -9,10 +9,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Register Success</title>
+        <title>Register Result</title>
     </head>
     <body>
-        <h1>Register Success!</h1>
-        <h1>Please wait for verifying.</h1>
+        <%
+            String msg = (String) request.getAttribute("msg");
+            out.println("<h1>" + msg + "</h1>");
+        %>
     </body>
 </html>

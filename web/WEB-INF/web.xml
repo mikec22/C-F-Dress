@@ -12,14 +12,6 @@
         <param-name>dbPassword</param-name>
         <param-value>root</param-value>
     </context-param>
-    <servlet>
-        <servlet-name>ClientAccountController</servlet-name>
-        <servlet-class>com.servlet.ClientAccountController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ClientAccountController</servlet-name>
-        <url-pattern>/main</url-pattern>
-    </servlet-mapping>
 
     <session-config>
         <session-timeout>
