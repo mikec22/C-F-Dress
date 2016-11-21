@@ -113,7 +113,7 @@ public class ClientDB {
             rs = pStmnt.executeQuery();
             if (rs.next()) {
                 int client_id = rs.getInt("client_id");
-                //Stringlogin_id = rs.getString("login_id");
+                //String login_id = rs.getString("login_id");
                 String password = rs.getString("password");
                 String name = rs.getString("name");
                 String gender = rs.getString("gender");
@@ -213,7 +213,7 @@ public class ClientDB {
         return isSuccess;
     }
 
-    public Vector<Client> getAllNotVerify() {
+    public Vector<Client> getAllNotVerifyClients() {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         Vector<Client> clients = new Vector();
