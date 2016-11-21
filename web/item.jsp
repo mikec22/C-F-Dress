@@ -3,7 +3,10 @@
     Created on : 2016/11/20, 下午 04:05:13
     Author     : Fai
 --%>
-
+<%@page import="com.db.ItemDB"%>
+<%@page import="java.util.Vector"%>
+<%@page import="com.bean.Item"%>
+<%@ taglib uri="/WEB-INF/tlds/com-taglib.tld" prefix="com" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -37,22 +40,21 @@
         </style>
         <link rel="stylesheet" href="css/card.css">
     </head>
+    <%! ItemDB itemDB = new ItemDB(); %>
+    <% 
+    Vector <Item> itemList = new Vector();
+    String keyword ;
+    if(request.getParameter("getItem")==null){
+        keyword = "";
+    }else{
+        keyword = request.getParameter("getItem");
+    }
+        itemList = itemDB.queryItemByKeyword(keyword);
+
+    %>
     <body>
         <div class="context">
-            <%
-                for(int i=1 ; i<=10;i++){
-                    out.print("<div class='card card-1'><img src='img/item/c"+ i +".jpg'><br>Black Halo Women's Constance Velvet Dress<br>Clothing<br>$350.00 </div>");
-                    out.print("");
-                }
-                
-                for(int i=1 ; i<=10;i++){
-                    out.print("<div class='card card-1'><img id='img1' src='img/item/s"+ i +".jpg'></div>");
-                }
-                
-                for(int i=1 ; i<=10;i++){
-                    out.print("<div class='card card-1'><img src='img/item/w"+ i +".jpg'></div>");
-                }
-            %>
+            <com:ItemTag itemList="<%=itemList%>" />
         </div>
     </body>
 </html>
