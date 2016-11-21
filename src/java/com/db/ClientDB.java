@@ -6,13 +6,13 @@
 package com.db;
 
 import com.bean.Client;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 /**
  *
@@ -23,6 +23,9 @@ public class ClientDB {
     private String dburl, dbUser, dbPassword;
 
     public ClientDB() {
+        dburl = "jdbc:mysql://localhost:3306/CF_DB";
+        dbUser = "root";
+        dbPassword = "";
     }
 
     public ClientDB(String dburl, String dbUser, String dbPassword) {
@@ -40,8 +43,8 @@ public class ClientDB {
         }
         return null;
     }
-    
-    public boolean isExistClient(String login_id, String email){
+
+    public boolean isExistClient(String login_id, String email) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isExist = false;
@@ -208,6 +211,46 @@ public class ClientDB {
             }
         }
         return isSuccess;
+    }
+
+    public Vector<Client> getAllNotVerify() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        Vector<Client> clients = new Vector();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM client"
+                    + " WHERE verified = ?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setBoolean(1, false);
+            ResultSet rs = rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                int client_id = rs.getInt("client_id");
+                String login_id = rs.getString("login_id");
+                String password = rs.getString("password");
+                String name = rs.getString("name");
+                String gender = rs.getString("gender");
+                Date dob = rs.getDate("dob");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                int bonus_point = rs.getInt("bonus_point");
+                boolean verified = rs.getBoolean("verified");
+                double balance = rs.getDouble("balance");
+                Client client = new Client(client_id, login_id, password, name,
+                        gender, dob, email, phone, address,
+                        bonus_point, verified, balance);
+                clients.add(client);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return clients;
     }
 
 }

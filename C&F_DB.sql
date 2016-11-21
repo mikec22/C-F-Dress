@@ -2,9 +2,9 @@ CREATE DATABASE  IF NOT EXISTS `CF_DB` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `CF_DB`;
 -- MySQL dump 10.13  Distrib 5.7.12, for osx10.9 (x86_64)
 --
--- Host: dev16.asuscomm.com    Database: CF_DB
+-- Host: localhost    Database: CF_DB
 -- ------------------------------------------------------
--- Server version	5.7.16-0ubuntu0.16.04.1
+-- Server version	5.5.5-10.1.13-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -90,11 +90,12 @@ DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order` (
-  `order_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `client_id` int(11) NOT NULL,
   `delivery_datetime` datetime NOT NULL,
   `order_datetime` datetime NOT NULL,
   `address` varchar(255) NOT NULL,
+  `option` varchar(10) NOT NULL,
   `status` varchar(10) NOT NULL,
   PRIMARY KEY (`order_id`),
   KEY `Order_client_id_idx` (`client_id`),
@@ -122,7 +123,7 @@ CREATE TABLE `order_line` (
   `order_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `quantity` int(3) NOT NULL,
-  PRIMARY KEY (`order_id`),
+  PRIMARY KEY (`order_id`,`item_id`),
   KEY `order_line_item_id_idx` (`item_id`),
   CONSTRAINT `order_line_item_id` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `order_line_order_id` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -174,4 +175,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-21  3:05:47
+-- Dump completed on 2016-11-21 15:40:29

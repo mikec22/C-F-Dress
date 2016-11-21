@@ -21,6 +21,9 @@ public class StaffDB {
     private String dburl, dbUser, dbPassword;
 
     public StaffDB() {
+        dburl = "jdbc:mysql://localhost:3306/CF_DB";
+        dbUser = "root";
+        dbPassword = "";
     }
 
     public StaffDB(String dburl, String dbUser, String dbPassword) {

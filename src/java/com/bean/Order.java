@@ -18,10 +18,29 @@ public class Order implements Serializable {
     private int order_id;
     private Client client;
     private Date delivery_datetime, order_datetime;
-    private String address, status;
+    private String address, option, status;
     private Vector<OrderLine> order_line;
 
     public Order() {
+    }
+
+    public Order(int order_id, Client client, Date delivery_datetime, Date order_datetime, String address, String option, String status, Vector<OrderLine> order_line) {
+        this.order_id = order_id;
+        this.client = client;
+        this.delivery_datetime = delivery_datetime;
+        this.order_datetime = order_datetime;
+        this.address = address;
+        this.option = option;
+        this.status = status;
+        this.order_line = order_line;
+    }
+
+    public String getOption() {
+        return option;
+    }
+
+    public void setOption(String option) {
+        this.option = option;
     }
 
     public int getOrder_id() {

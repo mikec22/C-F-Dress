@@ -23,6 +23,9 @@ public class ItemDB implements Serializable {
     private String dburl, dbUser, dbPassword;
 
     public ItemDB() {
+        dburl = "jdbc:mysql://localhost:3306/CF_DB";
+        dbUser = "root";
+        dbPassword = "";
     }
 
     public ItemDB(String dburl, String dbUser, String dbPassword) {
@@ -137,5 +140,28 @@ public class ItemDB implements Serializable {
             }
         }
         return designers;
+    }
+    public Item getItem(int item_id) {
+        Item item = null;
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM item "
+                    + "WHERE item_id = ?";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, item_id);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                item = new Item(rs.getInt(1), rs.getString(2), rs.getString(3),
+                        rs.getString(4), rs.getDouble(5), rs.getString(6), rs.getString(7));
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return item;
     }
 }

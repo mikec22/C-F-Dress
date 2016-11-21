@@ -6,6 +6,7 @@
 package com.db;
 
 import com.bean.Order;
+import com.bean.OrderLine;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,9 +20,13 @@ import java.util.Vector;
  * @author Mike
  */
 public class OrderDB implements Serializable {
+
     private String dburl, dbUser, dbPassword;
 
     public OrderDB() {
+        dburl = "jdbc:mysql://localhost:3306/CF_DB";
+        dbUser = "root";
+        dbPassword = "";
     }
 
     public OrderDB(String dburl, String dbUser, String dbPassword) {
@@ -29,7 +34,7 @@ public class OrderDB implements Serializable {
         this.dbUser = dbUser;
         this.dbPassword = dbPassword;
     }
-    
+
     public Connection getConnection() throws SQLException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -39,21 +44,24 @@ public class OrderDB implements Serializable {
         }
         return null;
     }
-    
+
     public Vector<Order> getOrders(int client_id) {
         Vector<Order> orders = new Vector();
         try {
             Connection cnnct = getConnection();
             String preQueryStatement = "SELECT * FROM order "
-                    + "INNER JOIN order_line "
-                    + "ON order.order_id = order_line.order_id "
                     + "WHERE client_id = ?";
             PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setInt(1, client_id);
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
             while (rs.next()) {
-                
+                ClientDB clientDB = new ClientDB();
+                Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
+                        rs.getDate(3), rs.getDate(4), rs.getString(5), rs.getString(6),
+                        rs.getString(7), null);
+                order.setOrder_line(getOrderLines(order));
+                orders.add(order);
             }
             pStmnt.close();
             cnnct.close();
@@ -64,5 +72,32 @@ public class OrderDB implements Serializable {
             }
         }
         return orders;
+    }
+
+    public Vector<OrderLine> getOrderLines(Order order) {
+        Vector<OrderLine> orderLines = new Vector();
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM order_line "
+                    + "WHERE order_id = ?";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, order.getOrder_id());
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                ItemDB itemDB = new ItemDB();
+                OrderLine orderLine = new OrderLine(order,
+                        itemDB.getItem(rs.getInt(2)), rs.getInt(3));
+                orderLines.add(orderLine);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return orderLines;
     }
 }
