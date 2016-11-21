@@ -74,7 +74,7 @@ nav.stroke ul li a:hover:after {
 }
 
 nav.fill ul li a {
-  transition: all 2s;
+  transition: all 0.5s;
 }
 
 nav.fill ul li a:after {
