@@ -30,7 +30,7 @@ public class Item implements Serializable {
         this.img = img;
         this.price = price;
     }
-
+    
     public int getItem_id() {
         return item_id;
     }
