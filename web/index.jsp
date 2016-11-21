@@ -12,11 +12,8 @@
         <title>Classic and Fashion Dress</title>
     </head>
     <body>
-        <div id="menu">
-            <jsp:include page="menu.jsp" />
-        </div>
         <div id="context">
-            <jsp:include page="item.jsp" />
+            <jsp:forward page="item?action=getItemList" />
         </div>
     </body>
 </html>

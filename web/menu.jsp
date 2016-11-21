@@ -14,12 +14,14 @@
     <a href="index.jsp"><img src="img/cf_logo.png" style="display: block;margin: 0 auto; width: 15%; height: 15%"></a>
     <ul>
         <li><a href="index.jsp">Home</a></li>
-        <li><a href="item.jsp">Dress</a></li>
+        <li><a href="item">Dress</a></li>
         <li><a href="signup.jsp">Sign up</a></li>
         <li><a href="login.jsp">Sign in</a></li>
+        <li><a href="itemDetails.jsp">Test</a></li>
         <div id="wrap" >
-            <form action="" autocomplete="on">
-                <input id="search" class="searchBar" name="search" type="text" placeholder="Any Keyword..."><input class="searchIcon" id="search_submit" value="Rechercher" type="submit">
+            <form action="item" autocomplete="on" method="get">
+                <input id="search" class="searchBar" name="keyword" type="text" placeholder="Any Keyword...">
+                <input class="searchIcon" id="search_submit" value="Rechercher" type="submit">
             </form>
         </div>
     </ul>

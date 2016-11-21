@@ -9,7 +9,7 @@ import com.bean.Item;
 import com.db.ItemDB;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.Vector;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,28 +21,51 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author shukyan
  */
-@WebServlet(name = "itemController", urlPatterns = {"/itemController"})
+@WebServlet(name = "itemController", urlPatterns = {"/item"})
 public class ItemController extends HttpServlet {
+
     private ItemDB itemDB;
-    
+
+    @Override
     public void init() {
         String dburl = this.getServletContext().getInitParameter("dbUrl");
         String dbUser = this.getServletContext().getInitParameter("dbUser");
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         itemDB = new ItemDB(dburl, dbUser, dbPassword);
     }
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-            Item items = itemDB.getItem(1);
-            request.setAttribute("item", items);
+        String action = request.getParameter("action");
+        if (action.equals("getItem")) {
+            
+        } else if (action.equals("getItemList")) {
+            showItemList(request, response);
+        } else {
+            PrintWriter out = response.getWriter();
+            out.println("No such action!!!");
             RequestDispatcher rd;
-            rd = getServletContext().getRequestDispatcher("/listCustomers.jsp");
+            rd = getServletContext().getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
-       
+        }
+
     }
-    
+
+    private void showItemList(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String keyword;
+        RequestDispatcher rd;
+        if (request.getParameter("keyword") == null) {
+            keyword = "";
+        } else {
+            keyword = request.getParameter("keyword");
+        }
+        Vector<Item> itemList = itemDB.queryItemByKeyword(keyword);
+        rd = getServletContext().getRequestDispatcher("/item.jsp");
+        request.setAttribute("itemList", itemList);
+        rd.forward(request, response);
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

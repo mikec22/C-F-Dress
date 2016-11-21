@@ -21,13 +21,18 @@
       </listener>
     -->
   <tag>
-    <name>ItemTag</name>
-    <tag-class>com.tag.ItemTag</tag-class>
+    <name>ItemListTag</name>
+    <tag-class>com.tag.ItemListTag</tag-class>
     <body-content>scriptless</body-content>
     <attribute>
       <name>itemList</name>
       <rtexprvalue>true</rtexprvalue>
       <type>java.unit.Vector</type>
     </attribute>
+  </tag>
+  <tag>
+    <name>ItemDetails</name>
+    <tag-class>com.tag.ItemDetails</tag-class>
+    <body-content>scriptless</body-content>
   </tag>
 </taglib>

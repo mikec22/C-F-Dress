@@ -4,6 +4,10 @@ body {
   margin: 0;
 }
 
+#context {
+    padding: 50px;
+}
+
 small {
   font-size: 12px;
   color: rgba(0, 0, 0, 0.4);
