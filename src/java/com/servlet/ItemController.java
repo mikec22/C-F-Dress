@@ -41,7 +41,6 @@ public class ItemController extends HttpServlet {
         if (action == null) {
             action = "getItemList";
         }
-
         if (action.equals("getItem")) {
             showItem(request, response);
         } else if (action.equals("getItemList")) {
@@ -49,9 +48,7 @@ public class ItemController extends HttpServlet {
         } else {
             PrintWriter out = response.getWriter();
             out.println("No such action!!!");
-            RequestDispatcher rd;
-            rd = getServletContext().getRequestDispatcher("/index.jsp");
-            rd.forward(request, response);
+            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);;
         }
 
     }
@@ -63,21 +60,28 @@ public class ItemController extends HttpServlet {
         try {
             id = Integer.parseInt(request.getParameter("id"));
             Item item = itemDB.getItem(id);
-            rd = getServletContext().getRequestDispatcher("/itemDetails.jsp");
-            request.setAttribute("item", item);
-            rd.forward(request, response);
-
-        } catch (NumberFormatException e) {
-            rd = getServletContext().getRequestDispatcher("/index.jsp");
-            rd.forward(request, response);
+            if(item!=null){
+                request.setAttribute("item", item);
+                getServletContext().getRequestDispatcher("/itemDetails.jsp").forward(request, response);
+            }else{
+                throw new ServletException();
+            }
+        } catch (IOException | NumberFormatException | ServletException e) {
+            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }
     }
 
     private void showItemList(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Vector<Item> itemList;
         String keyword = request.getParameter("keyword");
+        String category = request.getParameter("category");
         keyword = keyword == null ? "" : keyword;
-        Vector<Item> itemList = itemDB.queryItemByKeyword(keyword);
+        if(category==null){
+            itemList = itemDB.queryItemByKeyword(keyword);
+        }else{
+            itemList = itemDB.queryItemByCategoryKeyword(keyword, category);
+        }
         request.setAttribute("itemList", itemList);
         getServletContext().getRequestDispatcher("/item.jsp").forward(request, response);
     }
