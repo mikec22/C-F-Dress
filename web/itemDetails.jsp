@@ -7,11 +7,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="/WEB-INF/tlds/com-taglib.tld" prefix="com" %>
 <jsp:useBean id="item" scope="request" class="com.bean.Item"/>
+<%
+    String title = (String)request.getAttribute("title");
+%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title><%=title%></title>
         <link rel="stylesheet" href="css/itemDetails.css">
 
     </head>

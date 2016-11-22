@@ -57,11 +57,14 @@ public class ItemController extends HttpServlet {
             throws ServletException, IOException {
         RequestDispatcher rd;
         int id;
+        String title;
         try {
             id = Integer.parseInt(request.getParameter("id"));
             Item item = itemDB.getItem(id);
             if(item!=null){
+                title = item.getName();
                 request.setAttribute("item", item);
+                request.setAttribute("title", title);
                 getServletContext().getRequestDispatcher("/itemDetails.jsp").forward(request, response);
             }else{
                 throw new ServletException();
@@ -76,14 +79,18 @@ public class ItemController extends HttpServlet {
         Vector<Item> itemList;
         String keyword = request.getParameter("keyword");
         String category = request.getParameter("category");
+        String title;
         keyword = keyword == null ? "" : keyword;
         try {
         if(category==null){
             itemList = itemDB.queryItemByKeyword(keyword);
+            title = "C&F Dress ";
         }else{
             itemList = itemDB.queryItemByCategoryKeyword(keyword, category);
+            title = "C&F Dress - " + category;
         }
         request.setAttribute("itemList", itemList);
+        request.setAttribute("title", title);
         getServletContext().getRequestDispatcher("/item.jsp").forward(request, response);
         } catch (IOException | NumberFormatException | ServletException e) {
             getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);

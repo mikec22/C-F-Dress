@@ -20,9 +20,9 @@
     </div>
     <ul>
         <li><a href="index.jsp">Home</a></li>
-        <li><a href="item?category=clothing">Clothing</a></li>
-        <li><a href="item?category=shoes">Shoes</a></li>
-        <li><a href="item?category=watches">Watches</a></li>
+        <li><a href="item?category=Clothing">Clothing</a></li>
+        <li><a href="item?category=Shoes">Shoes</a></li>
+        <li><a href="item?category=Watches">Watches</a></li>
         <li><a href="register?action=fillForm">Sign up</a></li>
         <li><a href="login">Sign in</a></li>
 
