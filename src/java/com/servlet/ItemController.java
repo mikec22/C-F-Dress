@@ -66,7 +66,7 @@ public class ItemController extends HttpServlet {
             rd = getServletContext().getRequestDispatcher("/itemDetails.jsp");
             request.setAttribute("item", item);
             rd.forward(request, response);
-            
+
         } catch (NumberFormatException e) {
             rd = getServletContext().getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
@@ -75,17 +75,11 @@ public class ItemController extends HttpServlet {
 
     private void showItemList(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String keyword;
-        RequestDispatcher rd;
-        if (request.getParameter("keyword") == null) {
-            keyword = "";
-        } else {
-            keyword = request.getParameter("keyword");
-        }
+        String keyword = request.getParameter("keyword");
+        keyword = keyword == null ? "" : keyword;
         Vector<Item> itemList = itemDB.queryItemByKeyword(keyword);
-        rd = getServletContext().getRequestDispatcher("/item.jsp");
         request.setAttribute("itemList", itemList);
-        rd.forward(request, response);
+        getServletContext().getRequestDispatcher("/item.jsp").forward(request, response);
     }
 
     @Override
