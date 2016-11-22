@@ -55,7 +55,7 @@ public class ClientLoginController extends HttpServlet {
             client.setLogin_id(username);
             client.setPassword(password);
             session.setAttribute("clientInfo", client);
-            targetURL = "index.jsp";
+            targetURL = "";
         } else {
             request.setAttribute("userPath", "/login");
             targetURL = "loginError.jsp";
