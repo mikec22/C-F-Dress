@@ -134,8 +134,7 @@ public class ManagerLoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (!isAuthenticated(request)
-                && !("authenticate".equals(action))) {
+        if (!isAuthenticated(request) && !("authenticate".equals(action))) {
             doLogin(request, response);
             return;
         }else if ("authenticate".equals(action)) {
