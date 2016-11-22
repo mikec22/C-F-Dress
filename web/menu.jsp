@@ -12,18 +12,20 @@
 
 <nav class="stroke">
     <a href="index.jsp"><img src="img/cf_logo.png" style="display: block;margin: 0 auto; width: 15%; height: 15%"></a>
+    <div id="wrap" >
+        <form action="item" autocomplete="on" method="get">
+            <input id="search" class="searchBar" name="keyword" type="text" placeholder="Search">
+            <input class="searchIcon" id="search_submit" value="Rechercher" type="submit">
+        </form>
+    </div>
     <ul>
         <li><a href="index.jsp">Home</a></li>
-        <li><a href="item">Dress</a></li>
+        <li><a href="item?category=Clothing">Clothing</a></li>
+        <li><a href="item?category=Shoes">Shoes</a></li>
+        <li><a href="item?category=Watches">Watches</a></li>
         <li><a href="register?action=fillForm">Sign up</a></li>
         <li><a href="login">Sign in</a></li>
-        <li><a href="itemDetails.jsp">Test</a></li>
-        <div id="wrap" >
-            <form action="item" autocomplete="on" method="get">
-                <input id="search" class="searchBar" name="keyword" type="text" placeholder="Search">
-                <input class="searchIcon" id="search_submit" value="Rechercher" type="submit">
-            </form>
-        </div>
+
     </ul>
 </nav>
 

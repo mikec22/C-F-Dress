@@ -4,7 +4,7 @@ body {
   margin: 0;
 }
 
-#context {
+#content {
     padding: 50px;
 }
 
@@ -203,7 +203,7 @@ nav.shift ul li a:hover:after {
 }
 
 #wrap {
-  margin-top: 10px;
+  margin: 0 auto;
   display: inline-block;
   position: relative;
   height: 60px;

@@ -8,11 +8,14 @@
 <%@page import="com.bean.Item"%>
 <%@taglib uri="/WEB-INF/tlds/com-taglib.tld" prefix="com" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    String title = (String)request.getAttribute("title");
+%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title><%=title%></title>
         <link rel="stylesheet" href="css/card.css">
         <link rel="stylesheet" href="css/item.css">
     </head>
@@ -23,7 +26,7 @@
         <div id="menu">
             <jsp:include page="menu.jsp" />
         </div>
-        <div id="context">
+        <div id="content">
             <com:ItemListTag itemList="<%=itemList%>" />
         </div>
     </body>

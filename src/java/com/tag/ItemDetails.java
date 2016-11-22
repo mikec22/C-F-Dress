@@ -5,6 +5,7 @@
  */
 package com.tag;
 
+import com.bean.Item;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.JspFragment;
@@ -21,29 +22,44 @@ public class ItemDetails extends SimpleTagSupport {
      * method is provided by the tag library developer, and handles all tag
      * processing, body iteration, etc.
      */
+    private Item item;
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
     @Override
     public void doTag() throws JspException {
         JspWriter out = getJspContext().getOut();
-        
         try {
-            // TODO: insert code to write html before writing the body content.
-            // e.g.:
-            //
-            // out.println("<strong>" + attribute_1 + "</strong>");
-            // out.println("    <blockquote>");
-
-            JspFragment f = getJspBody();
-            if (f != null) {
-                f.invoke(out);
+            String cssClass;
+            if (item.getCategory().equals("shoes")) {
+                cssClass = "img1";
+            } else {
+                cssClass = "";
             }
-
-            // TODO: insert code to write html after writing the body content.
-            // e.g.:
-            //
-            // out.println("    </blockquote>");
+            String img = "<img src='img/item/" + item.getImg() + "' class='" + cssClass + "' />";
+            String name = "<p class='title'>" + item.getName() + "</p>";
+            String category = "<p class='type'>" + item.getCategory() + "</p>";
+            String designer = "<p>Design by</p><p class='designer'>" + item.getDesigner() + "</p>";
+            String price = "<p class='price'>$ " + item.getPrice() + "</p>";
+            
+            out.print("<div class='left'><div class'left-content'>"
+                    + img
+                    + designer
+                    + "</div></div>");
+            out.print("<div class='right'>"
+                    + name 
+                    + category
+                    + price
+                    + "</div>");
         } catch (java.io.IOException ex) {
             throw new JspException("Error in ItemDetails tag", ex);
         }
     }
-    
+
 }

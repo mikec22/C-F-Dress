@@ -22,7 +22,7 @@
                 <h3>Sign up to start shopping.<br>
                     <span class="signupDivider">Sign up with your email address</span></h3>
                 <!-- <span class="divider"></span> -->
-                <form method="post" action="Register">
+                <form method="post" action="Register" >
                     <input type="hidden" name="action" value="register"/>
                     <div class="signupForm">
                         <input type="text" name="login_id" placeholder="Your Login Id" required>
@@ -39,7 +39,13 @@
                     <input type="password" name="password" class="half" placeholder="Password" required>
                     <input type="password" name="cpassword" class="half confirmpass" placeholder="Confirm Password" required>
                     <input type="tel" name="phone" placeholder="Phone Number" required>
-                    <input type="date" name="dob" required>
+                    </div>
+                    <div id="radiogp">
+                        <h4>
+                            <span>Date of Birthday </span></h4>
+                            <input type="date" name="dob"  placeholder="Date of Birthday" required>
+                    </div>
+                    <div class="signupForm">
                     <textarea id="noresize" name="address" rows="5" placeholder="Your Delivery Address" required></textarea>
                     <input type="submit" class="signupBtn" value="Sign up">
                     </div>

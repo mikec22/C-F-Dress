@@ -46,8 +46,9 @@ public class ItemListTag extends SimpleTagSupport {
                 }
                 String img = "<img src='img/item/" + item.getImg() + "' class='"+ cssClass +"' />";
                 String name = "<p class='title'>" + item.getName() + "</p>";
-                String category = "<p>" + item.getCategory() + "</p>";
-                String price = "<p>$ " + item.getPrice() + "</p>";
+                String category = "<p class='type'>" + item.getCategory() + "</p>";
+                String price = "<p class='price'>$ " + item.getPrice() + "</p>";
+                
                 out.print("<div class='card card-1'><a href='item?action=getItem&id="+ item.getItem_id() +"'>" + 
                         img + "</a>" +
                         name + 
