@@ -51,11 +51,9 @@ public class ClientLoginController extends HttpServlet {
         boolean isValid = db.isValidClient(username, password);
         if (isValid) {
             HttpSession session = request.getSession(true);
-            Client client = new Client();
-            client.setLogin_id(username);
-            client.setPassword(password);
+            Client client = db.getClient(username);
             session.setAttribute("clientInfo", client);
-            targetURL = "";
+            targetURL = "index.jsp";
         } else {
             request.setAttribute("userPath", "/login");
             targetURL = "loginError.jsp";
@@ -122,8 +120,9 @@ public class ClientLoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (!isAuthenticated(request) && !"authenticate".equals(action)) {
-            doLogin(request, response);
+        action = action == null ? "" : action;
+        if ((!isAuthenticated(request) && ! "authenticate".equals(action))) {
+            doLogout(request, response);
             return;
         }
         if ("authenticate".equals(action)) {
