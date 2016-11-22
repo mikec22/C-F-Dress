@@ -47,6 +47,12 @@ public class ItemDetails extends SimpleTagSupport {
             String category = "<p class='type'>" + item.getCategory() + "</p>";
             String designer = "<p>Design by</p><p class='designer'>" + item.getDesigner() + "</p>";
             String price = "<p class='price'>$ " + item.getPrice() + "</p>";
+            String form = "<form >\n" +
+"                    <div class='qty'><label for=\"quantity\">Quantity : </label>\n" +
+"                    <input type='hidden' name='itemId' value='"+ item.getItem_id() +"'>"
+                    + "<input type='number' min='1' size='5' id='numberinput' name='quantity' value='1' /></div>\n" +
+"                    <input type=\"submit\" class=\"btn\" value=\"Add Cart\">\n" +
+"                </form>";
             
             out.print("<div class='left'><div class'left-content'>"
                     + img
@@ -56,6 +62,7 @@ public class ItemDetails extends SimpleTagSupport {
                     + name 
                     + category
                     + price
+                    + form
                     + "</div>");
         } catch (java.io.IOException ex) {
             throw new JspException("Error in ItemDetails tag", ex);

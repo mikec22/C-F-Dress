@@ -8,7 +8,7 @@
 <%@taglib uri="/WEB-INF/tlds/com-taglib.tld" prefix="com" %>
 <jsp:useBean id="item" scope="request" class="com.bean.Item"/>
 <%
-    String title = (String)request.getAttribute("title");
+    String title = (String) request.getAttribute("title");
 %>
 <!DOCTYPE html>
 <html>
@@ -16,7 +16,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><%=title%></title>
         <link rel="stylesheet" href="css/itemDetails.css">
-
     </head>
     <body>
         <div id="menu">
@@ -24,17 +23,6 @@
         </div>
         <div id="content">
             <com:ItemDetailsTag item="<%=item%>"/>
-<!--            <div class="left">
-                <div class="left-content">
-                    <img src="img/item/w1.jpg">
-                </div>
-            </div>
-            <div class="right">
-                Quartz Gold-Tone and Rubber Casual Watch<br>
-                watches<br>
-                Tommy Hilfiger<br>
-                $999.00<br>
-            </div>-->
         </div>
     </body>
 </html>

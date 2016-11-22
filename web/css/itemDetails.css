@@ -85,3 +85,23 @@ img {
     font-size: 40px;
     color: coral;
 }
+
+.qty{
+    height: 55px;
+}
+
+.btn {
+  margin: 0 auto; 
+  display: block;
+  width: 60%;
+  padding: 15px;
+  background-color: #ff6c00;
+  border: none;
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: 400;
+  border-radius: 3px;
+  font-family: 'Source Sans Pro', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  cursor: pointer;
+}
