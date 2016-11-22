@@ -43,18 +43,18 @@ public class ItemDetails extends SimpleTagSupport {
                 cssClass = "";
             }
             String img = "<img src='img/item/" + item.getImg() + "' class='" + cssClass + "' />";
-            String name = "" + item.getName() + "<br>";
-            String category = "<p>" + item.getCategory() + "</p>";
-            String designer = "<p>" + item.getDesigner() + "</p>";
-            String price = "<p>$ " + item.getPrice() + "</p>";
+            String name = "<p class='title'>" + item.getName() + "</p>";
+            String category = "<p class='type'>" + item.getCategory() + "</p>";
+            String designer = "<p>Design by</p><p class='designer'>" + item.getDesigner() + "</p>";
+            String price = "<p class='price'>$ " + item.getPrice() + "</p>";
             
             out.print("<div class='left'><div class'left-content'>"
                     + img
+                    + designer
                     + "</div></div>");
             out.print("<div class='right'>"
                     + name 
                     + category
-                    + designer
                     + price
                     + "</div>");
         } catch (java.io.IOException ex) {

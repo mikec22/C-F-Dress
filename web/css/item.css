@@ -2,6 +2,28 @@ body {
     text-align: center;
 }
 
+
+
+.image {
+    
+}
+
+.image img {
+    -webkit-transition: all 1s ease; /* Safari and Chrome */
+    -moz-transition: all 1s ease; /* Firefox */
+    -ms-transition: all 1s ease; /* IE 9 */
+    -o-transition: all 1s ease; /* Opera */
+    transition: all 1s ease;
+}
+
+.image:hover img {
+    -webkit-transform:scale(1.25); /* Safari and Chrome */
+    -moz-transform:scale(1.25); /* Firefox */
+    -ms-transform:scale(1.25); /* IE 9 */
+    -o-transform:scale(1.25); /* Opera */
+     transform:scale(1.25);
+}
+
 img {
     background: no-repeat center center ; 
     -webkit-background-size: cover;
@@ -23,5 +45,20 @@ img {
 }
 
 .title{
-    height: 35px;
+    font-variant: small-caps;
+    font-size: 20px;
+    font-style: initial;
+    height: 25px;
+}
+
+.type {
+    font-size: 20px;
+    font-variant: small-caps;
+    color: gray;
+    height: 5px;
+}
+
+.price{
+    font-size: 24px;
+    color: coral;
 }
