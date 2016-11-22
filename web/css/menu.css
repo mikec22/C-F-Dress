@@ -278,12 +278,11 @@ nav.shift ul li a:hover:after {
 
 .atext a {
   display: block;
-  padding: 15px;
+  padding: 2px;
   text-decoration: none;
   color:  darkgrey;
   font-weight: 800;
   text-transform: uppercase;
-  margin: 0 10px;
 }
 
 .atext a:hover {

@@ -22,12 +22,13 @@
 
 <nav class="stroke">
     <%
-    if (isAuthenticated) {
-        out.print("<div class='atext'> Hi, " + client.getName() + "");
-        out.print("<a href='login?action=logout'>Log out</a></div>");
-    }
+        if (isAuthenticated) {
+            out.print("<div class='atext'> Hi, " + client.getName() + "");
+            out.print("<a href='login?action=logout'>Log out</a>"
+                    + "<a href=''>Cart</a></div>");
+        }
 
-%>
+    %>
     <a href="<%=request.getContextPath()%>"><img src="img/cf_logo.png" style="display: block;margin: 0 auto; width: 15%; height: 15%"></a>
 
     <div id="wrap" >
@@ -45,11 +46,15 @@
                 if (!isAuthenticated) {
                     out.print("<li><a href='register?action=fillForm'>Sign up</a></li>");
                     out.print("<li><a href='login'>Sign in</a></li>");
+
                 } else {
-                    
+                    out.print("<li><a href=''>Gifts</a></li>");
+                    out.print("<li><a href=''>Order</a></li>");
+                    out.print("<li><a href=''>History</a></li>");
+                    out.print("<li><a href=''>Personal Details</a></li>");
+
                 }
             %>
-        <li><a href="item?category=Watches">Shopping Cart</a></li>
     </ul>
 </nav>
 
