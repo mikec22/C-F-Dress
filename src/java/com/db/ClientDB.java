@@ -34,7 +34,7 @@ public class ClientDB {
         this.dbPassword = dbPassword;
     }
 
-    public Connection getConnection() throws SQLException {
+    private Connection getConnection() throws SQLException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             return DriverManager.getConnection(dburl, dbUser, dbPassword);
@@ -252,6 +252,30 @@ public class ClientDB {
         }
         return clients;
     }
-    
-    
+
+    public boolean approvalClient(int client_id) {
+        boolean isSuccess = false;
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "UPDATE client "
+                    + "SET verified = ? "
+                    + "WHERE client_id = ?";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setBoolean(1, true);
+            pStmnt.setInt(2, client_id);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount == 1) {
+                isSuccess = true;
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return isSuccess;
+    }
+
 }

@@ -12,12 +12,13 @@
 
 <nav class="fill">
     <ul>
-        <li><a href="index.jsp">Home</a></li>
-        <li><a href="item.jsp">Item details</a></li>
-        <li><a href="signup.jsp">Order status</a></li>
-        <li><a href="login.jsp">Verify client</a></li>
+        <li><a href="<%= request.getContextPath() %>">Home</a></li>
+        <li><a href="">Item details</a></li>
+        <li><a href="">Order status</a></li>
+        <li><a href="<%=request.getContextPath()+"/verifyClient" %>">Verify client</a></li>
         <li><a href="">Approving credit</a></li>
         <li><a href="">Report</a></li>
+        <li><a href="<%=request.getContextPath()%>/ManagerLogin?action=logout">Logout</a></li>
     </ul>
 </nav>
 
