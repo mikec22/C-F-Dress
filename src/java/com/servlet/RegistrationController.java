@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Fai
  */
-@WebServlet(name = "RegistrationController", urlPatterns = {"/register"})
+@WebServlet(name = "RegistrationController", urlPatterns = {"/Register"})
 public class RegistrationController extends HttpServlet {
 
     /**
@@ -50,8 +50,6 @@ public class RegistrationController extends HttpServlet {
         String action = request.getParameter("action");
         if ("register".equals(action)) {
             doRegisteration(request, response);
-        } else if (action.equalsIgnoreCase("fillForm")) {
-            response.sendRedirect("signup.jsp");
         } else {
             response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED);
         }
