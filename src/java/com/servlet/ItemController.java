@@ -77,6 +77,7 @@ public class ItemController extends HttpServlet {
         String keyword = request.getParameter("keyword");
         String category = request.getParameter("category");
         keyword = keyword == null ? "" : keyword;
+        try {
         if(category==null){
             itemList = itemDB.queryItemByKeyword(keyword);
         }else{
@@ -84,6 +85,9 @@ public class ItemController extends HttpServlet {
         }
         request.setAttribute("itemList", itemList);
         getServletContext().getRequestDispatcher("/item.jsp").forward(request, response);
+        } catch (IOException | NumberFormatException | ServletException e) {
+            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+        }
     }
 
     @Override
