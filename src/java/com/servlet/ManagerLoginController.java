@@ -46,20 +46,9 @@ public class ManagerLoginController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoginController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoginController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        doPost(request, response);
     }
+
     private void doAuthenticate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String username = request.getParameter("login_id");
@@ -70,15 +59,16 @@ public class ManagerLoginController extends HttpServlet {
             HttpSession session = request.getSession(true);
             Staff staff = db.getStaff(username);
             session.setAttribute("ManagerInfo", staff);
-            targetURL = "RegisterResult.jsp";
+            targetURL = "managerIndex.jsp";
         } else {
+            request.setAttribute("userPath", "/ManagerLogin");
             targetURL = "loginError.jsp";
         }
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
     }
-    
+
     private boolean isAuthenticated(HttpServletRequest request) {
         boolean result = false;
         HttpSession session = request.getSession();
@@ -87,7 +77,7 @@ public class ManagerLoginController extends HttpServlet {
         }
         return result;
     }
-    
+
     private void doLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String targetURL = "ManagerLogin.jsp";
@@ -95,7 +85,7 @@ public class ManagerLoginController extends HttpServlet {
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
     }
-    
+
     private void doLogout(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
@@ -105,7 +95,6 @@ public class ManagerLoginController extends HttpServlet {
         }
         doLogin(request, response);
     }
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -134,11 +123,11 @@ public class ManagerLoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (!isAuthenticated(request)
-                && !("authenticate".equals(action))) {
+        if (!isAuthenticated(request) && !("authenticate".equals(action))) {
             doLogin(request, response);
             return;
-        }else if ("authenticate".equals(action)) {
+        }
+        if ("authenticate".equals(action)) {
             doAuthenticate(request, response);
         } else if ("logout".equals(action)) {
             doLogout(request, response);

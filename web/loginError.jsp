@@ -12,9 +12,12 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <p>Incorrect Password</p>
+        <p>Incorrect Account or Password</p>
         <p>
-            <%out.println("<a href=\"" + request.getContextPath() + "/main\"> Login Again</a>");%>
+            <%
+                String userPath = (String) request.getAttribute("userPath");
+            %>
+            <a href="<%= request.getContextPath() + userPath %>"> Login Again</a>
         </p>
     </body>
 </html>

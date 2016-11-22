@@ -8,7 +8,6 @@ package com.servlet;
 import com.bean.Client;
 import com.db.ClientDB;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Mike
  */
-@WebServlet(name = "ClientLoginController", urlPatterns = {"/main"})
+@WebServlet(name = "ClientLoginController", urlPatterns = {"/login"})
 public class ClientLoginController extends HttpServlet {
 
     /**
@@ -58,6 +57,7 @@ public class ClientLoginController extends HttpServlet {
             session.setAttribute("clientInfo", client);
             targetURL = "index.jsp";
         } else {
+            request.setAttribute("userPath", "/login");
             targetURL = "loginError.jsp";
         }
         RequestDispatcher rd;
@@ -76,8 +76,8 @@ public class ClientLoginController extends HttpServlet {
 
     private void doLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String targetURL = "login.jsp";
-        response.sendRedirect(targetURL);
+        String targetURL = "/login.jsp";
+        request.getRequestDispatcher(targetURL).forward(request, response);
     }
 
     private void doLogout(HttpServletRequest request, HttpServletResponse response)
@@ -92,19 +92,7 @@ public class ClientLoginController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoginController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoginController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        doPost(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -134,16 +122,14 @@ public class ClientLoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (!isAuthenticated(request) && "login".equals(action)) {
+        if (!isAuthenticated(request) && !"authenticate".equals(action)) {
             doLogin(request, response);
             return;
         }
         if ("authenticate".equals(action)) {
             doAuthenticate(request, response);
-            System.out.print(action);
         } else if ("logout".equals(action)) {
             doLogout(request, response);
-            System.out.print(action);
         } else {
             response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED);
         }
@@ -158,5 +144,5 @@ public class ClientLoginController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
+
 }

@@ -19,14 +19,14 @@
         </div>
         <div class="container">
             <div class="signup">
-                    <span class="signupDivider">Login to start shopping.</span>
-                    <!-- <span class="divider"></span> -->
-                    <form method="post" action="main" class="signupForm">
-                        <input type="hidden" name="action" value="authenticate"/>
-                        <input type="text" required="required" name="username" placeholder="Username">
-                        <input type="password" name="password" placeholder="Password" required>
-                        <input type="submit" class="signupBtn1" value="Sign in">
-                    </form>
+                <span class="signupDivider">Login to start shopping.</span>
+                <!-- <span class="divider"></span> -->
+                <form method="post" action="login" class="signupForm">
+                    <input type="hidden" name="action" value="authenticate"/>
+                    <input type="text" required="required" name="username" placeholder="Username">
+                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="submit" class="signupBtn1" value="Sign in">
+                </form>
             </div>
         </div>
     </body>
