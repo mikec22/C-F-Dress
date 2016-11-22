@@ -37,8 +37,13 @@ public class ItemController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
+
+        if (action == null) {
+            action = "getItemList";
+        }
+
         if (action.equals("getItem")) {
-            
+            showItem(request, response);
         } else if (action.equals("getItemList")) {
             showItemList(request, response);
         } else {
@@ -49,6 +54,23 @@ public class ItemController extends HttpServlet {
             rd.forward(request, response);
         }
 
+    }
+
+    private void showItem(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        RequestDispatcher rd;
+        int id;
+        try {
+            id = Integer.parseInt(request.getParameter("id"));
+            Item item = itemDB.getItem(id);
+            rd = getServletContext().getRequestDispatcher("/itemDetails.jsp");
+            request.setAttribute("item", item);
+            rd.forward(request, response);
+            
+        } catch (NumberFormatException e) {
+            rd = getServletContext().getRequestDispatcher("/index.jsp");
+            rd.forward(request, response);
+        }
     }
 
     private void showItemList(HttpServletRequest request, HttpServletResponse response)

@@ -23,7 +23,7 @@
         <div id="menu">
             <jsp:include page="menu.jsp" />
         </div>
-        <div id="context">
+        <div id="content">
             <com:ItemListTag itemList="<%=itemList%>" />
         </div>
     </body>
