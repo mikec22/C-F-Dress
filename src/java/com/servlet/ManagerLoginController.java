@@ -58,7 +58,7 @@ public class ManagerLoginController extends HttpServlet {
         if (isValid) {
             HttpSession session = request.getSession(true);
             Staff staff = db.getStaff(username);
-            session.setAttribute("ManagerInfo", staff);
+            session.setAttribute("managerInfo", staff);
             targetURL = "managerIndex.jsp";
         } else {
             request.setAttribute("userPath", "/ManagerLogin");
@@ -72,7 +72,7 @@ public class ManagerLoginController extends HttpServlet {
     private boolean isAuthenticated(HttpServletRequest request) {
         boolean result = false;
         HttpSession session = request.getSession();
-        if (session.getAttribute("ManagerInfo") != null) {
+        if (session.getAttribute("managerInfo") != null) {
             result = true;
         }
         return result;
@@ -90,7 +90,7 @@ public class ManagerLoginController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            session.removeAttribute("ManagerInfo");
+            session.removeAttribute("managerInfo");
             session.invalidate();
         }
         doLogin(request, response);
