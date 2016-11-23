@@ -5,7 +5,6 @@
  */
 package com.tag;
 
-import com.bean.CartItem;
 import com.bean.OrderLine;
 import java.util.Vector;
 import javax.servlet.jsp.JspException;
