@@ -13,11 +13,16 @@
         <title>Shopping Cart</title>
     </head>
     <body>
-        <h1>Shopping Cart</h1>
-        <jsp:useBean id="cart" scope="session" class="com.bean.ShoppingCart"/>
-        <com:CartItemListTag cartItems="<%=cart.getItems()%>"/>
-        Grand total <%=cart.getTotalPrice()%>
-        
-        <button>Check Out</button>
+        <div id="menu">
+            <jsp:include page="menu.jsp" />
+        </div>
+        <div>
+            <h1>Shopping Cart</h1>
+            <jsp:useBean id="cart" scope="session" class="com.bean.ShoppingCart"/>
+            <com:CartItemListTag cartItems="<%=cart.getItems()%>"/>
+            Grand total <%=cart.getTotalPrice()%>
+            <button>Check Out</button>
+        </div>
+
     </body>
 </html>

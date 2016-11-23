@@ -48,17 +48,24 @@ img {
     font-variant: small-caps;
     font-size: 20px;
     font-style: initial;
-    height: 25px;
+    height: 30px;
 }
 
 .type {
     font-size: 20px;
     font-variant: small-caps;
     color: gray;
-    height: 5px;
+    margin: 10px;
 }
 
 .price{
-    font-size: 24px;
+    font-size: 25px;
     color: coral;
+}
+
+.designer{
+    font-variant: nlckanji;
+    color: #39579A;
+    font-size: 15px;
+    margin: 10px;
 }

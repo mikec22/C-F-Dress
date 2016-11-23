@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author shukyan
  */
-@WebServlet(name = "CartServlet", urlPatterns = {"/CartServlet"})
+@WebServlet(name = "CartServlet", urlPatterns = {"/shoppingCart"})
 public class CartController extends HttpServlet {
 //	private static final long serialVersionUID = 1L;
 
@@ -38,49 +38,79 @@ public class CartController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
 
+        if (action == null) {
+            action = "";
+        }
+        if (action.equals("addToCart")) {
+            addItemToCart(request, response);
+        } else if (action.equals("showCart")) {
+            showCart(request, response);
+        } else {
+            PrintWriter out = response.getWriter();
+            out.println("No such action!!!");
+            String referer = request.getHeader("Referer");
+            response.sendRedirect(referer);
+//            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);;
+        }
+    }
+
+    private void addItemToCart(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
 //        synchronized (session) {
         ShoppingCart sc = (ShoppingCart) session.getAttribute("cart");
+        sc = sc == null ? new ShoppingCart() : (ShoppingCart) session.getAttribute("cart");
 
-        if (sc == null) {
-            sc = new ShoppingCart();
+        try {
+            int itemID = Integer.parseInt(request.getParameter("itemId"));
+            Item item = db.getItem(itemID);
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            System.out.println(itemID);
+            System.out.println(item);
+            System.out.println(quantity);
+            // Set quantity
+            if (quantity < 0) {
+                quantity = 1;
+
+            }
+
+            CartItem cartItem = new CartItem(item, quantity);
+
+            if (quantity == 0) {
+                sc.removeItem(cartItem);
+            } else {
+                sc.addItem(cartItem);
+            }
+
+            // Update Cart session attribute
+            session.setAttribute("cart", sc);
+
+            // Forward to JSP
+            String url = "/itemDetails.jsp";
+            RequestDispatcher dispatcher = getServletContext()
+                    .getRequestDispatcher(url);
+            request.setAttribute("item", item);
+            dispatcher.forward(request, response);
+//    }
+        } catch (NumberFormatException e) {
+            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }
-
-        int itemID = Integer.parseInt(request.getParameter("itemId"));
-        Item item = db.getItem(itemID);
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
-        System.out.println(itemID);
-        System.out.println(item);
-        System.out.println(quantity);
-        // Set quantity
-        if (quantity < 0) {
-            quantity = 1;
-
-        }
-
-        CartItem cartItem = new CartItem(item, quantity);
-
-        if (quantity == 0) {
-            sc.removeItem(cartItem);
-        } else {
-            sc.addItem(cartItem);
-        }
-
-        // Update Cart session attribute
-        session.setAttribute("cart", sc);
-
-        // Forward to JSP
-        String url = "/itemDetails.jsp";
-        RequestDispatcher dispatcher = getServletContext()
-                .getRequestDispatcher(url);
-        request.setAttribute("item", item);
-        dispatcher.forward(request, response);
-
     }
 
-//    }
+    private void showCart(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
+        
+        HttpSession session = request.getSession();
+        ShoppingCart sc = (ShoppingCart) session.getAttribute("cart");
+        sc = sc == null ? new ShoppingCart() : (ShoppingCart) session.getAttribute("cart");
+        
+        getServletContext().getRequestDispatcher("/shoppingCart.jsp").forward(request, response);
+        
+    }
+
     @Override
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {

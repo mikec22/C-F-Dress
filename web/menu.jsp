@@ -18,14 +18,13 @@
 %>
 <link rel="stylesheet" href="css/menu.css">
 <link href='http://fonts.googleapis.com/css?family=Roboto:500,900,100,300,700,400' rel='stylesheet' type='text/css'>
-<link href='https://raw.github.com/FortAwesome/Font-Awesome/master/docs/assets/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
 
 <nav class="stroke">
     <%
         if (isAuthenticated) {
             out.print("<div class='atext'> Hi, " + client.getName() + "");
             out.print("<a href='login?action=logout'>Log out</a>"
-                    + "<a href=''>Cart</a></div>");
+                    + "<a href='shoppingCart?action=showItem'>Cart</a></div>");
         }
 
     %>
@@ -46,12 +45,12 @@
                 if (!isAuthenticated) {
                     out.print("<li><a href='register?action=fillForm'>Sign up</a></li>");
                     out.print("<li><a href='login'>Sign in</a></li>");
-
+                    out.print("<li><a href='shoppingCart?action=showCart'>Shopping Cart</a></li>");
                 } else {
                     out.print("<li><a href=''>Gifts</a></li>");
                     out.print("<li><a href=''>Order</a></li>");
                     out.print("<li><a href=''>History</a></li>");
-                    out.print("<li><a href=''>Personal Details</a></li>");
+                    out.print("<li><a href='clientDetails.jsp'>Personal Details</a></li>");
 
                 }
             %>

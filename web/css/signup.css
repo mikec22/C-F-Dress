@@ -3,6 +3,9 @@ body {
   font-size: 100%;
   -webkit-font-smoothing: antialiased;
 }
+#content {
+    padding: 50px;
+}
 
 * { 
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */

@@ -47,9 +47,11 @@ public class ItemDetails extends SimpleTagSupport {
             String category = "<p class='type'>" + item.getCategory() + "</p>";
             String designer = "<p>Design by</p><p class='designer'>" + item.getDesigner() + "</p>";
             String price = "<p class='price'>$ " + item.getPrice() + "</p>";
-            String form = "<form >\n" +
+            String desc = "<p class='desc'>" + item.getDescription() + "</p>";
+            String form = "<form method='post' action='shoppingCart'>\n" +
 "                    <div class='qty'><label for=\"quantity\">Quantity : </label>\n" +
-"                    <input type='hidden' name='itemId' value='"+ item.getItem_id() +"'>"
+"                    <input type='hidden' name='action' value='addToCart'>"
+                    + "<input type='hidden' name='itemId' value='"+ item.getItem_id() +"'>"
                     + "<input type='number' min='1' size='5' id='numberinput' name='quantity' value='1' /></div>\n" +
 "                    <input type=\"submit\" class=\"btn\" value=\"Add Cart\">\n" +
 "                </form>";
@@ -61,6 +63,7 @@ public class ItemDetails extends SimpleTagSupport {
             out.print("<div class='right'>"
                     + name 
                     + category
+                    + desc
                     + price
                     + form
                     + "</div>");
