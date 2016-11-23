@@ -99,4 +99,11 @@ public class Order implements Serializable {
         this.order_line = order_line;
     }
 
+    public double getTotalPrice() {
+        double totalPrice = 0;
+        for (OrderLine ol : order_line) {
+            totalPrice += ol.getPrice();
+        }
+        return totalPrice;
+    }
 }
