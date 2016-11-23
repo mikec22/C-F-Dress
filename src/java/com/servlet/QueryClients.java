@@ -8,6 +8,7 @@ package com.servlet;
 import com.bean.Client;
 import com.db.ClientDB;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Mike
  */
-@WebServlet(name = "VerifyClientController", urlPatterns = {"/verifyClient"})
-public class VerifyClientController extends HttpServlet {
+@WebServlet(name = "QueryClients", urlPatterns = {"/queryClients"})
+public class QueryClients extends HttpServlet {
 
     private ClientDB clientDB;
 
@@ -31,6 +32,13 @@ public class VerifyClientController extends HttpServlet {
         String dbUser = this.getServletContext().getInitParameter("dbUser");
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         clientDB = new ClientDB(dbUrl, dbUser, dbPassword);
+    }
+
+    private void doShowNotVerified(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Vector<Client> clients = clientDB.getAllNotVerifyClients();
+        request.setAttribute("clients", clients);
+        getServletContext().getRequestDispatcher("/clientTable.jsp").forward(request, response);
     }
 
     /**
@@ -45,23 +53,22 @@ public class VerifyClientController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (action == null || action.equals("")) {
-            response.sendRedirect(request.getContextPath() + 
-                    "/queryClients?action=showNotVerified");
-        } else if (action.equalsIgnoreCase("show")) {
-            int client_id = Integer.parseInt(request.getParameter("client_id"));
-            Client client = clientDB.getClient(client_id);
-            if (!client.isVerified()) {
-                request.setAttribute("client", client);
+        if (action == null || action.equalsIgnoreCase("")) {
+
+        } else if (action.equals("deposit")) {
+            String keyword = request.getParameter("keyword");
+            if (keyword != null || action.equals("")) {
+                request.setAttribute("clients", clientDB.queryClientByKeyword(keyword));
+                getServletContext().getRequestDispatcher("/searchClientResultForDeposit.jsp").forward(request, response);
             }
-            getServletContext().getRequestDispatcher("/verifyClient.jsp").forward(request, response);
-        } else if (action.equalsIgnoreCase("approval")) {
+        } else if (action.equalsIgnoreCase("showNotVerified")) {
+            doShowNotVerified(request, response);
+        } else if (action.equalsIgnoreCase("depositClient")) {
             int client_id = Integer.parseInt(request.getParameter("client_id"));
-            if (clientDB.approvalClient(client_id)) {
-                response.sendRedirect(request.getContextPath() + 
-                    "/queryClients?action=showNotVerified");
-                //response.sendRedirect("handleCustomer?action=list");
-            }
+            request.setAttribute("client", clientDB.getClient(client_id));
+            getServletContext().getRequestDispatcher("/depositClient.jsp").forward(request, response);
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED);
         }
     }
 

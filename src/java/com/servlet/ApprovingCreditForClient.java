@@ -5,10 +5,8 @@
  */
 package com.servlet;
 
-import com.bean.Client;
 import com.db.ClientDB;
 import java.io.IOException;
-import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Mike
  */
-@WebServlet(name = "VerifyClientController", urlPatterns = {"/verifyClient"})
-public class VerifyClientController extends HttpServlet {
+@WebServlet(name = "ApprovingCreditForClient", urlPatterns = {"/approvingCredit"})
+public class ApprovingCreditForClient extends HttpServlet {
 
     private ClientDB clientDB;
 
@@ -45,23 +43,18 @@ public class VerifyClientController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (action == null || action.equals("")) {
-            response.sendRedirect(request.getContextPath() + 
-                    "/queryClients?action=showNotVerified");
-        } else if (action.equalsIgnoreCase("show")) {
+        if (action == null || action.equalsIgnoreCase("")) {
+            getServletContext().getRequestDispatcher("/searchClientForDeposit.jsp").forward(request, response);
+        } else if (action.equalsIgnoreCase("depositClient")) {
+            double quantity = Double.parseDouble(request.getParameter("quantity"));
             int client_id = Integer.parseInt(request.getParameter("client_id"));
-            Client client = clientDB.getClient(client_id);
-            if (!client.isVerified()) {
-                request.setAttribute("client", client);
+            if (clientDB.depositClient(client_id, quantity)) {
+                response.sendRedirect(request.getContextPath()
+                        + "/queryClients?action=depositClient&client_id=" + client_id);
             }
-            getServletContext().getRequestDispatcher("/verifyClient.jsp").forward(request, response);
-        } else if (action.equalsIgnoreCase("approval")) {
-            int client_id = Integer.parseInt(request.getParameter("client_id"));
-            if (clientDB.approvalClient(client_id)) {
-                response.sendRedirect(request.getContextPath() + 
-                    "/queryClients?action=showNotVerified");
-                //response.sendRedirect("handleCustomer?action=list");
-            }
+
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED);
         }
     }
 

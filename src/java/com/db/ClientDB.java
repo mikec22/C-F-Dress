@@ -213,6 +213,62 @@ public class ClientDB {
         return isSuccess;
     }
 
+    public boolean depositClient(int client_id, double quantity) {
+        boolean isSuccess = false;
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "UPDATE client "
+                    + "SET balance = ? "
+                    + "WHERE client_id = ?";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            Client client = this.getClient(client_id);
+            if (quantity > 0) {
+                pStmnt.setDouble(1, client.getBalance() + quantity);
+                pStmnt.setInt(2, client_id);
+                int rowCount = pStmnt.executeUpdate();
+                if (rowCount == 1) {
+                    isSuccess = true;
+                }
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return isSuccess;
+    }
+
+    public boolean withdrawClient(int client_id, double quantity) {
+        boolean isSuccess = false;
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "UPDATE client "
+                    + "SET balance = ? "
+                    + "WHERE client_id = ?";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            Client client = this.getClient(client_id);
+            if (quantity > 0) {
+                pStmnt.setDouble(1, client.getBalance() - quantity);
+                pStmnt.setInt(2, client_id);
+                int rowCount = pStmnt.executeUpdate();
+                if (rowCount == 1) {
+                    isSuccess = true;
+                }
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return isSuccess;
+    }
+
     public Vector<Client> getAllNotVerifyClients() {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -278,4 +334,45 @@ public class ClientDB {
         return isSuccess;
     }
 
+    public Vector<Client> queryClientByKeyword(String keyword) {
+        Vector<Client> clients = new Vector();
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM client"
+                    + " WHERE name LIKE ?"
+                    + " OR email LIKE ?"
+                    + " OR phone LIKE ?";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, "%" + keyword + "%");
+            pStmnt.setString(2, "%" + keyword + "%");
+            pStmnt.setString(3, "%" + keyword + "%");
+            ResultSet rs = rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                int client_id = rs.getInt("client_id");
+                String login_id = rs.getString("login_id");
+                String password = rs.getString("password");
+                String name = rs.getString("name");
+                String gender = rs.getString("gender");
+                Date dob = rs.getDate("dob");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                int bonus_point = rs.getInt("bonus_point");
+                boolean verified = rs.getBoolean("verified");
+                double balance = rs.getDouble("balance");
+                Client client = new Client(client_id, login_id, password, name,
+                        gender, dob, email, phone, address,
+                        bonus_point, verified, balance);
+                clients.add(client);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return clients;
+    }
 }
