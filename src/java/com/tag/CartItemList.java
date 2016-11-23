@@ -38,14 +38,14 @@ public class CartItemList extends SimpleTagSupport {
                 String name = cartItem.getItem().getName();
                 double unitPrice = cartItem.getItem().getPrice();
                 double quantity = cartItem.getQuantity();
-                double price = quantity * unitPrice;
+                double subtotal = quantity * unitPrice;
 
                 out.println("<div><form action='' method='GET'>"
                         + img
                         + name
                         + unitPrice
                         + "<input type='nunber' name='quantity' value='" + quantity + "' />"
-                        + price
+                        + subtotal
                         + "<input type='submit' name='submit_btn' value='Update'><input type='submit' name='submit_btn' value='Update'>"
                         + "</form></div>");
             }

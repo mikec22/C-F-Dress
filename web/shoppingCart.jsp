@@ -16,7 +16,7 @@
         <h1>Shopping Cart</h1>
         <jsp:useBean id="cart" scope="session" class="com.bean.ShoppingCart"/>
         <com:CartItemListTag cartItems="<%=cart.getItems()%>"/>
-        Total <%=cart.getTotalPrice()%>
+        Grand total <%=cart.getTotalPrice()%>
         
         <button>Check Out</button>
     </body>
