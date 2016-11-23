@@ -19,9 +19,10 @@ public class Order implements Serializable {
     private Client client;
     private Date delivery_datetime, order_datetime;
     private String address, option, status;
-    private Vector<OrderLine> order_line;
+    private Vector<OrderLine> order_lines;
 
     public Order() {
+        order_lines = new Vector<OrderLine>();
     }
 
     public Order(int order_id, Client client, Date delivery_datetime, Date order_datetime, String address, String option, String status, Vector<OrderLine> order_line) {
@@ -32,7 +33,15 @@ public class Order implements Serializable {
         this.address = address;
         this.option = option;
         this.status = status;
-        this.order_line = order_line;
+        this.order_lines = order_line;
+    }
+
+    public Vector<OrderLine> getOrder_lines() {
+        return order_lines;
+    }
+
+    public void setOrder_lines(Vector<OrderLine> order_lines) {
+        this.order_lines = order_lines;
     }
 
     public String getOption() {
@@ -92,17 +101,40 @@ public class Order implements Serializable {
     }
 
     public Vector<OrderLine> getOrder_line() {
-        return order_line;
+        return order_lines;
     }
 
     public void setOrder_line(Vector<OrderLine> order_line) {
-        this.order_line = order_line;
+        this.order_lines = order_line;
+    }
+
+    public void addItem(OrderLine orderLine) {
+        //keep the quantity updated
+        for (OrderLine ol : order_lines) {
+            if (ol.getItem().getItem_id() == orderLine.getItem().getItem_id()) {
+                ol.setQuantity(ol.getQuantity() + orderLine.getQuantity());
+                return;
+            }
+        }
+
+        order_lines.add(orderLine);
+    }
+
+    public void removeItem(OrderLine orderLine) {
+        for (OrderLine ol : order_lines) {
+            if (ol.getItem().getItem_id() == orderLine.getItem().getItem_id()) {
+                order_lines.remove(ol);
+                return;
+            }
+        }
     }
 
     public double getTotalPrice() {
         double totalPrice = 0;
-        for (OrderLine ol : order_line) {
-            totalPrice += ol.getPrice();
+        for (OrderLine ol : order_lines) {
+            totalPrice += ol.getItem().getPrice() * ol.getQuantity();
+            System.out.println(ol.getPrice());
+            System.out.println(totalPrice);
         }
         return totalPrice;
     }

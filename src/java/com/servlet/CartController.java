@@ -5,9 +5,9 @@
  */
 package com.servlet;
 
-import com.bean.CartItem;
 import com.bean.Item;
-import com.bean.ShoppingCart;
+import com.bean.Order;
+import com.bean.OrderLine;
 import com.db.ItemDB;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -61,32 +61,31 @@ public class CartController extends HttpServlet {
         HttpSession session = request.getSession();
 
 //        synchronized (session) {
-        ShoppingCart sc = (ShoppingCart) session.getAttribute("cart");
-        sc = sc == null ? new ShoppingCart() : (ShoppingCart) session.getAttribute("cart");
+        Order order = (Order) session.getAttribute("cart");
+        order = order == null ? new Order() : (Order) session.getAttribute("cart");
 
         try {
             int itemID = Integer.parseInt(request.getParameter("itemId"));
             Item item = db.getItem(itemID);
             int quantity = Integer.parseInt(request.getParameter("quantity"));
-            System.out.println(itemID);
-            System.out.println(item);
-            System.out.println(quantity);
             // Set quantity
             if (quantity < 0) {
                 quantity = 1;
 
             }
 
-            CartItem cartItem = new CartItem(item, quantity);
+            OrderLine orderline = new OrderLine();
+            orderline.setItem(item);
+            orderline.setQuantity(quantity);
 
             if (quantity == 0) {
-                sc.removeItem(cartItem);
+                order.removeItem(orderline);
             } else {
-                sc.addItem(cartItem);
+                order.addItem(orderline);
             }
 
             // Update Cart session attribute
-            session.setAttribute("cart", sc);
+            session.setAttribute("cart", order);
 
             // Forward to JSP
             String url = "/itemDetails.jsp";
@@ -104,9 +103,8 @@ public class CartController extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
         
         HttpSession session = request.getSession();
-        ShoppingCart sc = (ShoppingCart) session.getAttribute("cart");
-        sc = sc == null ? new ShoppingCart() : (ShoppingCart) session.getAttribute("cart");
-        
+        Order order = (Order) session.getAttribute("cart");
+        order = order == null ? new Order() : (Order) session.getAttribute("cart");
         getServletContext().getRequestDispatcher("/shoppingCart.jsp").forward(request, response);
         
     }

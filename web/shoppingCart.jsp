@@ -3,7 +3,7 @@
     Created on : Nov 23, 2016, 4:00:52 AM
     Author     : shukyan
 --%>
-<%@page import="com.bean.CartItem,java.util.ArrayList"%>
+<%@page import="com.bean.OrderLine,java.util.ArrayList"%>
 <%@taglib uri="/WEB-INF/tlds/com-taglib.tld" prefix="com"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,9 +18,9 @@
         </div>
         <div>
             <h1>Shopping Cart</h1>
-            <jsp:useBean id="cart" scope="session" class="com.bean.ShoppingCart"/>
-            <com:CartItemListTag cartItems="<%=cart.getItems()%>"/>
-            Grand total <%=cart.getTotalPrice()%>
+            <jsp:useBean id="cart" scope="session" class="com.bean.Order"/>
+            <com:CartItemListTag orderLines="<%=cart.getOrder_lines()%>"/>
+            Grand total: $ <%=cart.getTotalPrice()%>
             <button>Check Out</button>
         </div>
 

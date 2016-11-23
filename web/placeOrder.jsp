@@ -30,17 +30,19 @@
 
 
 <form method="post" action="HandleOrderController" >
-    <input type="hidden" name="action" value="placeOrder"/>
+    <input type="hidden" name="action" value=""/>
+    <input type="hidden" name="action" value=""/>
+    
     Delivery method
-    <input type ="radio" name="delivery_method" value="delivery" id="delivery" onclick="handleClick(this.id);">Delivery
-    <input type ="radio" name="delivery_method" value="self" id="self" onclick="handleClick(this.id);" checked>Self-pick up<br>
-    <div id="delivery_detail" style="display:none">
-        <p>*Delivery datetime: <br>
-            <input type="datetime" name="delivery_datetime" value=""></p>
-        <p>*Delivery address:<br>
+    <input type ="radio" name="delivery_method" value="delivery" id="delivery" onclick="handleClick(this.id);" checked>Delivery
+    <input type ="radio" name="delivery_method" value="self" id="self" onclick="handleClick(this.id);" >Self-pick up<br>
+    <div id="delivery_detail" >
+        <p>Delivery datetime* <br>
+            <input type="datetime-local" name="delivery_datetime" value=""></p>
+        <p>Delivery address*<br>
             <input type="text" name="delivery_address" value="<%=clientInfo.getAddress()%>"></p>
     </div>
-    <div id ="pick-up" >
+    <div id ="pick-up" style="display:none">
         <p>Separate notice will be given when items arrived.</p>
 
     </div>

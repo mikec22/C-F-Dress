@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @author Mike
  */
 public class OrderLine implements Serializable {
+
     private Order order;
     private Item item;
     private double price;

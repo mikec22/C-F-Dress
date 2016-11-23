@@ -47,9 +47,9 @@
     <tag-class>com.tag.CartItemList</tag-class>
     <body-content>empty</body-content>
     <attribute>
-      <name>cartItems</name>
+      <name>orderLines</name>
       <rtexprvalue>true</rtexprvalue>
-      <type>java.unit.ArrayList</type>
+      <type>java.unit.Vector</type>
     </attribute>
   </tag>
   

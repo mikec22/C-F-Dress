@@ -6,7 +6,8 @@
 package com.tag;
 
 import com.bean.CartItem;
-import java.util.ArrayList;
+import com.bean.OrderLine;
+import java.util.Vector;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
@@ -17,14 +18,14 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
  */
 public class CartItemList extends SimpleTagSupport {
 
-    private ArrayList<CartItem> cartItems;
+    private Vector<OrderLine> orderLines;
 
-    public ArrayList<CartItem> getCartItems() {
-        return cartItems;
+    public Vector<OrderLine> getOrderLines() {
+        return orderLines;
     }
 
-    public void setCartItems(ArrayList<CartItem> cartItems) {
-        this.cartItems = cartItems;
+    public void setOrderLines(Vector<OrderLine> orderLines) {
+        this.orderLines = orderLines;
     }
 
     @Override
@@ -33,11 +34,11 @@ public class CartItemList extends SimpleTagSupport {
 
         try {
 
-            for (CartItem cartItem : cartItems) {
-                String img = "<img src='img/item/" + cartItem.getItem().getImg() + "'/>";
-                String name = cartItem.getItem().getName();
-                double unitPrice = cartItem.getItem().getPrice();
-                double quantity = cartItem.getQuantity();
+            for (OrderLine ol : orderLines) {
+                String img = "<img src='img/item/" + ol.getItem().getImg() + "'/>";
+                String name = ol.getItem().getName();
+                double unitPrice = ol.getItem().getPrice();
+                double quantity = ol.getQuantity();
                 double subtotal = quantity * unitPrice;
 
                 out.println("<div><form action='' method='GET'>"
