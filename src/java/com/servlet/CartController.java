@@ -38,48 +38,46 @@ public class CartController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
 
 //        synchronized (session) {
+        ShoppingCart sc = (ShoppingCart) session.getAttribute("cart");
 
-            ShoppingCart ol = (ShoppingCart) session.getAttribute("cart");
+        if (sc == null) {
+            sc = new ShoppingCart();
+        }
 
-            if (ol == null) {
-                ol = new ShoppingCart();
-            }
+        int itemID = Integer.parseInt(request.getParameter("itemId"));
+        Item item = db.getItem(itemID);
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        System.out.println(itemID);
+        System.out.println(item);
+        System.out.println(quantity);
+        // Set quantity
+        if (quantity < 0) {
+            quantity = 1;
 
-            int itemID = Integer.parseInt(request.getParameter("itemId"));
-            Item item = db.getItem(itemID);
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
-            System.out.println(itemID);
-            System.out.println(item);
-            System.out.println(quantity);
-            // Set quantity
-            if (quantity < 0) {
-                quantity = 1;
+        }
 
-            }
+        CartItem cartItem = new CartItem(item, quantity);
 
-            CartItem cartItem = new CartItem(item, quantity);
+        if (quantity == 0) {
+            sc.removeItem(cartItem);
+        } else {
+            sc.addItem(cartItem);
+        }
 
-            if (quantity == 0) {
-                ol.removeItem(cartItem);
-            } else {
-                ol.addItem(cartItem);
-            }
+        // Update Cart session attribute
+        session.setAttribute("cart", sc);
 
-            // Update Cart session attribute
-            session.setAttribute("cart", ol);
+        // Forward to JSP
+        String url = "/itemDetails.jsp";
+        RequestDispatcher dispatcher = getServletContext()
+                .getRequestDispatcher(url);
+        request.setAttribute("item", item);
+        dispatcher.forward(request, response);
 
-            // Forward to JSP
-            String url = "/itemDetails.jsp";
-            RequestDispatcher dispatcher = getServletContext()
-                    .getRequestDispatcher(url);
-            request.setAttribute("item", item);
-            dispatcher.forward(request, response);
-
-       
     }
 
 //    }

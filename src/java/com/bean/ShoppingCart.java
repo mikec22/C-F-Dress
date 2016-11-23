@@ -20,6 +20,10 @@ public class ShoppingCart {
         cartItems = new ArrayList<CartItem>();
     }
 
+    public ShoppingCart(ArrayList<CartItem> cartItems) {
+        this.cartItems = cartItems;
+    }
+
     public ArrayList<CartItem> getItems() {
         return cartItems;
     }
@@ -28,8 +32,8 @@ public class ShoppingCart {
         //keep the quantity updated
         for (CartItem ci : cartItems) {
             if (ci.getItem().getItem_id() == cartItem.getItem().getItem_id()) {
-                ci.setQuantity(cartItem.getQuantity());
-                break;
+                ci.setQuantity(ci.getQuantity() + cartItem.getQuantity());
+                return;
             }
         }
 
@@ -40,18 +44,25 @@ public class ShoppingCart {
         for (CartItem ci : cartItems) {
             if (ci.getItem().getItem_id() == cartItem.getItem().getItem_id()) {
                 cartItems.remove(ci);
-                break;
+                return;
+            }
+        }
+    }
+
+    public void changeQuantity(int id,int quantity) {
+        for (CartItem ci : cartItems) {
+            if (ci.getItem().getItem_id() == id) {
+                ci.setQuantity(quantity);
+                return;
             }
         }
     }
 
     public double getTotalPrice() {
         double total = 0;
-
         for (CartItem ci : cartItems) {
             total = ci.getItem().getPrice() * ci.getQuantity();
         }
-
         return total;
     }
 

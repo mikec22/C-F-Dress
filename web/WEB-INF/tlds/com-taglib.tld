@@ -41,4 +41,16 @@
       <type>com.bean.Item</type>
     </attribute>
   </tag>
+  
+   <tag>
+    <name>CartItemListTag</name>
+    <tag-class>com.tag.CartItemList</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+      <name>cartItems</name>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.unit.ArrayList</type>
+    </attribute>
+  </tag>
+  
 </taglib>
