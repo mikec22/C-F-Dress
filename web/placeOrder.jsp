@@ -33,7 +33,7 @@
             %>
                
         <form method="post" action="HandleOrderController" >
-            <input type="hidden" name="client" value=""/>
+            <input type="hidden" name="action" value="placeOrder"/>
             <input type="text" name="username" placeholder="Username" required><br>
             <input type="number" name="quantity" value="1" required><br>
             delivery method
@@ -46,7 +46,7 @@
                 <input type="text" name="delivery_address" value="<%=clientInfo.getAddress()%>"><br>
             </div>
             <div id ="pick-up" >
-                Separate notice will be given when items arrived
+                Separate notice will be given when items arrived.
                 
             </div>
             <input type="submit" value="Comfirm">

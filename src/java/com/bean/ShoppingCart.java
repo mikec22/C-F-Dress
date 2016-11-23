@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.association;
+package com.bean;
 
 import com.bean.CartItem;
 import java.util.ArrayList;
@@ -12,11 +12,11 @@ import java.util.ArrayList;
  *
  * @author shukyan
  */
-public class orderline {
+public class ShoppingCart {
 
     private ArrayList<CartItem> cartItems;
 
-    public orderline() {
+    public ShoppingCart() {
         cartItems = new ArrayList<CartItem>();
     }
 
@@ -49,7 +49,7 @@ public class orderline {
         double total = 0;
 
         for (CartItem ci : cartItems) {
-            total = ci.getItem().getPrice()*ci.getQuantity();
+            total = ci.getItem().getPrice() * ci.getQuantity();
         }
 
         return total;
