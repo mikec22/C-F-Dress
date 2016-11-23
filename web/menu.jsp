@@ -24,7 +24,7 @@
         if (isAuthenticated) {
             out.print("<div class='atext'> Hi, " + client.getName() + "");
             out.print("<a href='login?action=logout'>Log out</a>"
-                    + "<a href='shoppingCart?action=showItem'>Cart</a></div>");
+                    + "<a href='shoppingCart?action=showCart'>Cart</a></div>");
         }
 
     %>
