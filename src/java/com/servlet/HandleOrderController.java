@@ -50,6 +50,7 @@ public class HandleOrderController extends HttpServlet {
         HttpSession session = request.getSession();
         System.out.println(request.getParameter("delivery_datetime"));
         String action = request.getParameter("action");
+        String msg = "";
         if (action.equals("placeOrder")) {
         }
         //Date delivery_datetime = java.sql.Date.valueOf(request.getParameter("delivery_datetime"));
@@ -57,16 +58,29 @@ public class HandleOrderController extends HttpServlet {
         String delivery_datetime = "1999-05-05 13:44:00";
         String option = request.getParameter("delievry_method");
         Client client = (Client) request.getAttribute("client");
-//        int client_id = client.getClient_id();
-        int client_id = 1;
+        int client_id = client.getClient_id();
         String address = request.getParameter("delivery_address");
         String status = "processing";
-        Order order= (Order)session.getAttribute("cart");
-//        Vector<OrderLine> order_line = order.getOrder_lines();
-        Vector<OrderLine> order_line = null;
-        System.out.print(order_line);
-        orderDB.addOrder(client_id, delivery_datetime, address, option, status, order_line);
-          
+        Order order = (Order) session.getAttribute("cart");
+        double amount = order.getTotalPrice();
+        double balance = client.getBalance();
+        double credit = client.getCredit_amount();
+        if ((balance + credit) < amount) {
+            msg = "Balance not enough ";
+        } else {
+            Vector<OrderLine> order_line = order.getOrder_lines();
+            boolean add = orderDB.addOrder(client_id, delivery_datetime, address, option, status, order_line);
+            if (add) {
+                int bonus_point = client.getBonus_point();
+                if(amount>2000){
+                    bonus_point += (int)(amount*0.05);
+                }
+                msg = "success";
+            }
+            else{
+                msg = "fail";
+            }
+        }
 //        String targetUrl = "/placeOrder.jsp";
 //        response.sendRedirect(targetUrl);
 //        }
