@@ -76,6 +76,7 @@ public class CartController extends HttpServlet {
 
             OrderLine orderline = new OrderLine();
             orderline.setItem(item);
+            orderline.setPrice(item.getPrice());
             orderline.setQuantity(quantity);
 
             if (quantity == 0) {
