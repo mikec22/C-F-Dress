@@ -28,9 +28,12 @@
         <div>
             <h1>Shopping Cart</h1>
             <jsp:useBean id="cart" scope="session" class="com.bean.Order"/>
-            <com:CartItemListTag orderLines="<%=cart.getOrder_lines()%>"/>
+            <jsp:useBean id="client" scope="session" class="com.bean.Client"/>
             Grand total: $ <%=cart.getTotalPrice()%>
-            <button>Check Out</button>
+            <form method="POST" action="HandleOrderController" >
+            <input type="hidden" name ="total" <%=cart.getTotalPrice()%> >
+            <input type="submit" name="submit" value = "Check Out">
+            <form>
         </div>
 
     </body>
