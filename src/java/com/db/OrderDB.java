@@ -53,6 +53,7 @@ public class OrderDB implements Serializable {
         Statement stmnt = null;
         boolean isSuccess = false;
         int orde_id = getNewOrderId();
+        System.out.print("I AM HERE ID: "+orde_id);
         try {
             cnnct = getConnection();
             cnnct.setAutoCommit(false);
@@ -70,21 +71,12 @@ public class OrderDB implements Serializable {
                 throw new SQLException();
             }
             for (OrderLine ol : order_lines) {
-                System.out.println("orderLine :" + ol.getItem().getItem_id());
-                String sql2 = "INSERT INTO `order_line`(`order_id`, `item_id`, `total_price`, `quantity`) VALUES("
-                        + orde_id + ","
-                        + ol.getItem().getItem_id() + ","
-                        + ol.getSubTotal() + ","
-                        + ol.getQuantity()
-                        + ")";
                 stmnt.addBatch("INSERT INTO `order_line`(`order_id`, `item_id`, `total_price`, `quantity`) VALUES("
                         + orde_id + ","
                         + ol.getItem().getItem_id() + ","
                         + ol.getSubTotal() + ","
                         + ol.getQuantity()
                         + ")");
-
-                stmnt.executeUpdate(sql2);
             }
             int[] rowCount = stmnt.executeBatch();
             cnnct.commit();

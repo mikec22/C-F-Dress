@@ -54,22 +54,29 @@ public class HandleOrderController extends HttpServlet {
         if (action.equals("placeOrder")) {
         }
         //Date delivery_datetime = java.sql.Date.valueOf(request.getParameter("delivery_datetime"));
-//        String delivery_datetime = request.getParameter("delivery_datetime");
-        String delivery_datetime = "1999-05-05 13:44:00";
-        String option = request.getParameter("delievry_method");
-        Client client = (Client) request.getAttribute("client");
-        int client_id = client.getClient_id();
+        String delivery_datetime = request.getParameter("delivery_date")+" "+request.getParameter("delivery_time")+":00";
+        System.out.println("delivery_datetime:  " +delivery_datetime );
+//        String delivery_datetime = "1999-05-05 13:44:00";
+        String option = request.getParameter("delivery_method");
+        System.out.println("I AM HERE  " + option);
+        Client client = (Client) session.getAttribute("clientInfo");
+        int client_id = 1;
+                //client.getClient_id();
         String address = request.getParameter("delivery_address");
         String status = "processing";
         Order order = (Order) session.getAttribute("cart");
+        System.out.println("I AM HERE ID: " + client_id);
         double amount = order.getTotalPrice();
         double balance = client.getBalance();
         double credit = client.getCredit_amount();
+        System.out.println("I AM HERE A: " + amount +" B: "+ balance+" C: "+credit);
         if ((balance + credit) < amount) {
             msg = "Balance not enough ";
         } else {
             Vector<OrderLine> order_line = order.getOrder_lines();
+            System.out.println("I AM HERE" + order_line);
             boolean add = orderDB.addOrder(client_id, delivery_datetime, address, option, status, order_line);
+            System.out.println("I AM HERE AFTER ADD" + add);
             if (add) {
                 int bonus_point = client.getBonus_point();
                 if(amount>2000){
@@ -81,6 +88,8 @@ public class HandleOrderController extends HttpServlet {
                 msg = "fail";
             }
         }
+        
+        System.out.println("Message:   "+msg);
 //        String targetUrl = "/placeOrder.jsp";
 //        response.sendRedirect(targetUrl);
 //        }

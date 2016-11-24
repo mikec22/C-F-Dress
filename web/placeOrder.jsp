@@ -38,7 +38,8 @@
     <input type ="radio" name="delivery_method" value="self" id="self" onclick="handleClick(this.id);" >Self-pick up<br>
     <div id="delivery_detail" >
         <p>Delivery datetime* <br>
-            <input type="datetime-local" name="delivery_datetime" value=""></p>
+            <input type="date" name="delivery_date" value="">
+            <input type="time" name="delivery_time" value=""></p>
         <p>Delivery address*<br>
             <input type="text" name="delivery_address" value="<%=clientInfo.getAddress()%>"></p>
     </div>
