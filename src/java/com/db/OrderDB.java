@@ -5,7 +5,6 @@
  */
 package com.db;
 
-import com.bean.Client;
 import com.bean.Order;
 import com.bean.OrderLine;
 import java.io.Serializable;
@@ -38,7 +37,7 @@ public class OrderDB implements Serializable {
         this.dbPassword = dbPassword;
     }
 
-    public Connection getConnection() throws SQLException {
+    private Connection getConnection() throws SQLException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             return DriverManager.getConnection(dburl, dbUser, dbPassword);
@@ -147,6 +146,35 @@ public class OrderDB implements Serializable {
             }
         }
         return orders;
+    }public Vector<Order> getExistedOrdersOfClient(int client_id) {
+        Vector<Order> orders = new Vector();
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM order "
+                    + "WHERE client_id = ? "
+                    + "AND status = ?";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, client_id);
+            pStmnt.setString(2, "processing");
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                ClientDB clientDB = new ClientDB();
+                Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
+                        rs.getDate(3), rs.getDate(4), rs.getString(5), rs.getString(6),
+                        rs.getString(7), null);
+                order.setOrder_lines(getOrderLines(order));
+                orders.add(order);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return orders;
     }
 
     public Vector<OrderLine> getOrderLines(Order order) {
@@ -175,6 +203,5 @@ public class OrderDB implements Serializable {
         }
         return orderLines;
     }
-    
-    
+       
 }
