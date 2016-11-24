@@ -39,7 +39,7 @@ public class CartItemController extends HttpServlet {
         String action = request.getParameter("action");
         int item_id = Integer.parseInt(request.getParameter("id"));
         Order order = (Order) session.getAttribute("cart");
-        Vector<OrderLine> order_lines = order.getOrder_line();
+        Vector<OrderLine> order_lines = order.getOrder_lines();
         if (action.equals("Update")) {
             int quantity = Integer.parseInt(request.getParameter("quantity"));
             for (OrderLine ol : order_lines) {

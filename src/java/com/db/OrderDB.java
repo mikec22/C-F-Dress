@@ -143,7 +143,7 @@ public class OrderDB implements Serializable {
                 Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
                         rs.getDate(3), rs.getDate(4), rs.getString(5), rs.getString(6),
                         rs.getString(7), null);
-                order.setOrder_line(getOrderLines(order));
+                order.setOrder_lines(getOrderLines(order));
                 orders.add(order);
             }
             pStmnt.close();
