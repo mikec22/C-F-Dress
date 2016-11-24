@@ -48,7 +48,7 @@ public class OrderDB implements Serializable {
         return null;
     }
 
-    public boolean addOrder(int client_id, String delivery_datetime, String address, String option, String status, Vector<OrderLine> order_lines) {
+    public boolean addOrder(int client_id, Date delivery_datetime, String address, String option, String status, Vector<OrderLine> order_lines) {
         Connection cnnct = null;
         Statement stmnt = null;
         boolean isSuccess = false;
