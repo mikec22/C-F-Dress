@@ -8,7 +8,6 @@ package com.servlet;
 import com.bean.Client;
 import com.db.ClientDB;
 import java.io.IOException;
-import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

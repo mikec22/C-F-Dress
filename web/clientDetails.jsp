@@ -7,6 +7,7 @@
 <%@page import="com.bean.Client"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="/WEB-INF/tlds/com-taglib.tld" prefix="com" %>
+<%@include file="checkIsClientLogin.jsp" %>D
 <!DOCTYPE html>
 <html>
     <head>
