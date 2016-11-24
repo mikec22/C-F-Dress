@@ -68,6 +68,40 @@ public class ItemDB implements Serializable {
         this.dbPassword = dbPassword;
     }
 
+    public Vector<Item> querySellItemByKeyword(String keyword) {
+        Vector<Item> items = new Vector();
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM item "
+                    + "WHERE category != 'gifts' "
+                    + "AND ("
+                    + "name LIKE ? "
+                    + "OR price LIKE ? "
+                    + "OR category LIKE ? "
+                    + "OR designer LIKE ? )";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, "%" + keyword + "%");
+            pStmnt.setString(2, "%" + keyword + "%");
+            pStmnt.setString(3, "%" + keyword + "%");
+            pStmnt.setString(4, "%" + keyword + "%");
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                Item item = new Item(rs.getInt(1), rs.getString(2), rs.getString(3),
+                        rs.getString(4), rs.getDouble(5), rs.getString(6), rs.getString(7));
+                items.add(item);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return items;
+    }
+
     public Vector<Item> queryItemByKeyword(String keyword) {
         Vector<Item> items = new Vector();
         try {
@@ -75,11 +109,13 @@ public class ItemDB implements Serializable {
             String preQueryStatement = "SELECT * FROM item "
                     + "WHERE name LIKE ? "
                     + "OR category LIKE ? "
+                    + "OR price LIKE ? "
                     + "OR designer LIKE ?";
             PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, "%" + keyword + "%");
             pStmnt.setString(2, "%" + keyword + "%");
             pStmnt.setString(3, "%" + keyword + "%");
+            pStmnt.setString(4, "%" + keyword + "%");
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
             while (rs.next()) {
@@ -198,8 +234,8 @@ public class ItemDB implements Serializable {
         }
         return item;
     }
-    
-    public boolean updateItem(Item item){
+
+    public boolean updateItem(Item item) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;

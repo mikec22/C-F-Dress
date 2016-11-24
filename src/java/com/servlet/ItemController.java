@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -97,6 +98,7 @@ public class ItemController extends HttpServlet {
 
     private void showItemList(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         Vector<Item> itemList;
         String keyword = request.getParameter("keyword");
         String category = request.getParameter("category");
@@ -104,7 +106,11 @@ public class ItemController extends HttpServlet {
         keyword = keyword == null ? "" : keyword;
         try {
             if (category == null) {
-                itemList = itemDB.queryItemByKeyword(keyword);
+                if(session.getAttribute("clientInfo")!=null){
+                    itemList = itemDB.queryItemByKeyword(keyword);
+                }else{
+                    itemList = itemDB.querySellItemByKeyword(keyword);
+                }
                 title = "C&F Dress ";
             } else {
                 itemList = itemDB.queryItemByCategoryKeyword(keyword, category);
