@@ -8,9 +8,11 @@
 <%@taglib uri="/WEB-INF/tlds/com-taglib.tld" prefix="com" %>
 <jsp:useBean id="item" scope="request" class="com.bean.Item"/>
 <%
-    String title = (String)request.getAttribute("title");
+    String title = (String) request.getAttribute("title");
     String menu;
-    if (session.getAttribute("clientInfo") != null) {
+    if (session.getAttribute("managerInfo") != null) {
+        menu = "managerMenu.jsp";
+    }else if (session.getAttribute("clientInfo") != null) {
         menu = "clientMenu.jsp";
     } else {
         menu = "menu.jsp";

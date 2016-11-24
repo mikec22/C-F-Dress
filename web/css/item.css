@@ -40,8 +40,7 @@ img {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    height: 30%;
-    max-height: 200px;
+    height: 100%; 
     width: 300px;
 }
 
@@ -69,4 +68,9 @@ img {
     color: #39579A;
     font-size: 15px;
     margin: 10px;
+}
+
+.price .bp{
+   font-size: 10px;
+   color: coral;
 }

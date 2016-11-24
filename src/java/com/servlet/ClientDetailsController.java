@@ -96,14 +96,14 @@ public class ClientDetailsController extends HttpServlet {
             throws ServletException, IOException {
         int client_id = Integer.parseInt(request.getParameter("client_id"));
         Client client = db.getClient(client_id);
-        String name = request.getParameter("name") == null ? client.getName() : request.getParameter("name");
-        String gender = request.getParameter("gender") == null ? client.getGender() : request.getParameter("gender");
-        String password = request.getParameter("password") == null ? client.getPassword() : request.getParameter("password");
-        String cpassword = request.getParameter("cpassword") == null ? client.getPassword() : request.getParameter("cpassword");
-        String email = request.getParameter("email") == null ? client.getEmail() : request.getParameter("email");
-        String phone = request.getParameter("phone") == null ? client.getPhone() : request.getParameter("phone");
-        Date dob = request.getParameter("dob") == null ? client.getDob() : java.sql.Date.valueOf(request.getParameter("dob"));
-        String address = request.getParameter("address") == null ? client.getAddress() : request.getParameter("address");
+        String name = (request.getParameter("name") == null|| request.getParameter("name").equals("")) ? client.getName() : request.getParameter("name");
+        String gender = (request.getParameter("gender") == null|| request.getParameter("gender").equals("")) ? client.getGender() : request.getParameter("gender");
+        String password = (request.getParameter("password") == null || request.getParameter("password").equals("")) ? client.getPassword() : request.getParameter("password");
+        String cpassword = (request.getParameter("cpassword") == null|| request.getParameter("cpassword").equals("")) ? client.getPassword() : request.getParameter("cpassword");
+        String email = (request.getParameter("email") == null|| request.getParameter("email").equals("")) ? client.getEmail() : request.getParameter("email");
+        String phone = (request.getParameter("phone") == null|| request.getParameter("phone").equals("")) ? client.getPhone() : request.getParameter("phone");
+        Date dob = (request.getParameter("dob") == null || request.getParameter("dob").equals(""))? client.getDob() : java.sql.Date.valueOf(request.getParameter("dob"));
+        String address = (request.getParameter("address") == null|| request.getParameter("address").equals("")) ? client.getAddress() : request.getParameter("address");
         if (!password.equals(cpassword)) {
             request.setAttribute("msg", "Password not match");
         } else {
@@ -113,7 +113,7 @@ public class ClientDetailsController extends HttpServlet {
             client.setDob(dob);
             client.setEmail(email);
             client.setPhone(phone);
-            client.setPassword(password);
+            client.setPassword(cpassword);
             if (db.updateClient(client)) {
                 request.setAttribute("msg", "Your registeration successful!");
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/ClientDetailsController?action=getClient");

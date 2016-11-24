@@ -44,16 +44,20 @@ public class ItemListTag extends SimpleTagSupport {
 
             for (Item item : itemList) {
                 String cssClass;
-                if (item.getCategory().equals("shoes")||item.getCategory().equals("gifts")) {
+                String price = "<p class='price'>HK$ " + item.getPrice() + "</p>";; 
+                if (item.getCategory().equals("shoes")) {
                     cssClass = "img1";
-                } else {
+                }else if (item.getCategory().equals("gifts")){
+                    cssClass = "img1";
+                    price = "<p class='price'>" + item.getPrice() + " BP</p>";
+                } 
+                else {
                     cssClass = "";
                 }
                 String img = "<img src='img/item/" + item.getImg() + "' class='" + cssClass + "' />";
                 String name = "<p class='title'>" + item.getName() + "</p>";
                 String category = "<p class='type'>" + item.getCategory() + "</p>";
                 String designer = "<p class='designer'>Design by : " + item.getDesigner() + "</p>";
-                String price = "<p class='price'>$ " + item.getPrice() + "</p>";
                 String action = user == null || user.equals("") ? "getItem" : "manageItemDetail";
                 if (user == null || user.equals("")){
                     action = "getItem" ;
