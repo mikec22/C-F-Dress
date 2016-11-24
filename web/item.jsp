@@ -10,6 +10,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     String title = (String)request.getAttribute("title");
+    String menu;
+    if (session.getAttribute("clientInfo") != null) {
+        menu = "clientMenu.jsp";
+    } else {
+        menu = "menu.jsp";
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -24,7 +30,7 @@
     %>
     <body>
         <div id="menu">
-            <jsp:include page="menu.jsp" />
+            <jsp:include page="<%=menu%>" />
         </div>
         <div id="content">
             <com:ItemListTag itemList="<%=itemList%>" />

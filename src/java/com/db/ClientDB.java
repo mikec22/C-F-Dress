@@ -333,6 +333,45 @@ public class ClientDB {
         }
         return isSuccess;
     }
+    
+    public boolean updateClient(Client client) {
+        boolean isSuccess = false;
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "UPDATE client "
+                    + "SET name = ? ,"
+                    + "password = ? ,"
+                    + "email = ? ,"
+                    + "phone = ? ,"
+                    + "dob = ? ,"
+                    + "gender = ? ,"
+                    + "address = ? "
+                    + "WHERE client_id = ?";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, client.getName());
+            pStmnt.setString(2, client.getPassword());
+            pStmnt.setString(3, client.getEmail());
+            pStmnt.setString(4, client.getPhone());
+            pStmnt.setDate(5, client.getDob());
+            pStmnt.setString(6, client.getGender());
+            pStmnt.setString(7, client.getAddress());
+            pStmnt.setInt(8, client.getClient_id());
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount == 1) {
+                isSuccess = true;
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return isSuccess;
+    }
+    
+    
 
     public Vector<Client> queryClientByKeyword(String keyword) {
         Vector<Client> clients = new Vector();

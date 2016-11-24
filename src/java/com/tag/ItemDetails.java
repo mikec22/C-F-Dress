@@ -37,7 +37,7 @@ public class ItemDetails extends SimpleTagSupport {
         JspWriter out = getJspContext().getOut();
         try {
             String cssClass;
-            if (item.getCategory().equals("shoes")) {
+            if (item.getCategory().equals("shoes")||item.getCategory().equals("gifts")) {
                 cssClass = "img1";
             } else {
                 cssClass = "";

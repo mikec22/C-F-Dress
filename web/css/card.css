@@ -9,9 +9,11 @@
   border-radius: 2px;
   display: inline-block;
   height: 300px;
+  max-height: 300px;
   margin: 1rem;
   position: relative;
   width: 300px;
+  max-width: 300px;
 }
 
 .card-1 {

@@ -44,7 +44,7 @@ public class ItemListTag extends SimpleTagSupport {
 
             for (Item item : itemList) {
                 String cssClass;
-                if (item.getCategory().equals("shoes")) {
+                if (item.getCategory().equals("shoes")||item.getCategory().equals("gifts")) {
                     cssClass = "img1";
                 } else {
                     cssClass = "";

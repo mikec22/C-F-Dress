@@ -57,5 +57,17 @@
             <type>java.unit.Vector</type>
         </attribute>
     </tag>
+    
+    <tag>
+    <name>clientDetailsTag</name>
+    <tag-class>com.tag.clientDetailsTag</tag-class>
+    <body-content>scriptless</body-content>
+    <attribute>
+      <name>client</name>
+      <rtexprvalue>true</rtexprvalue>
+      <required>true</required>
+      <type>com.bean.Client</type>
+    </attribute>
+  </tag>
   
 </taglib>

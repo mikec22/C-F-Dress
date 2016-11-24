@@ -8,7 +8,13 @@
 <%@taglib uri="/WEB-INF/tlds/com-taglib.tld" prefix="com" %>
 <jsp:useBean id="item" scope="request" class="com.bean.Item"/>
 <%
-    String title = (String) request.getAttribute("title");
+    String title = (String)request.getAttribute("title");
+    String menu;
+    if (session.getAttribute("clientInfo") != null) {
+        menu = "clientMenu.jsp";
+    } else {
+        menu = "menu.jsp";
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -19,7 +25,7 @@
     </head>
     <body>
         <div id="menu">
-            <jsp:include page="menu.jsp"/>
+            <jsp:include page="<%=menu%>"/>
         </div>
         <div id="content">
             <com:ItemDetailsTag item="<%=item%>"/>
