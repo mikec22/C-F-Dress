@@ -36,7 +36,7 @@ public class Order implements Serializable {
         this.order_lines = order_line;
     }
 
-    public Vector<OrderLine> getOrder_lines() {
+   public Vector<OrderLine> getOrder_lines() {
         return order_lines;
     }
 

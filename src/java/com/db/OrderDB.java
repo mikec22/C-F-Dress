@@ -5,14 +5,17 @@
  */
 package com.db;
 
+import com.bean.Client;
 import com.bean.Order;
 import com.bean.OrderLine;
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Vector;
 
 /**
@@ -43,6 +46,86 @@ public class OrderDB implements Serializable {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean addOrder(int client_id, String delivery_datetime, String address, String option, String status, Vector<OrderLine> order_lines) {
+        Connection cnnct = null;
+        Statement stmnt = null;
+        boolean isSuccess = false;
+        int orde_id = getNewOrderId();
+        try {
+            cnnct = getConnection();
+            cnnct.setAutoCommit(false);
+            stmnt = cnnct.createStatement();
+            stmnt.addBatch("INSERT INTO `order`(`order_id`, `client_id`, `delivery_datetime`, `address`, `option`, `status`) VALUES("
+                    + orde_id + ","
+                    + client_id + ",'"
+                    + delivery_datetime
+                    + "','" + address
+                    + "','" + option
+                    + "','" + status
+                    + "')");
+            
+            if (order_lines == null) {
+                throw new SQLException();
+            }
+            for (OrderLine ol : order_lines) {
+                System.out.println("orderLine :" + ol.getItem().getItem_id());
+                String sql2 = "INSERT INTO `order_line`(`order_id`, `item_id`, `total_price`, `quantity`) VALUES("
+                        + orde_id + ","
+                        + ol.getItem().getItem_id() + ","
+                        + ol.getSubTotal() + ","
+                        + ol.getQuantity()
+                        + ")";
+                stmnt.addBatch("INSERT INTO `order_line`(`order_id`, `item_id`, `total_price`, `quantity`) VALUES("
+                        + orde_id + ","
+                        + ol.getItem().getItem_id() + ","
+                        + ol.getSubTotal() + ","
+                        + ol.getQuantity()
+                        + ")");
+
+                stmnt.executeUpdate(sql2);
+            }
+            int[] rowCount = stmnt.executeBatch();
+            cnnct.commit();
+
+            isSuccess = true;
+            stmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            if (cnnct != null) {
+                try {
+                    cnnct.rollback();
+                } catch (SQLException ex1) {
+                    ex1.printStackTrace();
+                }
+            }
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return isSuccess;
+    }
+
+    public int getNewOrderId() {
+        int order_id = 0;
+        try {
+            Connection cnnct = getConnection();
+            Statement stmnt = cnnct.createStatement();
+            String sql = "SELECT order_id FROM `order` ORDER BY order_id DESC LIMIT 1";
+            ResultSet rs = stmnt.executeQuery(sql);;
+            if (rs.next()) {
+                order_id = rs.getInt(1);
+
+            }
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return order_id + 1;
     }
 
     public Vector<Order> getOrders(int client_id) {
@@ -87,7 +170,7 @@ public class OrderDB implements Serializable {
             while (rs.next()) {
                 ItemDB itemDB = new ItemDB();
                 OrderLine orderLine = new OrderLine(order,
-                        itemDB.getItem(rs.getInt(2)), rs.getDouble(3),rs.getInt(4));
+                        itemDB.getItem(rs.getInt(2)), rs.getDouble(3), rs.getInt(4));
                 orderLines.add(orderLine);
             }
             pStmnt.close();
