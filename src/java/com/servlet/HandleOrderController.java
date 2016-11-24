@@ -6,9 +6,11 @@ import com.bean.OrderLine;
 import com.db.OrderDB;
 import java.io.IOException;
 import java.sql.Date;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,20 +50,24 @@ public class HandleOrderController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        System.out.println(request.getParameter("delivery_datetime"));
         String action = request.getParameter("action");
         String msg = "";
         if (action.equals("placeOrder")) {
-        }
+     
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calobj = Calendar.getInstance();
+        System.out.println("I AM HERE TODAY" + df.format(calobj.getTime()));
+        String datetime = request.getParameter("test");
+        System.out.println("DATE: "+datetime);
+                System.out.println("I AM HERE TODAY" + df.format(datetime));
         //Date delivery_datetime = java.sql.Date.valueOf(request.getParameter("delivery_datetime"));
-        String delivery_datetime = request.getParameter("delivery_date")+" "+request.getParameter("delivery_time")+":00";
-        System.out.println("delivery_datetime:  " +delivery_datetime );
+        String delivery_datetime = request.getParameter("delivery_date") + " " + request.getParameter("delivery_time") + ":00";
+        System.out.println("delivery_datetime:  " + delivery_datetime);
 //        String delivery_datetime = "1999-05-05 13:44:00";
         String option = request.getParameter("delivery_method");
         System.out.println("I AM HERE  " + option);
         Client client = (Client) session.getAttribute("clientInfo");
-        int client_id = 1;
-                //client.getClient_id();
+        int client_id = client.getClient_id();
         String address = request.getParameter("delivery_address");
         String status = "processing";
         Order order = (Order) session.getAttribute("cart");
@@ -69,7 +75,7 @@ public class HandleOrderController extends HttpServlet {
         double amount = order.getTotalPrice();
         double balance = client.getBalance();
         double credit = client.getCredit_amount();
-        System.out.println("I AM HERE A: " + amount +" B: "+ balance+" C: "+credit);
+        System.out.println("I AM HERE A: " + amount + " B: " + balance + " C: " + credit);
         if ((balance + credit) < amount) {
             msg = "Balance not enough ";
         } else {
@@ -79,17 +85,17 @@ public class HandleOrderController extends HttpServlet {
             System.out.println("I AM HERE AFTER ADD" + add);
             if (add) {
                 int bonus_point = client.getBonus_point();
-                if(amount>2000){
-                    bonus_point += (int)(amount*0.05);
+                if (amount > 2000) {
+                    bonus_point += (int) (amount * 0.05);
                 }
                 msg = "success";
-            }
-            else{
+            } else {
                 msg = "fail";
             }
         }
-        
-        System.out.println("Message:   "+msg);
+
+        System.out.println("Message:   " + msg);
+        }
 //        String targetUrl = "/placeOrder.jsp";
 //        response.sendRedirect(targetUrl);
 //        }
