@@ -22,7 +22,7 @@ public class TestAddClient {
         //System.out.println(dob);
         ClientDB db = new ClientDB("jdbc:mysql://dev16.asuscomm.com:3306/CF_DB", "root", "root");
         Client c = new Client(0, "JSON", "123", "JSON Lam", "M", dob,
-                "joe@vtc.edu.hk", "87654321", "abc", 0, false, 0);
+                "joe@vtc.edu.hk", "87654321", "abc", 0, false, 0,0);
         System.out.println(db.addClient(c));
         System.out.println(db.getClient("Joe"));
     }

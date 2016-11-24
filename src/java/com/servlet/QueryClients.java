@@ -8,7 +8,6 @@ package com.servlet;
 import com.bean.Client;
 import com.db.ClientDB;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -55,18 +54,18 @@ public class QueryClients extends HttpServlet {
         String action = request.getParameter("action");
         if (action == null || action.equalsIgnoreCase("")) {
 
-        } else if (action.equals("deposit")) {
+        } else if (action.equals("search")) {
             String keyword = request.getParameter("keyword");
             if (keyword != null || action.equals("")) {
                 request.setAttribute("clients", clientDB.queryClientByKeyword(keyword));
-                getServletContext().getRequestDispatcher("/searchClientResultForDeposit.jsp").forward(request, response);
+                getServletContext().getRequestDispatcher("/searchClientResultForManage.jsp").forward(request, response);
             }
         } else if (action.equalsIgnoreCase("showNotVerified")) {
             doShowNotVerified(request, response);
-        } else if (action.equalsIgnoreCase("depositClient")) {
+        } else if (action.equalsIgnoreCase("changeBalance")) {
             int client_id = Integer.parseInt(request.getParameter("client_id"));
             request.setAttribute("client", clientDB.getClient(client_id));
-            getServletContext().getRequestDispatcher("/depositClient.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/changeBalance.jsp").forward(request, response);
         } else {
             response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED);
         }

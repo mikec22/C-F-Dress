@@ -14,7 +14,7 @@
     <body>
         <jsp:include page="managerMenu.jsp"/>
         <form method="get" action="queryClients">
-            <input type="hidden" name="action" value="deposit"/>
+            <input type="hidden" name="action" value="search"/>
             <input type="text" name="keyword" />
             <button type="submit">Search</button>
         </form>

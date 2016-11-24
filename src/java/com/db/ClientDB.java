@@ -125,7 +125,7 @@ public class ClientDB {
                 double credit_amount = rs.getDouble("credit_amount");
                 client = new Client(client_id, login_id, password, name,
                         gender, dob, email, phone, address,
-                        bonus_point, verified, balance,credit_amount);
+                        bonus_point, verified, balance, credit_amount);
             }
             pStmnt.close();
             cnnct.close();
@@ -269,6 +269,33 @@ public class ClientDB {
         return isSuccess;
     }
 
+    public boolean approvalCredit(int client_id, double credit) {
+        boolean isSuccess = false;
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "UPDATE client "
+                    + "SET credit_amount = ? "
+                    + "WHERE client_id = ?";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            if (credit >= 0) {
+                pStmnt.setDouble(1, credit);
+                pStmnt.setInt(2, client_id);
+                int rowCount = pStmnt.executeUpdate();
+                if (rowCount == 1) {
+                    isSuccess = true;
+                }
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return isSuccess;
+    }
+
     public Vector<Client> getAllNotVerifyClients() {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -296,7 +323,7 @@ public class ClientDB {
                 double credit_amount = rs.getDouble("credit_amount");
                 Client client = new Client(client_id, login_id, password, name,
                         gender, dob, email, phone, address,
-                        bonus_point, verified, balance,credit_amount);
+                        bonus_point, verified, balance, credit_amount);
                 clients.add(client);
             }
             pStmnt.close();
@@ -401,7 +428,7 @@ public class ClientDB {
                 double credit_amount = rs.getDouble("credit_amount");
                 Client client = new Client(client_id, login_id, password, name,
                         gender, dob, email, phone, address,
-                        bonus_point, verified, balance,credit_amount);
+                        bonus_point, verified, balance, credit_amount);
                 clients.add(client);
             }
             pStmnt.close();

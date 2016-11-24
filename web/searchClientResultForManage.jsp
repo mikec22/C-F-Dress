@@ -27,7 +27,7 @@
                                     + client.getEmail() + "</td><td>"
                                     + client.getPhone() + "</td><td>"
                                     + "<a href=\"" + request.getContextPath()
-                                    + "/queryClients?action=depositClient&client_id="
+                                    + "/queryClients?action=changeBalance&client_id="
                                     + client.getClient_id()
                                     + "\"/>Deposit</a></td></tr>");
                         }
