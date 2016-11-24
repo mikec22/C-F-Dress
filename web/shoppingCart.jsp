@@ -6,6 +6,15 @@
 <%@page import="com.bean.OrderLine,java.util.ArrayList"%>
 <%@taglib uri="/WEB-INF/tlds/com-taglib.tld" prefix="com"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    String title = (String)request.getAttribute("title");
+    String menu;
+    if (session.getAttribute("clientInfo") != null) {
+        menu = "clientMenu.jsp";
+    } else {
+        menu = "menu.jsp";
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,7 +23,7 @@
     </head>
     <body>
         <div id="menu">
-            <jsp:include page="menu.jsp" />
+            <jsp:include page="<%=menu%>" />
         </div>
         <div>
             <h1>Shopping Cart</h1>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
-  <tlib-version>1.0</tlib-version>
-  <short-name>com</short-name>
-  <uri>/WEB-INF/tlds/com-taglib</uri>
-  <!-- A validator verifies that the tags are used correctly at JSP
+    <tlib-version>1.0</tlib-version>
+    <short-name>com</short-name>
+    <uri>/WEB-INF/tlds/com-taglib</uri>
+    <!-- A validator verifies that the tags are used correctly at JSP
           translation time. Validator entries look like this: 
        <validator>
            <validator-class>com.mycompany.TagLibValidator</validator-class>
@@ -13,43 +13,60 @@
            </init-param>
        </validator>
     -->
-  <!-- A tag library can register Servlet Context event listeners in
+    <!-- A tag library can register Servlet Context event listeners in
          case it needs to react to such events. Listener entries look
          like this: 
       <listener>
           <listener-class>com.mycompany.TagLibListener</listener-class> 
       </listener>
     -->
-  <tag>
-    <name>ItemListTag</name>
-    <tag-class>com.tag.ItemListTag</tag-class>
+    <tag>
+        <name>ItemListTag</name>
+        <tag-class>com.tag.ItemListTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>itemList</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.unit.Vector</type>
+        </attribute>
+        <attribute>
+            <name>user</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+  
+    <tag>
+        <name>ItemDetailsTag</name>
+        <tag-class>com.tag.ItemDetails</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>item</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>com.bean.Item</type>
+        </attribute>
+    </tag>
+  
+    <tag>
+        <name>CartItemListTag</name>
+        <tag-class>com.tag.CartItemList</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>orderLines</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.unit.Vector</type>
+        </attribute>
+    </tag>
+    
+    <tag>
+    <name>clientDetailsTag</name>
+    <tag-class>com.tag.clientDetailsTag</tag-class>
     <body-content>scriptless</body-content>
     <attribute>
-      <name>itemList</name>
+      <name>client</name>
       <rtexprvalue>true</rtexprvalue>
-      <type>java.unit.Vector</type>
-    </attribute>
-  </tag>
-  
-  <tag>
-    <name>ItemDetailsTag</name>
-    <tag-class>com.tag.ItemDetails</tag-class>
-    <body-content>scriptless</body-content>
-    <attribute>
-      <name>item</name>
-      <rtexprvalue>true</rtexprvalue>
-      <type>com.bean.Item</type>
-    </attribute>
-  </tag>
-  
-   <tag>
-    <name>CartItemListTag</name>
-    <tag-class>com.tag.CartItemList</tag-class>
-    <body-content>empty</body-content>
-    <attribute>
-      <name>orderLines</name>
-      <rtexprvalue>true</rtexprvalue>
-      <type>java.unit.Vector</type>
+      <required>true</required>
+      <type>com.bean.Client</type>
     </attribute>
   </tag>
   

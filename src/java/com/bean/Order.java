@@ -131,6 +131,7 @@ public class Order implements Serializable {
 
     public double getTotalPrice() {
         double totalPrice = 0;
+
         for (OrderLine ol : order_lines) {
             totalPrice += ol.getItem().getPrice() * ol.getQuantity();
             System.out.println(ol.getPrice());

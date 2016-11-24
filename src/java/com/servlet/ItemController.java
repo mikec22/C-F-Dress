@@ -37,11 +37,12 @@ public class ItemController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-
-        if (action == null) {
-            action = "getItemList";
-        }
-        if (action.equals("getItem")) {
+        action = action == null ? "" : action;
+        if (action.equalsIgnoreCase("manageList")) {
+            showManagerItemList(request, response);
+        } else if (action.equals("manageItemDetail")) {
+            doManageItemDatail(request, response);
+        } else if (action.equals("getItem")) {
             showItem(request, response);
         } else if (action.equals("getItemList")) {
             showItemList(request, response);
@@ -61,16 +62,36 @@ public class ItemController extends HttpServlet {
         try {
             id = Integer.parseInt(request.getParameter("id"));
             Item item = itemDB.getItem(id);
-            if(item!=null){
+            if (item != null) {
                 title = item.getName();
                 request.setAttribute("item", item);
                 request.setAttribute("title", title);
                 getServletContext().getRequestDispatcher("/itemDetails.jsp").forward(request, response);
-            }else{
+            } else {
                 throw new ServletException();
             }
         } catch (IOException | NumberFormatException | ServletException e) {
             getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+        }
+    }
+
+    private void doManageItemDatail(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int id;
+        String title;
+        try {
+            id = Integer.parseInt(request.getParameter("id"));
+            Item item = itemDB.getItem(id);
+            if (item != null) {
+                title = item.getName();
+                request.setAttribute("item", item);
+                request.setAttribute("title", title);
+                getServletContext().getRequestDispatcher("/manageItemDetail.jsp").forward(request, response);
+            } else {
+                throw new ServletException();
+            }
+        } catch (IOException | NumberFormatException | ServletException e) {
+            e.printStackTrace();
         }
     }
 
@@ -82,18 +103,41 @@ public class ItemController extends HttpServlet {
         String title;
         keyword = keyword == null ? "" : keyword;
         try {
-        if(category==null){
-            itemList = itemDB.queryItemByKeyword(keyword);
-            title = "C&F Dress ";
-        }else{
-            itemList = itemDB.queryItemByCategoryKeyword(keyword, category);
-            title = "C&F Dress - " + category;
-        }
-        request.setAttribute("itemList", itemList);
-        request.setAttribute("title", title);
-        getServletContext().getRequestDispatcher("/item.jsp").forward(request, response);
+            if (category == null) {
+                itemList = itemDB.queryItemByKeyword(keyword);
+                title = "C&F Dress ";
+            } else {
+                itemList = itemDB.queryItemByCategoryKeyword(keyword, category);
+                title = "C&F Dress - " + category;
+            }
+            request.setAttribute("itemList", itemList);
+            request.setAttribute("title", title);
+            getServletContext().getRequestDispatcher("/item.jsp").forward(request, response);
         } catch (IOException | NumberFormatException | ServletException e) {
             getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+        }
+    }
+
+    private void showManagerItemList(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Vector<Item> itemList;
+        String keyword = request.getParameter("keyword");
+        String category = request.getParameter("category");
+        String title;
+        keyword = keyword == null ? "" : keyword;
+        try {
+            if (category == null) {
+                itemList = itemDB.queryItemByKeyword(keyword);
+                title = "C&F Dress ";
+            } else {
+                itemList = itemDB.queryItemByCategoryKeyword(keyword, category);
+                title = "C&F Dress - " + category;
+            }
+            request.setAttribute("itemList", itemList);
+            request.setAttribute("title", title);
+            getServletContext().getRequestDispatcher("/managerItem.jsp").forward(request, response);
+        } catch (IOException | NumberFormatException | ServletException e) {
+            getServletContext().getRequestDispatcher("/ManagerLogin").forward(request, response);
         }
     }
 

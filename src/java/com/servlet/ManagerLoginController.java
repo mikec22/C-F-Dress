@@ -57,16 +57,13 @@ public class ManagerLoginController extends HttpServlet {
         boolean isValid = db.isValidStaff(username, password);
         if (isValid) {
             HttpSession session = request.getSession(true);
-            Staff staff = db.getStaff(username);
-            session.setAttribute("managerInfo", staff);
+            session.setAttribute("managerInfo", db.getStaff(username));
             targetURL = "managerIndex.jsp";
         } else {
             request.setAttribute("userPath", "/ManagerLogin");
             targetURL = "loginError.jsp";
         }
-        RequestDispatcher rd;
-        rd = getServletContext().getRequestDispatcher("/" + targetURL);
-        rd.forward(request, response);
+        getServletContext().getRequestDispatcher("/" + targetURL).forward(request, response);
     }
 
     private boolean isAuthenticated(HttpServletRequest request) {
@@ -125,6 +122,12 @@ public class ManagerLoginController extends HttpServlet {
         String action = request.getParameter("action");
         if (!isAuthenticated(request) && !("authenticate".equals(action))) {
             doLogin(request, response);
+            return;
+        } 
+        if(isAuthenticated(request) && !"logout".equals(action) ) {
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/managerIndex.jsp");
+            rd.forward(request, response);
             return;
         }
         if ("authenticate".equals(action)) {
