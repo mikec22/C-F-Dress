@@ -59,4 +59,8 @@ public class OrderLine implements Serializable {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+    
+    public double getSubTotal(){
+        return price*quantity;
+    }
 }
