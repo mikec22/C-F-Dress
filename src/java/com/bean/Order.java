@@ -131,10 +131,15 @@ public class Order implements Serializable {
 
     public double getTotalPrice() {
         double totalPrice = 0;
+<<<<<<< Updated upstream
         for (OrderLine ol : order_lines) {
             totalPrice += ol.getItem().getPrice() * ol.getQuantity();
             System.out.println(ol.getPrice());
             System.out.println(totalPrice);
+=======
+        for (OrderLine ol : order_line) {
+            totalPrice += ol.getPrice() * ol.getQuantity();
+>>>>>>> Stashed changes
         }
         return totalPrice;
     }

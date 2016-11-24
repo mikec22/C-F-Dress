@@ -37,11 +37,11 @@ public class ItemController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-
-        if (action == null) {
-            action = "getItemList";
+        action = action == null ? "" : action;
+        if (action.equalsIgnoreCase("manageList")){
+            showManagerItemList(request, response);
         }
-        if (action.equals("getItem")) {
+        else if (action.equals("getItem")) {
             showItem(request, response);
         } else if (action.equals("getItemList")) {
             showItemList(request, response);
@@ -92,6 +92,28 @@ public class ItemController extends HttpServlet {
         request.setAttribute("itemList", itemList);
         request.setAttribute("title", title);
         getServletContext().getRequestDispatcher("/item.jsp").forward(request, response);
+        } catch (IOException | NumberFormatException | ServletException e) {
+            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+        }
+    }
+    private void showManagerItemList(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Vector<Item> itemList;
+        String keyword = request.getParameter("keyword");
+        String category = request.getParameter("category");
+        String title;
+        keyword = keyword == null ? "" : keyword;
+        try {
+        if(category==null){
+            itemList = itemDB.queryItemByKeyword(keyword);
+            title = "C&F Dress ";
+        }else{
+            itemList = itemDB.queryItemByCategoryKeyword(keyword, category);
+            title = "C&F Dress - " + category;
+        }
+        request.setAttribute("itemList", itemList);
+        request.setAttribute("title", title);
+        getServletContext().getRequestDispatcher("/managerItem.jsp").forward(request, response);
         } catch (IOException | NumberFormatException | ServletException e) {
             getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }

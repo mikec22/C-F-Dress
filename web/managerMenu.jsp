@@ -13,7 +13,7 @@
 <nav class="fill">
     <ul>
         <li><a href="<%= request.getContextPath() %>">Home</a></li>
-        <li><a href="">Item details</a></li>
+        <li><a href="<%=request.getContextPath() + "/manageItem" %>">Item details</a></li>
         <li><a href="">Order status</a></li>
         <li><a href="<%=request.getContextPath()+"/verifyClient" %>">Verify client</a></li>
         <li><a href="<%=request.getContextPath()+"/approvingCredit" %>">Approving credit</a></li>
