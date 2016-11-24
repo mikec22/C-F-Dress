@@ -122,9 +122,10 @@ public class ClientDB {
                 int bonus_point = rs.getInt("bonus_point");
                 boolean verified = rs.getBoolean("verified");
                 double balance = rs.getDouble("balance");
+                double credit_amount = rs.getDouble("credit_amount");
                 client = new Client(client_id, login_id, password, name,
                         gender, dob, email, phone, address,
-                        bonus_point, verified, balance);
+                        bonus_point, verified, balance,credit_amount);
             }
             pStmnt.close();
             cnnct.close();
@@ -162,9 +163,10 @@ public class ClientDB {
                 int bonus_point = rs.getInt("bonus_point");
                 boolean verified = rs.getBoolean("verified");
                 double balance = rs.getDouble("balance");
+                double credit_amount = rs.getDouble("credit_amount");
                 client = new Client(client_id, login_id, password, name,
                         gender, dob, email, phone, address,
-                        bonus_point, verified, balance);
+                        bonus_point, verified, balance, credit_amount);
             }
             pStmnt.close();
             cnnct.close();
@@ -291,9 +293,10 @@ public class ClientDB {
                 int bonus_point = rs.getInt("bonus_point");
                 boolean verified = rs.getBoolean("verified");
                 double balance = rs.getDouble("balance");
+                double credit_amount = rs.getDouble("credit_amount");
                 Client client = new Client(client_id, login_id, password, name,
                         gender, dob, email, phone, address,
-                        bonus_point, verified, balance);
+                        bonus_point, verified, balance,credit_amount);
                 clients.add(client);
             }
             pStmnt.close();
@@ -395,9 +398,10 @@ public class ClientDB {
                 int bonus_point = rs.getInt("bonus_point");
                 boolean verified = rs.getBoolean("verified");
                 double balance = rs.getDouble("balance");
+                double credit_amount = rs.getDouble("credit_amount");
                 Client client = new Client(client_id, login_id, password, name,
                         gender, dob, email, phone, address,
-                        bonus_point, verified, balance);
+                        bonus_point, verified, balance,credit_amount);
                 clients.add(client);
             }
             pStmnt.close();

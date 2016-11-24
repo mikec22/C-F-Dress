@@ -16,16 +16,16 @@ public class Client implements Serializable {
 
     private int client_id, bonus_point;
     private String login_id, password, name, email, phone, address, gender;
-    private double balance;
+    private double balance, credit_amount;
     private Date dob;
     private boolean verified;
 
     public Client() {
     }
 
-    public Client(int client_id, String login_id, String password, String name, 
-            String gender, Date dob, String email, String phone, String address, 
-            int bonus_point, boolean verified, double balance) {
+    public Client(int client_id, String login_id, String password, String name,
+            String gender, Date dob, String email, String phone, String address,
+            int bonus_point, boolean verified, double balance, double credit_amount) {
         this.client_id = client_id;
         this.bonus_point = bonus_point;
         this.login_id = login_id;
@@ -38,10 +38,11 @@ public class Client implements Serializable {
         this.balance = balance;
         this.dob = dob;
         this.verified = verified;
+        this.credit_amount = credit_amount;
     }
-    
-    public Client(String login_id, String name, 
-            String gender, String email,String password,String phone, Date dob, String address) {
+
+    public Client(String login_id, String name,
+            String gender, String email, String password, String phone, Date dob, String address) {
         this.bonus_point = 1000;
         this.login_id = login_id;
         this.password = password;
@@ -53,6 +54,14 @@ public class Client implements Serializable {
         this.balance = 0;
         this.dob = dob;
         this.verified = false;
+    }
+
+    public double getCredit_amount() {
+        return credit_amount;
+    }
+
+    public void setCredit_amount(double credit_amount) {
+        this.credit_amount = credit_amount;
     }
 
     public boolean isVerified() {
