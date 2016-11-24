@@ -57,9 +57,9 @@
                         <com:CartItemListTag orderLines="<%=cart.getOrder_lines()%>"/>
                     </ul>
                 </div>
-                <div class="subtotal cf">
+                    <div class="subtotal cf" >
                     <ul>
-                        <li class="totalRow"><span class="label">Bonus points</span><span class="value"></span></li>
+                        <li class="totalRow"><span class="label">Use Bonus points</span><span class="value"><%=cart.getUseBonusPoints()%> BP</span></li>
                         <li class="totalRow final"><span class="label">Total</span><span class="value">HK$<%=cart.getTotalPrice()%></span></li>
                         <li class="totalRow"><a href="HandleOrderController" class="btn continue">Checkout</a></li>
                     </ul>

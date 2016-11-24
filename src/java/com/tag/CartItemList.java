@@ -36,13 +36,24 @@ public class CartItemList extends SimpleTagSupport {
                 out.print("<h2>Empty</h2>");
             } else {
                 for (OrderLine ol : orderLines) {
-
                     String img = "<img src=\"img/item/" + ol.getItem().getImg() + "\" alt=\"\" class=\"itemImg\" />";
                     String name = ol.getItem().getName();
                     double unitPrice = ol.getItem().getPrice();
-                    double quantity = ol.getQuantity();
+                    int quantity = ol.getQuantity();
                     double subtotal = quantity * unitPrice;
-
+                    String total = "<p>HK$" + subtotal + "</p>\n";
+                    String updateForm = "<form action='CartItemController' method='GET'><p> <input type=\"number\" min='1' name='quantity' value='" + quantity + "' class=\"qty\" /> "
+                            + "x HK$" + unitPrice + "</p>\n"
+                            + ""
+                            + "<input type='hidden' name='action' value='update'/>\n"
+                            + "<input type='hidden' name='id' value='" + ol.getItem().getItem_id() + "'/>\n"
+                            + "<input class=\"continue\" type='submit' value='update'/>\n"
+                            + "</form>";
+                    if(ol.getItem().getCategory().equals("gifts")){
+                        total = "<p>" + subtotal + " BP</p>\n";
+                        updateForm = "";
+                    }
+                    
                     out.print("<li class=\"items odd\">\n"
                             + "                        <div class=\"infoWrap\"> \n"
                             + "                            <div class=\"cartSection\">\n"
@@ -50,23 +61,18 @@ public class CartItemList extends SimpleTagSupport {
                             + "<p class=\"itemNumber\">" + ol.getItem().getCategory() + "</p>\n"
                             + "                                <h3>" + name + "</h3>\n"
                             + "\n"
-                            + "<form action='CartItemController' method='GET'><p> <input type=\"number\" min='1' name='quantity' value='" + quantity + "' class=\"qty\" /> "
-                            + "x HK$" + unitPrice + "</p>\n"
-                            + ""
-                            + "<input type='hidden' name='action' value='update'/>\n"
-                            + "<input type='hidden' name='id' value='" + ol.getItem().getItem_id() + "'/>\n"
-                            + "<input class=\"continue\" type='submit' value='update'/>\n"
-                            + "</form>"
+                            + updateForm
                             + "                                <p class=\"stockStatus\"></p>\n"
                             + "                            </div>"
                             + "<div class=\"prodTotal cartSection\">\n"
-                            + "                                <p>HK$" + subtotal + "</p>\n"
+                            + total
                             + "                            </div>\n"
                             + "                            <div class=\"cartSection removeWrap\">\n"
                             + "<form action='CartItemController' method='GET'>"
                             + "<input type='hidden' name='action' value='delete'/>\n"
                             + "<input type='hidden' name='id' value='" + ol.getItem().getItem_id() + "'/>\n"
-                            + "                                <input class=\"Btn1\" type='submit' value='X'>\n"
+                            + ""
+                            + "                                <input type='submit' value='X'>\n"
                             + "                            </div>\n"
                             + "                        </div>\n"
                             + "                    </li></form>");

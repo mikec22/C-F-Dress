@@ -19,11 +19,11 @@
 %>
 <link rel="stylesheet" href="css/menu.css">
 <link href='http://fonts.googleapis.com/css?family=Roboto:500,900,100,300,700,400' rel='stylesheet' type='text/css'>
-
+<jsp:useBean id="cart" scope="session" class="com.bean.Order"/>
 <nav class="stroke">
     <div class='atext'> Hi, <%=client.getName()%>
         <a href='login?action=logout'>Log out</a>
-        <a href='shoppingCart?action=showCart'>Cart</a></div>
+        <a href='shoppingCart?action=showCart'>Cart (<%=cart.getOrder_lines().size() %>)</a></div>
         
     <a href="<%=request.getContextPath()%>"><img src="img/cf_logo.png" style="display: block;margin: 0 auto; width: 15%; height: 15%"></a>
 

@@ -151,6 +151,8 @@ img {
     font-size: .75em;
     color: #777;
     margin-bottom: .5em;
+    font-variant: nlckanji; 
+    text-transform: uppercase;
 }
 
 .cart .items .cartSection h3 {
@@ -232,7 +234,7 @@ img {
     font-family: helvetica, arial, sans-serif;
 }
 
-remove {
+a.remove {
     text-decoration: none;
     font-family: "Montserrat", sans-serif;
     color: #ffffff;
@@ -250,7 +252,7 @@ remove {
     transition: all 0.25s linear;
 }
 
-remove:hover {
+a.remove:hover {
     background: #f30;
 }
 
@@ -430,20 +432,47 @@ remove:hover {
         text-align: center;
     }
 
-    .Btn1 {
-        display: block;
-        margin: 10px 0;
-        width: 100%;
-        padding: 15px;
-        background-color: red;
-        border: none;
-        color: #fff;
-        font-size: 1.2em;
-        font-weight: 600;
-        border-radius: 3px;
+
+    .btndiv {
         font-family: 'Source Sans Pro', sans-serif;
-        -webkit-font-smoothing: antialiased;
+        box-sizing: border-box;
+        font-weight: 300;
+        padding: 0;
+        margin: 0;
+    }
+
+    .btn1-wrapper {
+        position: fixed;
+        top: calc(50% - 22px);
+        left: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .btn1 {
+        display: inline-block;
+        box-shadow: none;
+        appearance: none;
+        border: 0;
+        outline: 0;
+        background-color: #00f0a8;
+        height: 45px;
+        line-height: 42px;
+        padding: 0 30px;
+        font-size: 20px;
+        border-radius: 30px;
+        color: #282d32;
         cursor: pointer;
-        border-radius: 100%;
+        transition: all .5s;
+        transition-timing-function: cubic-bezier(0.2, 3, 0.4, 1);
+        user-select: none;
+    }
+
+    .btn1:hover {
+        transform: scale(1.1, 1.1);
+    }
+
+    .btn1:active {
+        transform: scale(1.05, 1.05);
     }
 }

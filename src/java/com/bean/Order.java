@@ -125,10 +125,22 @@ public class Order implements Serializable {
         double totalPrice = 0;
 
         for (OrderLine ol : order_lines) {
-            totalPrice += ol.getItem().getPrice() * ol.getQuantity();
+            if(!ol.getItem().getCategory().equals("gifts")){
+                totalPrice += ol.getItem().getPrice() * ol.getQuantity();
+            }
             System.out.println(ol.getPrice());
             System.out.println(totalPrice);
         }
         return totalPrice;
+    }
+    
+    public int getUseBonusPoints(){
+        int bp = 0;
+        for (OrderLine ol : order_lines) {
+            if(ol.getItem().getCategory().equals("gifts")){
+                bp += ol.getItem().getPrice() * ol.getQuantity();
+            }
+        }
+        return bp;
     }
 }
