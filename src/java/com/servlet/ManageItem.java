@@ -5,6 +5,8 @@
  */
 package com.servlet;
 
+import com.bean.Item;
+import com.db.ItemDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,7 +21,17 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ManageItem", urlPatterns = {"/manageItem"})
 public class ManageItem extends HttpServlet {
+    private ItemDB itemDB;
 
+    @Override
+    public void init() throws ServletException {
+        super.init(); //To change body of generated methods, choose Tools | Templates.
+        String dburl = this.getServletContext().getInitParameter("dbUrl");
+        String dbUser = this.getServletContext().getInitParameter("dbUser");
+        String dbPassword = this.getServletContext().getInitParameter("dbPassword");
+        itemDB = new ItemDB(dburl, dbUser, dbPassword);
+    }
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,8 +46,21 @@ public class ManageItem extends HttpServlet {
         String action = request.getParameter("action");
         if (action == null || action.equals("")){
             response.sendRedirect(request.getContextPath()+"/item?action=manageList");
-        } else {
-            
+        } else if (action.equalsIgnoreCase("editItem")) {
+            int item_id = Integer.parseInt(request.getParameter("item_id"));
+            String name = request.getParameter("name");
+            String designer = request.getParameter("designer");
+            double price = Double.parseDouble(request.getParameter("price"));
+            String description = request.getParameter("description");
+            Item item = itemDB.getItem(item_id);
+            item.setName(name);
+            item.setDesigner(designer);
+            item.setPrice(price);
+            item.setDescription(description);
+            if(itemDB.updateItem(item)){
+                response.sendRedirect(request.getContextPath()+"/item?action=getItem&id="
+                        + item.getItem_id());
+            }
         }
     }
 

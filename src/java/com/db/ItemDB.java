@@ -198,4 +198,42 @@ public class ItemDB implements Serializable {
         }
         return item;
     }
+    
+    public boolean updateItem(Item item){
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE item SET item_id = ?,"
+                    + " name = ?,"
+                    + " category = ?,"
+                    + " designer = ?,"
+                    + " price = ?,"
+                    + " description = ?,"
+                    + " img = ?"
+                    + " WHERE item_id = ?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, item.getItem_id());
+            pStmnt.setString(2, item.getName());
+            pStmnt.setString(3, item.getCategory());
+            pStmnt.setString(4, item.getDesigner());
+            pStmnt.setDouble(5, item.getPrice());
+            pStmnt.setString(6, item.getDescription());
+            pStmnt.setString(7, item.getImg());
+            pStmnt.setInt(8, item.getItem_id());
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount == 1) {
+                isSuccess = true;
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return isSuccess;
+    }
 }
