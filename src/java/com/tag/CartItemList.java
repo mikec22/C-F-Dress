@@ -40,7 +40,7 @@ public class CartItemList extends SimpleTagSupport {
                 double quantity = ol.getQuantity();
                 double subtotal = quantity * unitPrice;
 
-                out.println("<div><form action='handleCartItem' method='GET'>"
+                out.println("<div><form action='CartItemController' method='GET'>"
                         + img
                         + name
                         + unitPrice
