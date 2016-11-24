@@ -77,16 +77,14 @@ public class ClientDB {
         boolean isValid = false;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM client WHERE login_id=? and password=?";
+            String preQueryStatement = "SELECT * FROM client "
+                    + "WHERE login_id=? and password=?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, login_id);
             pStmnt.setString(2, pwd);
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
-            if (rs.next() && rs.getBoolean("verified")) {
-                isValid = true;
-                //System.out.print(rs.getBoolean("verified"));
-            }
+            isValid = rs.next() && rs.getString("login_id").equals(login_id) && rs.getBoolean("verified");
             pStmnt.close();
             cnnct.close();
 
@@ -333,7 +331,7 @@ public class ClientDB {
         }
         return isSuccess;
     }
-    
+
     public boolean updateClient(Client client) {
         boolean isSuccess = false;
         try {
@@ -370,8 +368,6 @@ public class ClientDB {
         }
         return isSuccess;
     }
-    
-    
 
     public Vector<Client> queryClientByKeyword(String keyword) {
         Vector<Client> clients = new Vector();

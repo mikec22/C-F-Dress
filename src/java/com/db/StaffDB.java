@@ -45,9 +45,7 @@ public class StaffDB {
             pStmnt.setString(2, pwd);
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
-            if (rs.next()) {
-                isValid = true;
-            }
+            isValid = rs.next() && login_id.equals(rs.getString("login_id"));
             pStmnt.close();
             cnnct.close();
         } catch (SQLException ex) {
