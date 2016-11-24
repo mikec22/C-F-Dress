@@ -67,7 +67,7 @@ public class CartController extends HttpServlet {
         try {
             int itemID = Integer.parseInt(request.getParameter("itemId"));
             Item item = db.getItem(itemID);
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            int quantity = request.getParameter("quantity") == null ? 1 : Integer.parseInt(request.getParameter("quantity"));
             // Set quantity
             if (quantity < 0) {
                 quantity = 1;

@@ -56,6 +56,10 @@ public class Client implements Serializable {
         this.verified = false;
     }
 
+    public Client(int i, String json, String string, String json_Lam, String m, Date dob, String joevtceduhk, String string0, String abc, int i0, boolean b, int i1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public double getCredit_amount() {
         return credit_amount;
     }

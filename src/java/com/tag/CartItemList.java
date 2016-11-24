@@ -32,24 +32,55 @@ public class CartItemList extends SimpleTagSupport {
         JspWriter out = getJspContext().getOut();
 
         try {
+            if (orderLines.isEmpty()) {
+                out.print("<h2>Empty</h2>");
+            } else {
+                for (OrderLine ol : orderLines) {
 
-            for (OrderLine ol : orderLines) {
-                String img = "<img src='img/item/" + ol.getItem().getImg() + "'/>";
-                String name = ol.getItem().getName();
-                double unitPrice = ol.getItem().getPrice();
-                double quantity = ol.getQuantity();
-                double subtotal = quantity * unitPrice;
+                    String img = "<img src=\"img/item/" + ol.getItem().getImg() + "\" alt=\"\" class=\"itemImg\" />";
+                    String name = ol.getItem().getName();
+                    double unitPrice = ol.getItem().getPrice();
+                    double quantity = ol.getQuantity();
+                    double subtotal = quantity * unitPrice;
 
-                out.println("<div><form action='CartItemController' method='GET'>"
-                        + img
-                        + name
-                        + unitPrice
-                        + "<input type='nunber' name='quantity' value='" + quantity + "' />"
-                        + subtotal
-                        + "<input type='submit' name='action' value='Update'><input type='submit' name='submit_btn' value='action'>"
-                        + "</form></div>");
+                    out.print("<li class=\"items odd\">\n"
+                            + "                        <div class=\"infoWrap\"> \n"
+                            + "                            <div class=\"cartSection\">\n"
+                            + img
+                            + "<p class=\"itemNumber\">" + ol.getItem().getCategory() + "</p>\n"
+                            + "                                <h3>" + name + "</h3>\n"
+                            + "\n"
+                            + "<form action='CartItemController' method='GET'><p> <input type=\"number\" min='1' name='quantity' value='" + quantity + "' class=\"qty\" /> "
+                            + "x HK$" + unitPrice + "</p>\n"
+                            + ""
+                            + "<input type='hidden' name='action' value='update'/>\n"
+                            + "<input type='hidden' name='id' value='" + ol.getItem().getItem_id() + "'/>\n"
+                            + "<input class=\"continue\" type='submit' value='update'/>\n"
+                            + "</form>"
+                            + "                                <p class=\"stockStatus\"></p>\n"
+                            + "                            </div>"
+                            + "<div class=\"prodTotal cartSection\">\n"
+                            + "                                <p>HK$" + subtotal + "</p>\n"
+                            + "                            </div>\n"
+                            + "                            <div class=\"cartSection removeWrap\">\n"
+                            + "<form action='CartItemController' method='GET'>"
+                            + "<input type='hidden' name='action' value='delete'/>\n"
+                            + "<input type='hidden' name='id' value='" + ol.getItem().getItem_id() + "'/>\n"
+                            + "                                <input class=\"Btn1\" type='submit' value='X'>\n"
+                            + "                            </div>\n"
+                            + "                        </div>\n"
+                            + "                    </li></form>");
+
+//                out.println("<div><form action='CartItemController' method='GET'>"
+//                        + img
+//                        + name
+//                        + unitPrice
+//                        + "<input type='nunber' name='quantity' value='" + quantity + "' />"
+//                        + subtotal
+//                        + "<input type='submit' name='action' value='delect'><input type='submit' name='submit_btn' value='action'>"
+//                        + "</form></div>");
+                }
             }
-
         } catch (java.io.IOException ex) {
             throw new JspException("Error in ItemTag tag", ex);
         }
