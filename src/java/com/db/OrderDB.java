@@ -52,7 +52,7 @@ public class OrderDB implements Serializable {
         Statement stmnt = null;
         boolean isSuccess = false;
         int orde_id = getNewOrderId();
-        System.out.print("I AM HERE ID: "+orde_id);
+        System.out.print("I AM HERE ID: " + orde_id);
         try {
             cnnct = getConnection();
             cnnct.setAutoCommit(false);
@@ -65,7 +65,7 @@ public class OrderDB implements Serializable {
                     + "','" + option
                     + "','" + status
                     + "')");
-            
+
             if (order_lines == null) {
                 throw new SQLException();
             }
@@ -146,7 +146,9 @@ public class OrderDB implements Serializable {
             }
         }
         return orders;
-    }public Vector<Order> getExistedOrdersOfClient(int client_id) {
+    }
+
+    public Vector<Order> getExistedOrdersOfClient(int client_id) {
         Vector<Order> orders = new Vector();
         try {
             Connection cnnct = getConnection();
@@ -162,7 +164,7 @@ public class OrderDB implements Serializable {
                 ClientDB clientDB = new ClientDB();
                 Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
                         rs.getDate(3), rs.getDate(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), null);
+                        rs.getString(7), this.getOrderLines(rs.getInt(1)));
                 order.setOrder_lines(getOrderLines(order));
                 orders.add(order);
             }
@@ -203,5 +205,85 @@ public class OrderDB implements Serializable {
         }
         return orderLines;
     }
-       
+
+    public Order getOrder(int order_id) {
+        Order order = null;
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM order "
+                    + "WHERE order_id = ?";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, order_id);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
+                order = new Order(order_id, clientDB.getClient(rs.getInt(2)), rs.getDate(3),
+                        rs.getDate(4), rs.getString(5), rs.getString(6),
+                        rs.getString(7), getOrderLines(rs.getInt(8)));
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return order;
+    }
+
+    public Vector<OrderLine> getOrderLines(int order_id) {
+        Vector<OrderLine> orderLines = new Vector();
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM order_line "
+                    + "WHERE order_id = ?";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, order_id);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                ItemDB itemDB = new ItemDB();
+                OrderLine orderLine = new OrderLine(null,
+                        itemDB.getItem(rs.getInt(2)), rs.getDouble(3), rs.getInt(4));
+                orderLines.add(orderLine);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return orderLines;
+    }
+
+    public Vector<Order> getAllOrder() {
+        Vector<Order> orders = new Vector();
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM order_line ";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
+                Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)), rs.getDate(3),
+                        rs.getDate(4), rs.getString(5), rs.getString(6),
+                        rs.getString(7), getOrderLines(rs.getInt(1)));
+                orders.add(order);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return orders;
+    }
+
 }

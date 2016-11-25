@@ -5,10 +5,8 @@
  */
 package com.servlet;
 
-import com.bean.Client;
-import com.db.ClientDB;
 import java.io.IOException;
-import javax.servlet.ServletContext;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,24 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Mike
  */
-@WebServlet(name = "VerifyClientController", urlPatterns = {"/verifyClient"})
-public class VerifyClientController extends HttpServlet {
-
-    private ClientDB clientDB;
-
-    @Override
-    public ServletContext getServletContext() {
-        return super.getServletContext(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void init() throws ServletException {
-        super.init(); //To change body of generated methods, choose Tools | Templates.
-        String dbUrl = this.getServletContext().getInitParameter("dbUrl");
-        String dbUser = this.getServletContext().getInitParameter("dbUser");
-        String dbPassword = this.getServletContext().getInitParameter("dbPassword");
-        clientDB = new ClientDB(dbUrl, dbUser, dbPassword);
-    }
+@WebServlet(name = "QueryOrder", urlPatterns = {"/QueryOrder"})
+public class QueryOrder extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,24 +31,18 @@ public class VerifyClientController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-        if (action == null || action.equals("")) {
-            response.sendRedirect(request.getContextPath() + 
-                    "/queryClients?action=showNotVerified");
-        } else if (action.equalsIgnoreCase("show")) {
-            int client_id = Integer.parseInt(request.getParameter("client_id"));
-            Client client = clientDB.getClient(client_id);
-            if (!client.isVerified()) {
-                request.setAttribute("client", client);
-            }
-            getServletContext().getRequestDispatcher("/verifyClient.jsp").forward(request, response);
-        } else if (action.equalsIgnoreCase("approval")) {
-            int client_id = Integer.parseInt(request.getParameter("client_id"));
-            if (clientDB.approvalClient(client_id)) {
-                response.sendRedirect(request.getContextPath() + 
-                    "/queryClients?action=showNotVerified");
-                //response.sendRedirect("handleCustomer?action=list");
-            }
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet QueryOrder</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet QueryOrder at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

@@ -23,9 +23,7 @@ public class ClientDB {
     private String dburl, dbUser, dbPassword;
 
     public ClientDB() {
-        dburl = "jdbc:mysql://localhost:3306/CF_DB";
-        dbUser = "root";
-        dbPassword = "";
+
     }
 
     public ClientDB(String dburl, String dbUser, String dbPassword) {

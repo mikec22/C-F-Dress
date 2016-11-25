@@ -23,9 +23,7 @@ public class ItemDB implements Serializable {
     private String dburl, dbUser, dbPassword;
 
     public ItemDB() {
-        dburl = "jdbc:mysql://localhost:3306/CF_DB";
-        dbUser = "root";
-        dbPassword = "";
+
     }
 
     public ItemDB(String dburl, String dbUser, String dbPassword) {
