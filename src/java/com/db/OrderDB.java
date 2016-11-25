@@ -114,7 +114,7 @@ public class OrderDB implements Serializable {
         try {
             Connection cnnct = getConnection();
             Statement stmnt = cnnct.createStatement();
-            String sql = "SELECT order_id FROM `order` ORDER BY order_id DESC LIMIT 1";
+            String sql = "SELECT order_id FROM CF_DB.`order` ORDER BY order_id DESC LIMIT 1";
             ResultSet rs = stmnt.executeQuery(sql);;
             if (rs.next()) {
                 order_id = rs.getInt(1);
@@ -133,7 +133,7 @@ public class OrderDB implements Serializable {
         Vector<Order> orders = new Vector();
         try {
             Connection cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM order "
+            String preQueryStatement = "SELECT * FROM CF_DB.`order` "
                     + "WHERE client_id = ?";
             PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setInt(1, client_id);
@@ -162,7 +162,7 @@ public class OrderDB implements Serializable {
         Vector<Order> orders = new Vector();
         try {
             Connection cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM order "
+            String preQueryStatement = "SELECT * FROM CF_DB.`order` "
                     + "WHERE client_id = ? "
                     + "AND status = ?";
             PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
@@ -175,7 +175,6 @@ public class OrderDB implements Serializable {
                 Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
                         rs.getDate(3), rs.getDate(4), rs.getString(5), rs.getString(6),
                         rs.getString(7), this.getOrderLines(rs.getInt(1)));
-                order.setOrder_lines(getOrderLines(order));
                 orders.add(order);
             }
             pStmnt.close();
@@ -220,7 +219,7 @@ public class OrderDB implements Serializable {
         Order order = null;
         try {
             Connection cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM order "
+            String preQueryStatement = "SELECT * FROM CF_DB.`order` "
                     + "WHERE order_id = ?";
             PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setInt(1, order_id);
@@ -247,16 +246,16 @@ public class OrderDB implements Serializable {
         Vector<OrderLine> orderLines = new Vector();
         try {
             Connection cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM order_line "
+            String preQueryStatement = "SELECT * FROM `order_line` "
                     + "WHERE order_id = ?";
             PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setInt(1, order_id);
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
             while (rs.next()) {
-                ItemDB itemDB = new ItemDB();
+                ItemDB itemDB = new ItemDB(dburl, dbUser, dbPassword);
                 OrderLine orderLine = new OrderLine(null,
-                        itemDB.getItem(rs.getInt(2)), rs.getDouble(3), rs.getInt(4));
+                        itemDB.getItem(rs.getInt("item_id")), rs.getDouble(3), rs.getInt(4));
                 orderLines.add(orderLine);
             }
             pStmnt.close();
@@ -270,20 +269,28 @@ public class OrderDB implements Serializable {
         return orderLines;
     }
 
-    public Vector<Order> getAllOrder() {
-        Vector<Order> orders = new Vector();
+    public Vector<Order> getAllOrders() {
+        Vector<Order> orders = null;
         try {
             Connection cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM order_line ";
+            String preQueryStatement = "SELECT * FROM CF_DB.`order`";
             PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
+                orders = new Vector();
                 ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
                 Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)), rs.getDate(3),
                         rs.getDate(4), rs.getString(5), rs.getString(6),
                         rs.getString(7), getOrderLines(rs.getInt(1)));
                 orders.add(order);
+                while (rs.next()) {
+                    clientDB = new ClientDB(dburl, dbUser, dbPassword);
+                    order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)), rs.getDate(3),
+                            rs.getDate(4), rs.getString(5), rs.getString(6),
+                            rs.getString(7), getOrderLines(rs.getInt(1)));
+                    orders.add(order);
+                }
             }
             pStmnt.close();
             cnnct.close();

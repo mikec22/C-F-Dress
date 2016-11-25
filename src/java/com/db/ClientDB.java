@@ -466,4 +466,43 @@ public class ClientDB {
         }
         return clients;
     }
+    
+    public Vector<Client> queryClientByName(String keyword) {
+        Vector<Client> clients = new Vector();
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM client"
+                    + " WHERE name LIKE ?";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, "%" + keyword + "%");
+            ResultSet rs = rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                int client_id = rs.getInt("client_id");
+                String login_id = rs.getString("login_id");
+                String password = rs.getString("password");
+                String name = rs.getString("name");
+                String gender = rs.getString("gender");
+                Date dob = rs.getDate("dob");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                int bonus_point = rs.getInt("bonus_point");
+                boolean verified = rs.getBoolean("verified");
+                double balance = rs.getDouble("balance");
+                double credit_amount = rs.getDouble("credit_amount");
+                Client client = new Client(client_id, login_id, password, name,
+                        gender, dob, email, phone, address,
+                        bonus_point, verified, balance, credit_amount);
+                clients.add(client);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return clients;
+    }
 }

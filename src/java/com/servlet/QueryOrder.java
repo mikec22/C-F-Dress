@@ -5,8 +5,13 @@
  */
 package com.servlet;
 
+import com.bean.Client;
+import com.bean.Order;
+import com.db.ClientDB;
+import com.db.OrderDB;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,8 +22,21 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Mike
  */
-@WebServlet(name = "QueryOrder", urlPatterns = {"/QueryOrder"})
+@WebServlet(name = "QueryOrder", urlPatterns = {"/queryOrder"})
 public class QueryOrder extends HttpServlet {
+
+    private OrderDB orderDB;
+    private ClientDB clientDB;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        String dburl = this.getServletContext().getInitParameter("dbUrl");
+        String dbUser = this.getServletContext().getInitParameter("dbUser");
+        String dbPassword = this.getServletContext().getInitParameter("dbPassword");
+        orderDB = new OrderDB(dburl, dbUser, dbPassword);
+        clientDB = new ClientDB(dburl, dbUser, dbPassword);
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,18 +49,21 @@ public class QueryOrder extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet QueryOrder</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet QueryOrder at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String action = request.getParameter("action");
+        if (action.equalsIgnoreCase("queryOrder")) {
+            String client_name=request.getParameter("client_name");
+            if (client_name == null||client_name.equals("")){
+                request.setAttribute("orders", orderDB.getAllOrders());
+                getServletContext().getRequestDispatcher("/queryOrder.jsp").forward(request, response);
+            } else {
+                Vector<Client> clients= clientDB.queryClientByName(client_name);
+                Vector<Vector<Order>> orders = new Vector();
+                for (Client client : clients){
+                    orders.add(orderDB.getOrders(client.getClient_id()));
+                }
+                request.setAttribute("queryOrders", orderDB.getOrders(0));
+                getServletContext().getRequestDispatcher("/queryOrder.jsp").forward(request, response);
+            }
         }
     }
 
