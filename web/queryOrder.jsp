@@ -18,36 +18,39 @@
     </head>
     <body>
         <jsp:include page="managerMenu.jsp"/>
-        <form method="get" action="queryOrder">
-            <input type="hidden" name="action" value=""
-            <input type="text" name="client_name"/>
-            <button type="submit">Search</button>
-        </form><br>
-        <table border="1">
-            <tr><th>Client Name</th><th>Delivery_Datetime</th><th>Order_Datetime</th><th>Address</th><th>Option</th><th><th>Status</th></th></tr>
-        <%
-            if(queryOrders!=null){
-                for(Vector<Order> qOrders :queryOrders){
-                    for (Order order : qOrders){
-                        out.print("<tr><td>"+order.getClient().getName()+"</td><td>"
-                                +order.getDelivery_datetime()+"</td><td>"
-                                +order.getOrder_datetime()+"</td><td>"
-                                +order.getAddress()+"</td><td>"
-                                +order.getOption()+"</td><td>"
-                                +order.getStatus()+"</td></tr>");
-                    }
-                }
-            } else {
-                for (Order order : orders){
-                        out.print("<tr><td>"+order.getClient().getName()+"</td><td>"
-                                +order.getDelivery_datetime()+"</td><td>"
-                                +order.getOrder_datetime()+"</td><td>"
-                                +order.getAddress()+"</td><td>"
-                                +order.getOption()+"</td><td>"
-                                +order.getStatus()+"</td></tr>");
-                    }
-            }
-        %>
-        </table>
+        <div style="text-align: center;margin: auto; width: 60%;">
+            <form method="get" action="queryOrder">
+                <input type="hidden" name="action" value="" placeholder="name"/>
+                <label for="inputBox">Client Name: </label> <input type="text" name="client_name" id="inputBox"/>
+                <button type="submit">Search</button>
+            </form><br>
+            <table border="1" style="text-align: center;">
+                <tr><th>Client Name</th><th>Delivery_Datetime</th><th>Order_Datetime</th><th>Address</th><th>Option</th><th>Status</th></tr>
+                        <%
+                            if (queryOrders != null) {
+                                for (Vector<Order> qOrders : queryOrders) {
+                                    for (Order order : qOrders) {
+                                        out.print("<tr><td>" + order.getClient().getName() + "</td><td>"
+                                                + order.getDelivery_datetime() + "</td><td>"
+                                                + order.getOrder_datetime() + "</td><td>"
+                                                + order.getAddress() + "</td><td>"
+                                                + order.getOption() + "</td><td>"
+                                                + order.getStatus() + "</td>"
+                                                + "</tr>");
+                                    }
+                                }
+                            } else {
+                                for (Order order : orders) {
+                                    out.print("<tr><td>" + order.getClient().getName() + "</td><td>"
+                                            + order.getDelivery_datetime() + "</td><td>"
+                                            + order.getOrder_datetime() + "</td><td>"
+                                            + order.getAddress() + "</td><td>"
+                                            + order.getOption() + "</td><td>"
+                                            + order.getStatus() + "</td></tr>");
+                                }
+                            }
+                        %>
+            </table>
+        </div>
     </body>
 </html>

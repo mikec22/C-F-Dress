@@ -24,10 +24,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "QueryOrder", urlPatterns = {"/queryOrder"})
 public class QueryOrder extends HttpServlet {
-
+    
     private OrderDB orderDB;
     private ClientDB clientDB;
-
+    
     @Override
     public void init() throws ServletException {
         super.init();
@@ -51,19 +51,21 @@ public class QueryOrder extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action.equalsIgnoreCase("queryOrder")) {
-            String client_name=request.getParameter("client_name");
-            if (client_name == null||client_name.equals("")){
+            String client_name = request.getParameter("client_name");
+            if (client_name == null || client_name.equals("")) {
                 request.setAttribute("orders", orderDB.getAllOrders());
                 getServletContext().getRequestDispatcher("/queryOrder.jsp").forward(request, response);
             } else {
-                Vector<Client> clients= clientDB.queryClientByName(client_name);
+                Vector<Client> clients = clientDB.queryClientByName(client_name);
                 Vector<Vector<Order>> orders = new Vector();
-                for (Client client : clients){
+                for (Client client : clients) {
                     orders.add(orderDB.getOrders(client.getClient_id()));
                 }
                 request.setAttribute("queryOrders", orderDB.getOrders(0));
                 getServletContext().getRequestDispatcher("/queryOrder.jsp").forward(request, response);
             }
+        } else if (action.equals("showOrderDetail")) {
+            
         }
     }
 
