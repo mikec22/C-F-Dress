@@ -24,8 +24,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author shukyan
  */
-@WebServlet(name = "existingOrderController", urlPatterns = {"/existingOrderController"})
-public class existingOrderController extends HttpServlet {
+@WebServlet(name = "ExistingOrderController", urlPatterns = {"/existingOrderController"})
+public class ExistingOrderController extends HttpServlet {
 
     private OrderDB db;
 
@@ -44,8 +44,8 @@ public class existingOrderController extends HttpServlet {
 
         if (action.equals("showExistingOrder")) {
             showExistingOrder(request, response);
-        } else if (action.equals("Cancle")) {
-            CancleOrder(request, response);
+        } else if (action.equals("Cancel")) {
+            CancelOrder(request, response);
         } else if (action.equals("editOrder")){
             editOrder(request, response);
         }
@@ -68,7 +68,7 @@ public class existingOrderController extends HttpServlet {
         rd.forward(request, response);
 
     }
-    private void CancleOrder(HttpServletRequest request, HttpServletResponse response)
+    private void CancelOrder(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int order_id = Integer.parseInt(request.getParameter("order_id"));
         //db.cancelOrder(order_id);

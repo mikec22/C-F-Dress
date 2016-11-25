@@ -33,7 +33,7 @@
                 out.print("<input type ='text' name ='address' value='"+address+"'>"+order.getOrder_datetime().toString());
                 //|| amount>1000
                 if ((current - order_date) > 86400000) {
-                    out.print("<input type='submit' name'action' value='Cancle'>");
+                    out.print("<input type='submit' name'action' value='Cancel'>");
                 }
 
                 out.print("<input type='submit' name'action' value='updateOrder'></form>");
