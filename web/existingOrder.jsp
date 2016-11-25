@@ -16,41 +16,29 @@
         <title>JSP Page</title>
     </head>
     <body>
-       <jsp:useBean class="java.util.Vector<Order>" scope="request" id="existingOrder" />
-            <%
-//                for(Order o: 
-//                        existingOrder){
-//            System.out.println("order id :" + o.getOrder_id());
-       // }  
-//                final long ONE_DAY_MILLISCONDS = 25 * 60 * 60 * 1000;
-//                Date od = order.getOrder_datetime().getTime();
-//                java.util.Date today = new java.util.Date();
-//                java.util.Date yesterday = new java.util.Date(today - ONE_DAY_MILLISCONDS);
-//                java.util.Date lastWeek = new java.util.Date(today - (7 * ONE_DAY_MILLISCONDS));
+        <jsp:useBean class="java.util.Vector<Order>" scope="request" id="existingOrder" />
 
-                for (Order order : existingOrder) {
-
-                    java.sql.Date logicalDate = order.getOrder_datetime();
-                    out.println(logicalDate);
-                    Calendar c = Calendar.getInstance();
-                    c.setTime(logicalDate);
-                    c.add(Calendar.DATE, 1);
-                    java.sql.Date exDate = new java.sql.Date(c.getTimeInMillis());
-                    out.println(exDate);
-                    
-
-//                    double amount = order.getTotalPrice();
-////                     Date od = order.getOrder_datetime().getTime();
-////                    Date expiry = order.getOrder_datetime().getTime() + 60 * 60 * 24 * 1000;
-//                    out.println(order.getDelivery_datetime().getTime() + 60 * 60 * 24 * 1000);
-//                    out.println();
-//                    out.println(order.getDelivery_datetime());
-//                    out.println(order.getTotalPrice());
-//                    out.println(amount);
-//                    if (amount > 10000) {
-//
-//                    }
+        <%out.print("ORDER");
+            for (Order order : existingOrder) {
+                out.print("<form method='' action''>");
+                String orderDate = order.getOrder_datetime().toString();
+                int order_id = order.getOrder_id();
+                //double amount = order.getTotalPrice();
+                String option = order.getOption();
+                String address = order.getAddress();
+                long order_date = order.getOrder_datetime().getTime();
+                Calendar c = Calendar.getInstance();
+                long current = c.getTimeInMillis();
+                out.print("<form method='' action''>" + orderDate);
+                out.print("<input type ='text' name ='address' value='"+address+"'>"+order.getOrder_datetime().toString());
+                //|| amount>1000
+                if ((current - order_date) > 86400000) {
+                    out.print("<input type='submit' name'action' value='Cancle'>");
                 }
-            %>
-        </body>
-    </html>
+
+                out.print("<input type='submit' name'action' value='updateOrder'></form>");
+
+            }
+        %>
+    </body>
+</html>

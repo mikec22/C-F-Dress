@@ -40,18 +40,43 @@ public class existingOrderController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if (action.equals("showExistingOrder")) {
+            showExistingOrder(request, response);
+        } else if (action.equals("Cancle")) {
+            CancleOrder(request, response);
+        } else if (action.equals("editOrder")){
+            editOrder(request, response);
+        }
+        else {
+            //
+        }
+
+    }
+
+    private void showExistingOrder(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
         HttpSession session = request.getSession();
         Client client = (Client) session.getAttribute("clientInfo");
         int client_id = 1;
-                //client.getClient_id();
+        //client.getClient_id();
         Vector<Order> orders = db.getExistedOrdersOfClient(client_id);
-        
         request.setAttribute("existingOrder", orders);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/existingOrder.jsp");
         rd.forward(request, response);
 
     }
+    private void CancleOrder(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int order_id = Integer.parseInt(request.getParameter("order_id"));
+        //db.cancelOrder(order_id);
+    
+    }
+    
+     private void editOrder(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {}
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
