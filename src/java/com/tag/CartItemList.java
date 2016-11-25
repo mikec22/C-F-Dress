@@ -18,6 +18,18 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 public class CartItemList extends SimpleTagSupport {
 
     private Vector<OrderLine> orderLines;
+    
+    private String status = "cart";
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    
 
     public Vector<OrderLine> getOrderLines() {
         return orderLines;
@@ -49,9 +61,14 @@ public class CartItemList extends SimpleTagSupport {
                             + "<input type='hidden' name='id' value='" + ol.getItem().getItem_id() + "'/>\n"
                             + "<input class=\"continue\" type='submit' value='update'/>\n"
                             + "</form>";
+                    String deleteBtn = "<input type='submit' value='X'>\n";
                     if(ol.getItem().getCategory().equals("gifts")){
                         total = "<p>" + subtotal + " BP</p>\n";
                         updateForm = "";
+                    }
+                    if(status.equals("result")){
+                        updateForm = "";
+                        deleteBtn = "";
                     }
                     
                     out.print("<li class=\"items odd\">\n"
@@ -72,7 +89,7 @@ public class CartItemList extends SimpleTagSupport {
                             + "<input type='hidden' name='action' value='delete'/>\n"
                             + "<input type='hidden' name='id' value='" + ol.getItem().getItem_id() + "'/>\n"
                             + ""
-                            + "                                <input type='submit' value='X'>\n"
+                            + deleteBtn
                             + "                            </div>\n"
                             + "                        </div>\n"
                             + "                    </li></form>");

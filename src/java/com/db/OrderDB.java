@@ -47,12 +47,11 @@ public class OrderDB implements Serializable {
         return null;
     }
 
-    public boolean addOrder(int client_id, Date delivery_datetime, String address, String option, String status, Vector<OrderLine> order_lines) {
+    public boolean addOrder(int client_id, String delivery_datetime, String address, String option, String status, Vector<OrderLine> order_lines) {
         Connection cnnct = null;
         Statement stmnt = null;
         boolean isSuccess = false;
         int orde_id = getNewOrderId();
-        System.out.print("I AM HERE ID: " + orde_id);
         try {
             cnnct = getConnection();
             cnnct.setAutoCommit(false);
@@ -65,17 +64,28 @@ public class OrderDB implements Serializable {
                     + "','" + option
                     + "','" + status
                     + "')");
-
+            
             if (order_lines == null) {
                 throw new SQLException();
             }
             for (OrderLine ol : order_lines) {
-                stmnt.addBatch("INSERT INTO `order_line`(`order_id`, `item_id`, `total_price`, `quantity`) VALUES("
+                if(ol.getItem().getCategory().equals("gifts")){
+                    stmnt.addBatch("INSERT INTO `order_line`(`order_id`, `item_id`, `total_price`, `quantity`,`bonus_point`) VALUES("
+                        + orde_id + ","
+                        + ol.getItem().getItem_id() + ","
+                        + "0" + ","
+                        + ol.getQuantity() + ","
+                        + ol.getPrice()
+                        + ")");
+                }else{
+                    stmnt.addBatch("INSERT INTO `order_line`(`order_id`, `item_id`, `total_price`, `quantity`,`bonus_point`) VALUES("
                         + orde_id + ","
                         + ol.getItem().getItem_id() + ","
                         + ol.getSubTotal() + ","
-                        + ol.getQuantity()
+                        + ol.getQuantity() + ","
+                        + "0"
                         + ")");
+                }
             }
             int[] rowCount = stmnt.executeBatch();
             cnnct.commit();
@@ -98,7 +108,7 @@ public class OrderDB implements Serializable {
         }
         return isSuccess;
     }
-
+    
     public int getNewOrderId() {
         int order_id = 0;
         try {

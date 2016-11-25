@@ -397,6 +397,33 @@ public class ClientDB {
         return isSuccess;
     }
 
+        public boolean updateClientBalanceBonusPoints(Client client) {
+        boolean isSuccess = false;
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "UPDATE client "
+                    + "SET balance = ? ,"
+                    + "bonus_point = ? "
+                    + "WHERE client_id = ?";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setDouble(1, client.getBalance());
+            pStmnt.setInt(2, client.getBonus_point());
+            pStmnt.setInt(3, client.getClient_id());
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount == 1) {
+                isSuccess = true;
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return isSuccess;
+    }
+    
     public Vector<Client> queryClientByKeyword(String keyword) {
         Vector<Client> clients = new Vector();
         try {

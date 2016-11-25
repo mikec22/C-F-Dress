@@ -56,6 +56,11 @@
             <rtexprvalue>true</rtexprvalue>
             <type>java.unit.Vector</type>
         </attribute>
+        <attribute>
+            <name>status</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
     
     <tag>
