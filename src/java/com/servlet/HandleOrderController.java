@@ -131,6 +131,9 @@ public class HandleOrderController extends HttpServlet {
             } else if ((dp > client_dp)) {
                 msg = "Bonus Points not enough ";
             } else {
+                order.setAddress(address);
+                order.setOption(option);
+                
                 Vector<OrderLine> order_line = order.getOrder_lines();
                 boolean add = orderDB.addOrder(client_id, datetime, address, option, status, order_line);
                 if (add) {

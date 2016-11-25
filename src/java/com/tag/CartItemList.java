@@ -42,7 +42,6 @@ public class CartItemList extends SimpleTagSupport {
     @Override
     public void doTag() throws JspException {
         JspWriter out = getJspContext().getOut();
-
         try {
             if (orderLines.isEmpty()) {
                 out.print("<h2>Empty</h2>");
@@ -88,7 +87,6 @@ public class CartItemList extends SimpleTagSupport {
                             + "<form action='CartItemController' method='GET'>"
                             + "<input type='hidden' name='action' value='delete'/>\n"
                             + "<input type='hidden' name='id' value='" + ol.getItem().getItem_id() + "'/>\n"
-                            + ""
                             + deleteBtn
                             + "                            </div>\n"
                             + "                        </div>\n"

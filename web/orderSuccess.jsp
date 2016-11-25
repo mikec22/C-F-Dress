@@ -4,7 +4,10 @@
     Author     : Fai
 --%>
 
+<%@page import="com.bean.OrderLine"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="/WEB-INF/tlds/com-taglib.tld" prefix="com"%>
+<jsp:useBean id="orderResult" scope="request" class="com.bean.Order"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -29,15 +32,18 @@
             <jsp:include page="clientMenu.jsp" />
         </div>
         <div>
-            <jsp:useBean id="orderResult" scope="request" class="com.bean.Order"/>
             <div class="wrap cf">
+                <h2>Order Successful</h2>
+                <h4>Address : <%=orderResult.getAddress() %></h4>
+                <h4>Status : <%=orderResult.getStatus() %></h4>
                 <div class="heading cf">
-                    <h1 style="text-align: center">Order Successful</h1>
+<!--                    <h1 style="text-align: center">Order Successful</h1>-->
                     <a href="<%=request.getContextPath()%>" class="continue">Continue Shopping</a>
                 </div>
                 <div class="cart">
                     <ul class="cartWrap">
-                        <com:CartItemListTag orderLines="<%=orderResult.getOrder_lines()%>"/>
+                        
+                        <com:CartItemListTag status="result" orderLines="<%=orderResult.getOrder_lines()%>"/>
                     </ul>
                 </div>
                 <div class="subtotal cf" >
