@@ -60,14 +60,19 @@ public class orderList extends SimpleTagSupport {
                 String option = order.getOption();
                 String address = order.getAddress();
                 long order_date = orderDate.getTime();
+                String ststus = order.getStatus();
                 long delivery_Datetime = delivery_datetime.getTime();
                 out.print("<br>id orderDate,(delivery date, time),amount, button");
-                String displayStr = "<div><form method='POST' action='edtiExistingOrder'>" + order_id
+                String displayStr = "<div><form method='POST' action='edtiExistingOrder'>"
+                        + "<input type =\"hidden\" name =\"order_id\" value=\""
+                        + order_id + "\">"
+                        + "<input type =\"hidden\" name =\"ststus\" value=\""
+                        + ststus + "\">"
                         + orderDate
                         + "$" + amount;
                 if (option.equals("delivery")) {
-                    displayStr += "<input type =\"text\" name =\"address\" value=\""
-                            + address + "\">" + "<input type =\"date\" name =\"delivery_date\" value=\""
+                    displayStr += address 
+                            + "<input type =\"date\" name =\"delivery_date\" value=\""
                             + datetime[0]
                             + "\">" + "<input type =\"time\" name =\"delivery_time\" value=\""
                             + datetime[1] + "\">";
@@ -75,8 +80,8 @@ public class orderList extends SimpleTagSupport {
                 if (allowCancel(order_date, delivery_Datetime, amount, option)) {
                     displayStr += "<input type='submit' name='action' value='CancelOrder'>";
                 }
-                if (option.equals("delivery")){
-                displayStr += "<input type='submit' name='action' value='updateOrder'></form></div>";
+                if (option.equals("delivery")) {
+                    displayStr += "<input type='submit' name='action' value='updateOrder'></form></div>";
                 }
                 out.print(displayStr);
 

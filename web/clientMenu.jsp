@@ -34,7 +34,7 @@
         <li><a href="item?category=Shoes">Shoes</a></li>
         <li><a href="item?category=Watches">Watches</a></li>
         <li><a href='item?category=Gifts'>Gifts</a></li>
-        <li><a href='existingOrderController'>Order</a></li>
+        <li><a href='existingOrder?action=showExistingOrder'>Order</a></li>
         <li><a href=''>History</a></li>
         <li><a href='ClientDetailsController?action=getClient'>Personal Details</a></li>
     </ul>

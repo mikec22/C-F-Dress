@@ -5,27 +5,21 @@
  */
 package com.servlet;
 
-import com.bean.Client;
-import com.bean.Order;
-import com.db.ClientDB;
 import com.db.OrderDB;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Vector;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author shukyan
  */
-@WebServlet(name = "ExistingOrderController", urlPatterns = {"/existingOrder"})
-public class ExistingOrderController extends HttpServlet {
+@WebServlet(name = "edtiExistingOrder", urlPatterns = {"/edtiExistingOrder"})
+public class edtiExistingOrder extends HttpServlet {
 
     private OrderDB db;
 
@@ -41,41 +35,22 @@ public class ExistingOrderController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-
-        if (action.equals("showExistingOrder")) {
-            showExistingOrder(request, response);
-        } else if (action.equals("Cancel")) {
-            CancelOrder(request, response);
-        } else if (action.equals("editOrder")){
-            editOrder(request, response);
-        }
-        else {
-            //
-        }
-
-    }
-
-    private void showExistingOrder(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        HttpSession session = request.getSession();
-        Client client = (Client) session.getAttribute("clientInfo");
-        int client_id = client.getClient_id();
-        Vector<Order> orders = db.getExistedOrdersOfClient(client_id);
-        request.setAttribute("existingOrder", orders);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/existingOrder.jsp");
-        rd.forward(request, response);
-
-    }
-    private void CancelOrder(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        String datetime = request.getParameter("delivery_date")
+                + " " + request.getParameter("delivery_time") + ":00";
+        String status = request.getParameter("ststus");;
         int order_id = Integer.parseInt(request.getParameter("order_id"));
-        //db.cancelOrder(order_id);
-    
+        if (action.equals("CancelOrder")) {
+            db.updateStatus(order_id, datetime, "cancelled");
+
+        } else if (action.equals("updateOrder")) {
+            db.updateStatus(order_id, datetime, status);
+        } else {
+            PrintWriter out = response.getWriter();
+            out.println("No action done!!!");
+            response.sendRedirect(request.getContextPath() + "/existingOrder?action=showExistingOrder");
+        }
+        response.sendRedirect(request.getContextPath() + "/existingOrder?action=showExistingOrder");
     }
-    
-     private void editOrder(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {}
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
