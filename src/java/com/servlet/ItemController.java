@@ -64,6 +64,12 @@ public class ItemController extends HttpServlet {
             id = Integer.parseInt(request.getParameter("id"));
             Item item = itemDB.getItem(id);
             if (item != null) {
+                if (item.getCategory().equals("gifts")) {
+                    HttpSession session = request.getSession();
+                    if (session.getAttribute("clientInfo") == null) {
+                        throw new ServletException();
+                    }
+                }
                 title = item.getName();
                 request.setAttribute("item", item);
                 request.setAttribute("title", title);
@@ -106,15 +112,20 @@ public class ItemController extends HttpServlet {
         keyword = keyword == null ? "" : keyword;
         try {
             if (category == null) {
-                if(session.getAttribute("clientInfo")!=null){
+                if (session.getAttribute("clientInfo") != null) {
                     itemList = itemDB.queryItemByKeyword(keyword);
-                }else{
+                } else {
                     itemList = itemDB.querySellItemByKeyword(keyword);
                 }
                 title = "C&F Dress ";
             } else {
-                itemList = itemDB.queryItemByCategoryKeyword(keyword, category);
-                title = "C&F Dress - " + category;
+                if (session.getAttribute("clientInfo") != null) {
+                    itemList = itemDB.queryItemByCategoryKeyword(keyword, category);
+                    title = "C&F Dress - " + category;
+                } else {
+                    itemList = itemDB.querySellItemByKeyword(keyword);
+                    title = "C&F Dress ";
+                }
             }
             request.setAttribute("itemList", itemList);
             request.setAttribute("title", title);

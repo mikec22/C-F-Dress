@@ -39,17 +39,10 @@ public class CartItemController extends HttpServlet {
 
         String action = request.getParameter("action");
 
-        if (action == null) {
-            action = "";
-        }
         if (action.equals("update")) {
             update(request, response);
         } else if (action.equals("delete")) {
             delete(request, response);
-        } else {
-            PrintWriter out = response.getWriter();
-            out.println("No such action!!!");
-            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);;
         }
         response.sendRedirect(request.getContextPath() + "/shoppingCart?action=showCart");
     }

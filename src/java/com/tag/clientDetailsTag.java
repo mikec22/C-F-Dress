@@ -70,6 +70,7 @@ public class clientDetailsTag extends SimpleTagSupport {
 "                        <li><label>Delivery Address</label><br>" + client.getAddress() + "</li>\n" +
 "                        <li><label>Bonus Point</label><br>"+ client.getBonus_point() +"</li>\n" +
 "                        <li><label>Balance</label><br> HK$ " + client.getBalance() + "</li>\n" +
+"                        <li><label>Credit Amount</label><br> HK$ " + client.getCredit_amount() + "</li>\n" +
 "                        <li><a href='ClientDetailsController?action=editForm'><input class='button' type='submit' value='Edit'/></li></a>\n" +
 "                    </ul>\n" +
 "                </div>\n" +

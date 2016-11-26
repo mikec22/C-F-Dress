@@ -11,11 +11,6 @@
     if(client == null ){
         request.getRequestDispatcher(request.getContextPath()+ "/login").forward(request, response);
     }
-//    if (client.getLogin_id()==null) {
-//        session.removeAttribute("clientInfo");
-//        response.sendRedirect(request.getContextPath()+ "/login");
-//        System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-//    }
 %>
 <link rel="stylesheet" href="css/menu.css">
 <link href='http://fonts.googleapis.com/css?family=Roboto:500,900,100,300,700,400' rel='stylesheet' type='text/css'>
@@ -23,7 +18,7 @@
 <nav class="stroke">
     <div class='atext'> Hi, <%=client.getName()%>
         <a href='login?action=logout'>Log out</a>
-        <a href='shoppingCart?action=showCart'>Cart (<%=cart.getOrder_lines().size() %>)</a></div>
+        <a href='shoppingCart?action=showCart'>Cart (<%=cart.getOrder_lines().size()%>)</a></div>
         
     <a href="<%=request.getContextPath()%>"><img src="img/cf_logo.png" style="display: block;margin: 0 auto; width: 15%; height: 15%"></a>
 

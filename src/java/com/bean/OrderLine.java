@@ -15,14 +15,27 @@ public class OrderLine implements Serializable {
 
     private Order order;
     private Item item;
+    private double totalPrice;
     private double price;
     private int quantity;
+    private int bonusPoint;
 
     public OrderLine(Order order, Item item, double price, int quantity) {
         this.order = order;
         this.item = item;
         this.price = price;
         this.quantity = quantity;
+        this.totalPrice = price * quantity;
+        this.bonusPoint = 0;
+    }
+    
+    public OrderLine(Order order, Item item, int bounsPoint, int quantity) {
+        this.order = order;
+        this.item = item;
+        this.price = 0;
+        this.totalPrice = 0;
+        this.quantity = quantity;
+        this.bonusPoint = bounsPoint;
     }
 
     public OrderLine() {
@@ -34,6 +47,14 @@ public class OrderLine implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public Order getOrder() {
@@ -58,6 +79,14 @@ public class OrderLine implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getBonusPoint() {
+        return bonusPoint;
+    }
+
+    public void setBonusPoint(int bonusPoint) {
+        this.bonusPoint = bonusPoint;
     }
     
     public double getSubTotal(){

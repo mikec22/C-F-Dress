@@ -54,6 +54,10 @@ img {
     color: #777;
 }
 
+ul {
+    list-style-type: none;
+}
+
 .heading {
     padding: 1em 0;
     border-bottom: 1px solid #D0D0D0;
@@ -159,6 +163,7 @@ img {
     font-size: 1em;
     font-family: "Montserrat", sans-serif;
     font-weight: bold;
+    max-width: 85%;
     text-transform: uppercase;
     letter-spacing: .025em;
 }
@@ -201,7 +206,7 @@ img {
 }
 
 .cart .items .cartSection input.qty {
-    width: 4em;
+    width: 3.25em;
     text-align: center;
     font-size: 1em;
     padding: .25em;
@@ -256,7 +261,27 @@ a.remove:hover {
     background: #f30;
 }
 
+a.update {
+    text-decoration: none;
+    font-family: "Montserrat", sans-serif;
+    color: #ffffff;
+    font-weight: bold;
+    background: lightsteelblue;
+    padding: .5em;
+    font-size: .78em;
+    display: inline-block;
+    border-radius: 0%;
+    line-height: .85;
+    -webkit-transition: all 0.25s linear;
+    -moz-transition: all 0.25s linear;
+    -ms-transition: all 0.25s linear;
+    -o-transition: all 0.25s linear;
+    transition: all 0.25s linear;
+}
 
+a.update:hover {
+    background: #00ABF1;
+}
 
 .promoCode {
     border: 2px solid #efefef;

@@ -248,6 +248,31 @@ public class OrderDB implements Serializable {
         }
         return order;
     }
+    
+    public Order getLastOrder() {
+        Order order = null;
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM `order` ORDER BY order_id DESC LIMIT 1;";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
+                order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)), rs.getTimestamp(3),
+                        rs.getTimestamp(4), rs.getString(5), rs.getString(6),
+                        rs.getString(7), getOrderLines(rs.getInt(1)));
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return order;
+    }
 
     public Vector<OrderLine> getOrderLines(int order_id) {
         Vector<OrderLine> orderLines = new Vector();

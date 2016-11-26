@@ -30,9 +30,7 @@
 
 
 <form method="post" action="HandleOrderController" >
-    <input type="hidden" name="action" value=""/>
-    <input type="hidden" name="action" value=""/>
-    
+    <input type="hidden" name="action" value="placeOrder"/>
     Delivery method
     <input type ="radio" name="delivery_method" value="delivery" id="delivery" onclick="handleClick(this.id);" checked>Delivery
     <input type ="radio" name="delivery_method" value="self" id="self" onclick="handleClick(this.id);" >Self-pick up<br>

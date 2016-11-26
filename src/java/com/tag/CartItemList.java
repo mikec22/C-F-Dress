@@ -44,7 +44,7 @@ public class CartItemList extends SimpleTagSupport {
         JspWriter out = getJspContext().getOut();
         try {
             if (orderLines.isEmpty()) {
-                out.print("<h2>Empty</h2>");
+                out.print("<h4 class=\"itemNumber\">No item here</h4>");
             } else {
                 for (OrderLine ol : orderLines) {
                     String img = "<img src=\"img/item/" + ol.getItem().getImg() + "\" alt=\"\" class=\"itemImg\" />";
@@ -53,14 +53,14 @@ public class CartItemList extends SimpleTagSupport {
                     int quantity = ol.getQuantity();
                     double subtotal = quantity * unitPrice;
                     String total = "<p>HK$" + subtotal + "</p>\n";
-                    String updateForm = "<form action='CartItemController' method='GET'><p> <input type=\"number\" min='1' name='quantity' value='" + quantity + "' class=\"qty\" /> "
+                    String updateForm = "<form name='updateForm' action='CartItemController' method='GET'><p> <input type=\"number\" min='1' name='quantity' value='" + quantity + "' class=\"qty\" /> "
                             + "x HK$" + unitPrice + "</p>\n"
                             + ""
                             + "<input type='hidden' name='action' value='update'/>\n"
                             + "<input type='hidden' name='id' value='" + ol.getItem().getItem_id() + "'/>\n"
-                            + "<input class=\"continue\" type='submit' value='update'/>\n"
+                            + "<a href=\"javascript:document.updateForm.submit()\" class=\"update\"> UPDATE  </a>\n"
                             + "</form>";
-                    String deleteBtn = "<input type='submit' value='X'>\n";
+                    String deleteBtn = "<a href='javascript:document.deleteForm.submit()' class='remove'>X</a>\n";
                     if(ol.getItem().getCategory().equals("gifts")){
                         total = "<p>" + subtotal + " BP</p>\n";
                         updateForm = "";
@@ -70,7 +70,7 @@ public class CartItemList extends SimpleTagSupport {
                         deleteBtn = "";
                     }
                     
-                    out.print("<li class=\"items odd\">\n"
+                    out.print("<div class=\"heading cf\"><li class=\"items odd\">\n"
                             + "                        <div class=\"infoWrap\"> \n"
                             + "                            <div class=\"cartSection\">\n"
                             + img
@@ -84,13 +84,13 @@ public class CartItemList extends SimpleTagSupport {
                             + total
                             + "                            </div>\n"
                             + "                            <div class=\"cartSection removeWrap\">\n"
-                            + "<form action='CartItemController' method='GET'>"
+                            + "<form name='deleteForm' action='CartItemController' method='GET'>"
                             + "<input type='hidden' name='action' value='delete'/>\n"
                             + "<input type='hidden' name='id' value='" + ol.getItem().getItem_id() + "'/>\n"
                             + deleteBtn
                             + "                            </div>\n"
                             + "                        </div>\n"
-                            + "                    </li></form>");
+                            + "                    </li></form></div>");
 
 //                out.println("<div><form action='CartItemController' method='GET'>"
 //                        + img

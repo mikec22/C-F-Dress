@@ -6,6 +6,7 @@
 package com.servlet;
 
 import com.bean.Client;
+import com.bean.Order;
 import com.db.ClientDB;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -49,12 +50,13 @@ public class ClientLoginController extends HttpServlet {
         String password = request.getParameter("password");
         String targetURL;
         boolean isValid = db.isValidClient(username, password);
-        if (isValid) {
-            HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(false);
+        if (isValid) {     
             Client client = db.getClient(username);
             session.setAttribute("clientInfo", client);
             targetURL = "index.jsp";
         } else {
+            session.removeAttribute("clientInfo");
             request.setAttribute("userPath", "/login");
             targetURL = "loginError.jsp";
         }

@@ -48,11 +48,7 @@ public class CartController extends HttpServlet {
         } else if (action.equals("showCart")) {
             showCart(request, response);
         } else {
-            PrintWriter out = response.getWriter();
-            out.println("No such action!!!");
-            String referer = request.getHeader("Referer");
-            response.sendRedirect(referer);
-//            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);;
+            response.sendRedirect(request.getContextPath() + "/shoppingCart?action=showCart");
         }
     }
 
@@ -71,18 +67,18 @@ public class CartController extends HttpServlet {
             // Set quantity
             if (quantity < 0) {
                 quantity = 1;
-
             }
-
-            OrderLine orderline = new OrderLine();
-            orderline.setItem(item);
-            orderline.setPrice(item.getPrice());
-            orderline.setQuantity(quantity);
-
-            if (quantity == 0) {
-                order.removeItem(orderline);
+            OrderLine orderLine;
+            if (item.getCategory().equals("gifts")) {
+                orderLine = new OrderLine(order, item, (int)item.getPrice(), quantity);
             } else {
-                order.addItem(orderline);
+                orderLine = new OrderLine(order, item, item.getPrice(), quantity);
+            }
+            
+            if (quantity == 0) {
+                order.removeItem(orderLine);
+            } else {
+                order.addItem(orderLine);
             }
 
             // Update Cart session attribute
@@ -102,12 +98,8 @@ public class CartController extends HttpServlet {
 
     private void showCart(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-        
-        HttpSession session = request.getSession();
-        Order order = (Order) session.getAttribute("cart");
-        order = order == null ? new Order() : (Order) session.getAttribute("cart");
         getServletContext().getRequestDispatcher("/shoppingCart.jsp").forward(request, response);
-        
+
     }
 
     @Override

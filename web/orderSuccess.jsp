@@ -8,6 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="/WEB-INF/tlds/com-taglib.tld" prefix="com"%>
 <jsp:useBean id="orderResult" scope="request" class="com.bean.Order"/>
+<jsp:useBean id="clientInfo" scope="session" class="com.bean.Client"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -34,15 +35,24 @@
         <div>
             <div class="wrap cf">
                 <h2>Order Successful</h2>
-                <h4>Address : <%=orderResult.getAddress() %></h4>
-                <h4>Status : <%=orderResult.getStatus() %></h4>
+                <h4>Order ID : <%=orderResult.getOrder_id()%></h4>
+                <h4>Order time : <%=orderResult.getOrder_datetime() %></h4>
+                <h4>Your current balance : <%=clientInfo.getBalance()%></h4>
+                <h4>Your current bonus point : <%=clientInfo.getBonus_point()%></h4>
+                <%
+                    if (orderResult.getOption().equals("delivery")) {
+                        out.print("<h4>Delivery address : " + orderResult.getAddress());
+                        out.print("<h4>Delivery Date and Time : " + orderResult.getDelivery_datetime());
+                    } else {
+                        out.print("<h4>Delivery Option : Self-pick up");
+                    }
+                %>
                 <div class="heading cf">
-<!--                    <h1 style="text-align: center">Order Successful</h1>-->
+                    <!--                    <h1 style="text-align: center">Order Successful</h1>-->
                     <a href="<%=request.getContextPath()%>" class="continue">Continue Shopping</a>
                 </div>
                 <div class="cart">
-                    <ul class="cartWrap">
-                        
+                    <ul class="cartWrap">    
                         <com:CartItemListTag status="result" orderLines="<%=orderResult.getOrder_lines()%>"/>
                     </ul>
                 </div>
