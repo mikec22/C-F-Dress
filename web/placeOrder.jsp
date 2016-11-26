@@ -27,7 +27,9 @@
 <jsp:useBean id="order" scope="request" class="com.bean.Order"/>
 <jsp:useBean id="clientInfo" class="com.bean.Client" scope="session" />
 
-
+<div id="menu">
+    <jsp:include page="clientMenu.jsp" />
+</div>
 
 <form method="post" action="HandleOrderController" >
     <input type="hidden" name="action" value="placeOrder"/>

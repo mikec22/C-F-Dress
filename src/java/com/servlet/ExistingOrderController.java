@@ -60,8 +60,7 @@ public class ExistingOrderController extends HttpServlet {
 
         HttpSession session = request.getSession();
         Client client = (Client) session.getAttribute("clientInfo");
-        int client_id = 1;
-        //client.getClient_id();
+        int client_id = client.getClient_id();
         Vector<Order> orders = db.getExistedOrdersOfClient(client_id);
         request.setAttribute("existingOrder", orders);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/existingOrder.jsp");
