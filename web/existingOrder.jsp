@@ -18,6 +18,6 @@
     <body>
         <jsp:useBean class="java.util.Vector<Order>" scope="request" id="existingOrder" />
 
-        <com:clientDetailsTag existingOrder="<%=existingOrder%>"/>
+        <com:existingOrderList existingOrder="<%=existingOrder%>"/>
     </body>
 </html>
