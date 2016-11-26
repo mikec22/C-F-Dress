@@ -36,8 +36,8 @@ CREATE TABLE `client` (
   `address` varchar(255) NOT NULL,
   `bonus_point` int(11) NOT NULL DEFAULT '1000',
   `verified` tinyint(1) NOT NULL DEFAULT '0',
-  `balance` decimal(7,2) NOT NULL DEFAULT '0.00',
-  `credit_amount` decimal(7,2) NOT NULL DEFAULT '0.00',
+  `balance` decimal(9,2) NOT NULL DEFAULT '0.00',
+  `credit_amount` decimal(9,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`client_id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `login_id_UNIQUE` (`login_id`)
@@ -50,7 +50,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (1,'Chris','123','Chris Wong','M','1993-01-02','abc@vtc.edu.hk','12345678','hhh',1000,1,9500.00,0.00),(2,'Peter','123','Peter Chan','M','1994-02-01','edf@vdc.edu.hk','23456789','777',1000,0,100.00,0.00),(3,'Joe','123','Joe Lam','M','1993-04-03','joe@vtc.edu.hk','12345678','20 Tsing Yi Road\r\nTsing Yi Island\r\nNew Territories',1000,1,0.00,0.00),(4,'Dick','123','Dick Hui','M','1994-01-01','dick@gmail.com','12312333','asd',1000,1,0.00,0.00),(5,'JSON','123','JSON Lam','M','1997-07-01','json@vtc.edu.hk','87634321','abc',1000,0,0.00,0.00),(7,'Mary','123','Mary Chan','M','1803-04-04','mary@gmail.com','12312312','123',1000,0,0.00,0.00),(10,'Apple','123','Apple Wong','M','2016-11-10','123@123.com','12345678','Test',1000,0,0.00,0.00),(11,'Ben','123','Ben Wong','M','1988-04-04','ben@vtc.edu.hk','23456766','123',1000,0,0.00,0.00),(12,'usa','123','Chan Tai Man','M','1995-11-11','usa@vtc.edu.hk','67891234','123',1000,1,103.50,0.00);
+INSERT INTO `client` VALUES (1,'Chris','123','Chris Wong','M','1993-01-02','abc@vtc.edu.hk','12345678','hhh',1139,1,6704.00,0.00),(2,'Peter','123','Peter Chan','M','1994-02-01','edf@vdc.edu.hk','23456789','777',1000,0,100.00,0.00),(3,'Joe','123','Joe Lam','M','1993-04-03','joe@vtc.edu.hk','12345678','20 Tsing Yi Road\r\nTsing Yi Island\r\nNew Territories',10217,1,994992.99,0.00),(4,'Dick','123','Dick Hui','M','1994-01-01','dick@gmail.com','12312333','asd',1000,1,0.00,0.00),(5,'JSON','123','JSON Lam','M','1997-07-01','json@vtc.edu.hk','87634321','abc',1000,0,0.00,0.00),(7,'Mary','123','Mary Chan','M','1803-04-04','mary@gmail.com','12312312','123',1000,0,0.00,0.00),(10,'Apple','123','Apple Wong','M','2016-11-10','123@123.com','12345678','Test',1000,0,0.00,0.00),(11,'Ben','123','Ben Wong','M','1988-04-04','ben@vtc.edu.hk','23456766','123',1000,0,0.00,0.00),(12,'usa','123','Chan Tai Man','M','1995-11-11','usa@vtc.edu.hk','67891234','123',1000,1,103.50,0.00);
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,10 +98,11 @@ CREATE TABLE `order` (
   `address` varchar(255) NOT NULL,
   `option` varchar(10) NOT NULL,
   `status` varchar(20) NOT NULL,
+  `delay_day` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`order_id`),
   KEY `Order_client_id_idx` (`client_id`),
   CONSTRAINT `Order_client_id` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -110,7 +111,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (1,1,'1999-05-05 13:44:00','2016-11-24 18:52:31','hhh','null','processing'),(2,1,'1999-05-05 13:44:00','2016-11-24 18:54:57','null','null','processing'),(3,1,'1999-05-05 13:44:00','2016-11-24 18:57:18','null','null','processing'),(4,1,'1999-05-05 13:44:00','2016-11-24 18:59:55','null','null','processing'),(5,1,'2016-01-01 01:00:00','2016-11-25 02:09:06','hhh','null','processing'),(6,1,'2016-01-01 01:00:00','2016-11-25 02:10:21','hhh','null','processing'),(7,1,'2016-01-01 01:00:00','2016-11-25 02:11:20','hhh','null','processing'),(8,1,'2016-01-01 01:00:00','2016-11-25 02:12:19','hhh','self','processing'),(9,1,'2016-12-31 12:59:00','2016-11-25 02:19:14','hhh','delivery','processing'),(10,1,'2016-12-31 12:59:00','2016-11-25 02:29:12','hhh','delivery','processing'),(11,1,'2016-12-31 12:59:00','2016-11-25 02:31:23','hhh','delivery','processing'),(12,1,'2016-12-31 12:59:00','2016-11-25 02:31:50','hhh','delivery','processing'),(13,1,'2016-01-01 01:00:00','2016-11-25 02:37:00','hhh','delivery','processing'),(14,1,'2016-01-01 01:00:00','2016-11-25 02:37:29','hhh','delivery','processing'),(15,1,'2016-01-01 01:00:00','2016-11-25 02:38:38','hhh','delivery','processing');
+INSERT INTO `order` VALUES (1,1,'1999-01-01 01:01:01','2016-11-26 20:28:39','self pick-up','self','processing',0),(2,3,'2016-11-30 01:00:00','2016-11-26 20:50:53','20 Tsing Yi Road\r\nTsing Yi Island\r\nNew Territories','delivery','processing',0),(3,3,'1999-01-01 01:01:01','2016-11-26 22:28:54','self pick-up','self','processing',0),(4,3,'1999-01-01 01:01:01','2016-11-26 23:04:01','self pick-up','self','processing',0);
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,6 +127,8 @@ CREATE TABLE `order_line` (
   `item_id` int(11) NOT NULL,
   `total_price` decimal(7,2) NOT NULL,
   `quantity` int(3) NOT NULL,
+  `bonus_point` int(11) NOT NULL DEFAULT '0',
+  `item_price` decimal(7,2) NOT NULL,
   PRIMARY KEY (`order_id`,`item_id`),
   KEY `order_line_item_id_idx` (`item_id`),
   CONSTRAINT `order_line_item_id` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -139,7 +142,7 @@ CREATE TABLE `order_line` (
 
 LOCK TABLES `order_line` WRITE;
 /*!40000 ALTER TABLE `order_line` DISABLE KEYS */;
-INSERT INTO `order_line` VALUES (1,1,400.00,1),(1,2,450.00,1),(1,4,570.00,1),(1,6,790.00,1),(1,24,1196.00,4),(5,1,800.00,2),(5,11,1998.00,2),(5,21,754.00,2),(6,1,800.00,2),(6,11,1998.00,2),(6,21,754.00,2),(7,1,800.00,2),(7,11,1998.00,2),(7,21,754.00,2),(8,1,800.00,2),(8,11,1998.00,2),(8,21,754.00,2),(9,14,3650.00,5),(9,21,1508.00,4),(10,14,3650.00,5),(10,21,1508.00,4),(11,14,3650.00,5),(11,21,1508.00,4),(12,14,3650.00,5),(12,21,1508.00,4),(13,14,3650.00,5),(13,21,1508.00,4),(14,14,3650.00,5),(14,21,1508.00,4),(15,14,3650.00,5),(15,21,1508.00,4);
+INSERT INTO `order_line` VALUES (1,13,2796.00,2,0,0.00),(2,3,330.00,1,0,0.00),(3,3,660.00,2,0,330.00),(4,2,450.00,1,0,450.00),(4,12,3897.00,3,0,1299.00);
 /*!40000 ALTER TABLE `order_line` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -179,4 +182,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-25  6:58:21
+-- Dump completed on 2016-11-26 23:18:27

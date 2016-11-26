@@ -6,7 +6,7 @@
 package com.bean;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Vector;
 
 /**
@@ -17,7 +17,7 @@ public class Order implements Serializable {
 
     private int order_id;
     private Client client;
-    private Date delivery_datetime, order_datetime;
+    private Timestamp delivery_datetime, order_datetime;
     private String address, option, status;
     private Vector<OrderLine> order_lines;
 
@@ -25,7 +25,7 @@ public class Order implements Serializable {
         order_lines = new Vector<OrderLine>();
     }
 
-    public Order(int order_id, Client client, Date delivery_datetime, Date order_datetime, String address, String option, String status, Vector<OrderLine> order_line) {
+    public Order(int order_id, Client client, Timestamp delivery_datetime, Timestamp order_datetime, String address, String option, String status, Vector<OrderLine> order_line) {
         this.order_id = order_id;
         this.client = client;
         this.delivery_datetime = delivery_datetime;
@@ -68,19 +68,19 @@ public class Order implements Serializable {
         this.client = client;
     }
 
-    public Date getDelivery_datetime() {
+    public Timestamp getDelivery_datetime() {
         return delivery_datetime;
     }
 
-    public void setDelivery_datetime(Date delivery_datetime) {
+    public void setDelivery_datetime(Timestamp delivery_datetime) {
         this.delivery_datetime = delivery_datetime;
     }
 
-    public Date getOrder_datetime() {
+    public Timestamp getOrder_datetime() {
         return order_datetime;
     }
 
-    public void setOrder_datetime(Date order_datetime) {
+    public void setOrder_datetime(Timestamp order_datetime) {
         this.order_datetime = order_datetime;
     }
 

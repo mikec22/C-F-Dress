@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="checkIsManagerLogin.jsp" %>
+<jsp:useBean id="client" scope="request" class="com.bean.Client"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,7 +15,6 @@
     </head>
     <body>
         <jsp:include page="managerMenu.jsp"/>
-        <jsp:useBean id="client" scope="request" class="com.bean.Client"/>
         <h3>Client info</h3>
         <table>
             <tr><td>LoginID</td><td><%=client.getLogin_id() %></td></tr>

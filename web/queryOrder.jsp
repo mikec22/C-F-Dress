@@ -18,7 +18,7 @@
     </head>
     <body>
         <jsp:include page="managerMenu.jsp"/>
-        <div style="text-align: center;margin: auto; width: 60%;">
+        <div style="text-align: center;margin: auto; width: 80%;">
             <form method="get" action="queryOrder">
                 <input type="hidden" name="action" value="queryOrder" />
                 <label for="inputBox">Client Name: </label> <input type="text" name="client_name" id="inputBox" placeholder="Name"/>
@@ -35,8 +35,10 @@
                                                 + order.getOrder_datetime() + "</td><td>"
                                                 + order.getAddress() + "</td><td>"
                                                 + order.getOption() + "</td><td>"
-                                                + order.getStatus() + "</td>"
-                                                + "</tr>");
+                                                + order.getStatus() + "</td><td>"
+                                                + "<a href=" + request.getContextPath()
+                                                + "/queryOrder?action=showOrderDetail&order_id="
+                                                + order.getOrder_id() + ">Show Detail</a>" + "</tr></tr>");
                                     }
                                 }
                             } else {
@@ -47,7 +49,10 @@
                                             + order.getOrder_datetime() + "</td><td>"
                                             + order.getAddress() + "</td><td>"
                                             + order.getOption() + "</td><td>"
-                                            + order.getStatus() + "</td></tr>");
+                                            + order.getStatus() + "</td><td>"
+                                            + "<a href=" + request.getContextPath()
+                                            + "/queryOrder?action=showOrderDetail&order_id="
+                                            + order.getOrder_id() + ">Show Detail</a>" + "</tr></tr>");
                                 }
                             }
                         %>

@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.Vector;
 
 /**
@@ -62,29 +63,29 @@ public class OrderDB implements Serializable {
                     + "','" + option
                     + "','" + status
                     + "')");
-            
+
             if (order_lines == null) {
                 throw new SQLException();
             }
             for (OrderLine ol : order_lines) {
-                if(ol.getItem().getCategory().equals("gifts")){
-                    stmnt.addBatch("INSERT INTO `order_line`(`order_id`, `item_id`, `total_price`, `quantity`,`bonus_point`,`total_price`) VALUES("
-                        + orde_id + ","
-                        + ol.getItem().getItem_id() + ","
-                        + "0" + ","
-                        + ol.getQuantity() + ","
-                        + ol.getPrice()
-                        + "0"
-                        + ")");
-                }else{
-                    stmnt.addBatch("INSERT INTO `order_line`(`order_id`, `item_id`, `total_price`, `quantity`,`bonus_point`,`total_price`) VALUES("
-                        + orde_id + ","
-                        + ol.getItem().getItem_id() + ","
-                        + ol.getSubTotal() + ","
-                        + ol.getQuantity() + ","
-                        + "0"
-                        + ol.getPrice()
-                        + ")");
+                if (ol.getItem().getCategory().equals("gifts")) {
+                    stmnt.addBatch("INSERT INTO `order_line`(`order_id`, `item_id`, `total_price`, `quantity`,`bonus_point`,`item_price`) VALUES("
+                            + orde_id + ","
+                            + ol.getItem().getItem_id() + ","
+                            + "0" + ","
+                            + ol.getQuantity() + ","
+                            + ol.getPrice() + ","
+                            + "0"
+                            + ")");
+                } else {
+                    stmnt.addBatch("INSERT INTO `order_line`(`order_id`, `item_id`, `total_price`, `quantity`,`bonus_point`,`item_price`) VALUES("
+                            + orde_id + ","
+                            + ol.getItem().getItem_id() + ","
+                            + ol.getSubTotal() + ","
+                            + ol.getQuantity() + ","
+                            + "0" + ","
+                            + ol.getPrice()
+                            + ")");
                 }
             }
             int[] rowCount = stmnt.executeBatch();
@@ -108,7 +109,7 @@ public class OrderDB implements Serializable {
         }
         return isSuccess;
     }
-    
+
     public int getNewOrderId() {
         int order_id = 0;
         try {
@@ -142,8 +143,8 @@ public class OrderDB implements Serializable {
             while (rs.next()) {
                 ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
                 Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
-                        rs.getDate(3), rs.getDate(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), null);
+                        rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
+                        rs.getString(7), this.getOrderLines(rs.getInt(1)));
                 order.setOrder_lines(getOrderLines(order));
                 orders.add(order);
             }
@@ -171,9 +172,9 @@ public class OrderDB implements Serializable {
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
             while (rs.next()) {
-                ClientDB clientDB = new ClientDB();
+                ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
                 Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
-                        rs.getDate(3), rs.getDate(4), rs.getString(5), rs.getString(6),
+                        rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
                         rs.getString(7), this.getOrderLines(rs.getInt(1)));
                 orders.add(order);
             }
@@ -199,14 +200,14 @@ public class OrderDB implements Serializable {
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
             while (rs.next()) {
-                ItemDB itemDB = new ItemDB(dburl,dbUser,dbPassword);
+                ItemDB itemDB = new ItemDB(dburl, dbUser, dbPassword);
                 OrderLine orderLine;
-                if(itemDB.getItem(rs.getInt(2)).getCategory().equals("gifts")){
+                if (itemDB.getItem(rs.getInt(2)).getCategory().equals("gifts")) {
                     orderLine = new OrderLine(order,
-                        itemDB.getItem(rs.getInt(2)), rs.getInt(5), rs.getInt(4));
-                }else{
+                            itemDB.getItem(rs.getInt(2)), rs.getInt(5), rs.getInt(4));
+                } else {
                     orderLine = new OrderLine(order,
-                        itemDB.getItem(rs.getInt(2)), rs.getDouble(3), rs.getInt(4));
+                            itemDB.getItem(rs.getInt(2)), rs.getDouble(3), rs.getInt(4));
                 }
                 orderLines.add(orderLine);
             }
@@ -233,8 +234,8 @@ public class OrderDB implements Serializable {
             rs = pStmnt.executeQuery();
             if (rs.next()) {
                 ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
-                order = new Order(order_id, clientDB.getClient(rs.getInt(2)), rs.getDate(3),
-                        rs.getDate(4), rs.getString(5), rs.getString(6),
+                order = new Order(order_id, clientDB.getClient(rs.getInt(2)), 
+                        rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
                         rs.getString(7), getOrderLines(order_id));
             }
             pStmnt.close();
@@ -261,12 +262,12 @@ public class OrderDB implements Serializable {
             while (rs.next()) {
                 ItemDB itemDB = new ItemDB(dburl, dbUser, dbPassword);
                 OrderLine orderLine;
-                if(itemDB.getItem(rs.getInt(2)).getCategory().equals("gifts")){
+                if (itemDB.getItem(rs.getInt(2)).getCategory().equals("gifts")) {
                     orderLine = new OrderLine(null,
-                        itemDB.getItem(rs.getInt("item_id")), rs.getInt(5), rs.getInt(4));
-                }else{
+                            itemDB.getItem(rs.getInt("item_id")), rs.getInt(5), rs.getInt(4));
+                } else {
                     orderLine = new OrderLine(null,
-                        itemDB.getItem(rs.getInt("item_id")), rs.getDouble(3), rs.getInt(4));
+                            itemDB.getItem(rs.getInt("item_id")), rs.getDouble(3), rs.getInt(4));
                 }
                 orderLines.add(orderLine);
             }
@@ -292,14 +293,14 @@ public class OrderDB implements Serializable {
             if (rs.next()) {
                 orders = new Vector();
                 ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
-                Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)), rs.getDate(3),
-                        rs.getDate(4), rs.getString(5), rs.getString(6),
+                Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)), 
+                        rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
                         rs.getString(7), getOrderLines(rs.getInt(1)));
                 orders.add(order);
                 while (rs.next()) {
                     clientDB = new ClientDB(dburl, dbUser, dbPassword);
-                    order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)), rs.getDate(3),
-                            rs.getDate(4), rs.getString(5), rs.getString(6),
+                    order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)), 
+                            rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
                             rs.getString(7), getOrderLines(rs.getInt(1)));
                     orders.add(order);
                 }
@@ -314,5 +315,28 @@ public class OrderDB implements Serializable {
         }
         return orders;
     }
-
+    
+        public boolean updateStatus(int order_id,String delivery_datetime ,String status) {
+        boolean isSuccess = false;
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "UPDATE CF_DB.`order` SET status = ?,"
+                    + " delivery_datetime = ?"
+                    + " WHERE order_id = ?";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, status);
+            pStmnt.setString(2, delivery_datetime);
+            pStmnt.setInt(3, order_id);
+            int rowCount = pStmnt.executeUpdate();
+            isSuccess = rowCount == 1;
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return isSuccess;
+    }
 }
