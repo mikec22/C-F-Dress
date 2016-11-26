@@ -70,7 +70,7 @@ public class CartController extends HttpServlet {
             }
             OrderLine orderLine;
             if (item.getCategory().equals("gifts")) {
-                orderLine = new OrderLine(order, item, (int)item.getPrice(), quantity);
+                orderLine = new OrderLine(order, item, (int)item.getPrice(), 1);
             } else {
                 orderLine = new OrderLine(order, item, item.getPrice(), quantity);
             }

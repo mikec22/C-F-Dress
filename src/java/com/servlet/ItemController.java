@@ -119,13 +119,19 @@ public class ItemController extends HttpServlet {
                 }
                 title = "C&F Dress ";
             } else {
-                if (session.getAttribute("clientInfo") != null) {
-                    itemList = itemDB.queryItemByCategoryKeyword(keyword, category);
-                    title = "C&F Dress - " + category;
+                if (category.equalsIgnoreCase("gifts")) {
+                    if (session.getAttribute("clientInfo") != null) {
+                        itemList = itemDB.queryItemByCategoryKeyword(keyword, category);
+                        title = "C&F Dress - " + category;
+                    } else {
+                        itemList = itemDB.querySellItemByKeyword(keyword);
+                        title = "C&F Dress ";
+                    }
                 } else {
-                    itemList = itemDB.querySellItemByKeyword(keyword);
-                    title = "C&F Dress ";
+                    itemList = itemDB.queryItemByCategoryKeyword(keyword, category);
+                        title = "C&F Dress - " + category;
                 }
+
             }
             request.setAttribute("itemList", itemList);
             request.setAttribute("title", title);

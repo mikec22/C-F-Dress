@@ -104,11 +104,12 @@ public class Order implements Serializable {
         //keep the quantity updated
         for (OrderLine ol : order_lines) {
             if (ol.getItem().getItem_id() == orderLine.getItem().getItem_id()) {
-                ol.setQuantity(ol.getQuantity() + orderLine.getQuantity());
+                if(!ol.getItem().getCategory().equalsIgnoreCase("gifts")){
+                    ol.setQuantity(ol.getQuantity() + orderLine.getQuantity());
+                }
                 return;
             }
         }
-
         order_lines.add(orderLine);
     }
 
