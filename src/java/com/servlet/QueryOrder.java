@@ -52,20 +52,26 @@ public class QueryOrder extends HttpServlet {
         String action = request.getParameter("action");
         if (action.equalsIgnoreCase("queryOrder")) {
             String client_name = request.getParameter("client_name");
+            
             if (client_name == null || client_name.equals("")) {
                 request.setAttribute("orders", orderDB.getAllOrders());
                 getServletContext().getRequestDispatcher("/queryOrder.jsp").forward(request, response);
             } else {
+                PrintWriter out = response.getWriter();
+                out.print("<h1>"+client_name+"</h1>");
                 Vector<Client> clients = clientDB.queryClientByName(client_name);
                 Vector<Vector<Order>> orders = new Vector();
                 for (Client client : clients) {
                     orders.add(orderDB.getOrders(client.getClient_id()));
+                    System.out.println(orderDB.getOrders(client.getClient_id()));
                 }
-                request.setAttribute("queryOrders", orderDB.getOrders(0));
+                request.setAttribute("queryOrders", orders);
                 getServletContext().getRequestDispatcher("/queryOrder.jsp").forward(request, response);
             }
         } else if (action.equals("showOrderDetail")) {
-            
+            int order_id = Integer.parseInt(request.getParameter("order_id"));
+            request.setAttribute("order", orderDB.getOrder(order_id));
+            getServletContext().getRequestDispatcher("/orderDetail.jsp").forward(request, response);
         }
     }
 

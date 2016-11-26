@@ -20,8 +20,8 @@
         <jsp:include page="managerMenu.jsp"/>
         <div style="text-align: center;margin: auto; width: 60%;">
             <form method="get" action="queryOrder">
-                <input type="hidden" name="action" value="" placeholder="name"/>
-                <label for="inputBox">Client Name: </label> <input type="text" name="client_name" id="inputBox"/>
+                <input type="hidden" name="action" value="queryOrder" />
+                <label for="inputBox">Client Name: </label> <input type="text" name="client_name" id="inputBox" placeholder="Name"/>
                 <button type="submit">Search</button>
             </form><br>
             <table border="1" style="text-align: center;">
@@ -40,6 +40,7 @@
                                     }
                                 }
                             } else {
+                                out.println("<h1>Result:</h1>");
                                 for (Order order : orders) {
                                     out.print("<tr><td>" + order.getClient().getName() + "</td><td>"
                                             + order.getDelivery_datetime() + "</td><td>"

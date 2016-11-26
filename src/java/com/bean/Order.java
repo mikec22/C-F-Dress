@@ -143,4 +143,9 @@ public class Order implements Serializable {
         }
         return bp;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" + "order_id=" + order_id + ", client=" + client + ", delivery_datetime=" + delivery_datetime + ", order_datetime=" + order_datetime + ", address=" + address + ", option=" + option + ", status=" + status + ", order_lines=" + order_lines + '}';
+    }
 }

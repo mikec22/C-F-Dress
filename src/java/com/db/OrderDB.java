@@ -26,9 +26,7 @@ public class OrderDB implements Serializable {
     private String dburl, dbUser, dbPassword;
 
     public OrderDB() {
-        dburl = "jdbc:mysql://localhost:3306/CF_DB";
-        dbUser = "root";
-        dbPassword = "";
+
     }
 
     public OrderDB(String dburl, String dbUser, String dbPassword) {
@@ -140,7 +138,7 @@ public class OrderDB implements Serializable {
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
             while (rs.next()) {
-                ClientDB clientDB = new ClientDB();
+                ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
                 Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
                         rs.getDate(3), rs.getDate(4), rs.getString(5), rs.getString(6),
                         rs.getString(7), null);
@@ -199,7 +197,7 @@ public class OrderDB implements Serializable {
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
             while (rs.next()) {
-                ItemDB itemDB = new ItemDB();
+                ItemDB itemDB = new ItemDB(dburl,dbUser,dbPassword);
                 OrderLine orderLine = new OrderLine(order,
                         itemDB.getItem(rs.getInt(2)), rs.getDouble(3), rs.getInt(4));
                 orderLines.add(orderLine);

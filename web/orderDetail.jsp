@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="order" scope="request" class="com.bean.Order"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,6 +13,20 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <table>
+            <tr><td>Client Name:<td><td><%= order.getClient().getName() %></td></tr>
+            <tr><td>Delivery_Datetime:</td><td><%= order.getDelivery_datetime() %></td></tr>
+            <tr><td>Order_Datetime:</td><td><%= order.getOrder_datetime() %></td></tr>
+            <tr><td>Address:</td><td><%= order.getAddress() %></td></tr>
+            <tr><td>Option:</td><td><%= order.getOption() %></td></tr>
+            <tr><td>Status:</td><td><%= order.getStatus() %></td></tr>
+        </table>
+        <h1>Item</h1>
+        <table>
+            
+        </table>
+        <form>
+
+        </form>
     </body>
 </html>
