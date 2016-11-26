@@ -8,6 +8,7 @@
 <%@page import="java.util.Calendar"%>
 <%@page import="com.bean.Order"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="/WEB-INF/tlds/com-taglib" prefix="com"%>
 <%--<jsp:useBean id="existingOrder" class="java.util.Vector" scope="request"/>--%>
 <!DOCTYPE html>
 <html>
@@ -17,7 +18,17 @@
     </head>
     <body>
         <jsp:useBean class="java.util.Vector<Order>" scope="request" id="existingOrder" />
-
-        <com:existingOrderList existingOrder="<%=existingOrder%>"/>
+          <%
+              for(Order o: existingOrder){
+                  System.out.println("fuck you");
+              }
+          %>
+          
+        <com:existingOrderList existingOrders="<%=existingOrder%>"/>
+        <%
+            for(Order o : existingOrder){
+                System.out.println("fuck you bb");
+            }
+        %>
     </body>
 </html>

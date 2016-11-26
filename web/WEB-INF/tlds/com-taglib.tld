@@ -73,12 +73,12 @@
   </tag>
   <tag>
     <name>existingOrderList</name>
-    <tag-class>com.tag.existingOrderList</tag-class>
-    <body-content>scriptless</body-content>
+    <tag-class>com.tag.orderList</tag-class>
+    <body-content>empty</body-content>
     <attribute>
-      <name>existingOrder</name>
+      <name>existingOrders</name>
       <rtexprvalue>true</rtexprvalue>
-      <type>java.unit.Vector</type>
+      <type>java.util.Vector</type>
     </attribute>
   </tag>
 </taglib>
