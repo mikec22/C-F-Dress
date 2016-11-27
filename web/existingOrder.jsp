@@ -19,7 +19,7 @@
             <jsp:include page="clientMenu.jsp" />
         </div>
         <div id="content">
-            <h1>Only over HKD10000 order can cancel the order within 24 hours after ordered and at least 24 hours before delivery</h1>
+            <h1>Only over HK$ 10000 order can cancel(Charge $500 handling fees) the order within 24 hours after ordered and at least 24 hours before delivery</h1>
             <jsp:useBean class="java.util.Vector<Order>" scope="request" id="existingOrder" />
             <com:existingOrderList type="showExistingOrders" orderList="<%=existingOrder%>"/>
         </div>
