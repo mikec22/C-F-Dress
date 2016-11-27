@@ -88,7 +88,7 @@ public class orderList extends SimpleTagSupport {
                 if (option.equalsIgnoreCase("delivery")) {
                     delivery = "<p class=\"info\">Delivery Time :  " + delivery_datetime + "</p>\n"
                             + "<p class=\"info\">Delivery Address : " + address + " </p>\n";
-                    updateBtn = "<form id='updateOrderForm' method='post' action='edtiExistingOrder'>"
+                    updateBtn = "<form id='updateOrderForm' method='post' action='existingOrder'>"
                             + "<input type='hidden' name='action' value='updateOrder'>"
                             + "<input type =\"hidden\" name =\"client_id\" value=\"" + client_id + "\">"
                             + "<input type =\"hidden\" name =\"order_id\" value=\"" + order_id + "\">"
@@ -100,7 +100,7 @@ public class orderList extends SimpleTagSupport {
 
                 if (allowCancel(order_date, delivery_Datetime, amount, option)) {
                     status = "calcelled";
-                    cancelBtn = "<br><form id='cancelOrderForm' method='post' action='edtiExistingOrder'>"
+                    cancelBtn = "<br><form id='cancelOrderForm' method='post' action='existingOrder'>"
                             + "<input type='hidden' name='action' value='CancelOrder'>"
                             + "<input type =\"hidden\" name =\"client_id\" value=\"" + client_id + "\">"
                             + "<input type =\"hidden\" name =\"order_id\" value=\"" + order_id + "\">"

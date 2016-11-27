@@ -27,7 +27,8 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ExistingOrderController", urlPatterns = {"/existingOrder"})
 public class ExistingOrderController extends HttpServlet {
 
-    private OrderDB db;
+    private OrderDB orderDB;
+    private ClientDB clientDB;
 
     @Override
     public void init() throws ServletException {
@@ -35,7 +36,8 @@ public class ExistingOrderController extends HttpServlet {
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         String dbUser = this.getServletContext().getInitParameter("dbUser");
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
-        db = new OrderDB(dbUrl, dbUser, dbPassword);
+        orderDB = new OrderDB(dbUrl, dbUser, dbPassword);
+        clientDB = new ClientDB(dbUrl, dbUser, dbPassword);
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -44,13 +46,10 @@ public class ExistingOrderController extends HttpServlet {
 
         if (action.equals("showExistingOrder")) {
             showExistingOrder(request, response);
-        } else if (action.equals("Cancel")) {
+        } else if (action.equals("CancelOrder")) {
             CancelOrder(request, response);
-        } else if (action.equals("editOrder")){
+        } else if (action.equals("updateOrder")) {
             editOrder(request, response);
-        }
-        else {
-            //
         }
 
     }
@@ -61,21 +60,57 @@ public class ExistingOrderController extends HttpServlet {
         HttpSession session = request.getSession();
         Client client = (Client) session.getAttribute("clientInfo");
         int client_id = client.getClient_id();
-        Vector<Order> orders = db.getExistedOrdersOfClient(client_id);
+        Vector<Order> orders = orderDB.getExistedOrdersOfClient(client_id);
         request.setAttribute("existingOrder", orders);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/existingOrder.jsp");
         rd.forward(request, response);
 
     }
+
     private void CancelOrder(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String datetime = "";
+        if (request.getParameter("delivery_date") == null || request.getParameter("delivery_time") == null) {
+            datetime = "1999-01-01 01:01:01";
+        } else {
+            datetime = request.getParameter("delivery_date")
+                    + " " + request.getParameter("delivery_time") + ":00";
+        }
+        String status = request.getParameter("status");
+        System.out.println("status" + status);
+        System.out.println("datetime " + datetime);
+        System.out.println("ID" + request.getParameter("order_id"));
         int order_id = Integer.parseInt(request.getParameter("order_id"));
-        //db.cancelOrder(order_id);
-    
+        int client_id = Integer.parseInt(request.getParameter("client_id"));
+        double amount = Double.parseDouble(request.getParameter("amount"));
+        orderDB.updateStatus(order_id, datetime, status);
+        clientDB.depositClient(client_id, (amount - 500));
+
+        response.sendRedirect(request.getContextPath() + "/existingOrder?action=showExistingOrder");
+
     }
-    
-     private void editOrder(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {}
+
+    private void editOrder(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
+        String datetime = "";
+        if (request.getParameter("delivery_date") == null || request.getParameter("delivery_time") == null) {
+            datetime = "1999-01-01 01:01:01";
+        } else {
+            datetime = request.getParameter("delivery_date")
+                    + " " + request.getParameter("delivery_time") + ":00";
+        }
+        String status = request.getParameter("status");
+        System.out.println("status" + status);
+        System.out.println("datetime " + datetime);
+        System.out.println("ID" + request.getParameter("order_id"));
+        int order_id = Integer.parseInt(request.getParameter("order_id"));
+        int client_id = Integer.parseInt(request.getParameter("client_id"));
+
+        orderDB.updateStatus(order_id, datetime, status);
+
+        response.sendRedirect(request.getContextPath() + "/existingOrder?action=showExistingOrder");
+    }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
