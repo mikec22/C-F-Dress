@@ -74,7 +74,7 @@ public class orderList extends SimpleTagSupport {
                 String option = order.getOption();
                 String address = order.getAddress();
                 long order_date = orderDate.getTime();
-                String ststus = order.getStatus();
+                String status = order.getStatus();
                 String delivery = "<p class=\"info\">Delivery Option : Self-pick up  </p>\n";
                 long delivery_Datetime = delivery_datetime.getTime();
                 int client_id = order.getClient().getClient_id();
@@ -92,36 +92,22 @@ public class orderList extends SimpleTagSupport {
                             + "<input type='hidden' name='action' value='updateOrder'>"
                             + "<input type =\"hidden\" name =\"client_id\" value=\"" + client_id + "\">"
                             + "<input type =\"hidden\" name =\"order_id\" value=\"" + order_id + "\">"
-                            + "<input type =\"hidden\" name =\"ststus\" value=\"" + ststus + "\">"
-                            + "<input type =\"hidden\" name =\"amount\" value=\"" + amount + "\">"
+                            + "<input type =\"hidden\" name =\"status\" value=\"" + status + "\">"
                             + "<input type =\"date\" name =\"delivery_date\" value=\"" + datetime[0] + "\">"
                             + "<input type =\"time\" name =\"delivery_time\" value=\"" + datetime[1] + "\">"
                             + "<a href=\"javascript:document.getElementById('updateOrderForm').submit()\" class='continue'>Update Order</a></form>";
                 }
-                
+
                 if (allowCancel(order_date, delivery_Datetime, amount, option)) {
+                    status = "calcelled";
                     cancelBtn = "<br><form id='cancelOrderForm' method='post' action='edtiExistingOrder'>"
                             + "<input type='hidden' name='action' value='CancelOrder'>"
                             + "<input type =\"hidden\" name =\"client_id\" value=\"" + client_id + "\">"
                             + "<input type =\"hidden\" name =\"order_id\" value=\"" + order_id + "\">"
-                            + "<input type =\"hidden\" name =\"ststus\" value=\"" + ststus + "\">"
+                            + "<input type =\"hidden\" name =\"status\" value=\"" + status + "\">"
                             + "<input type =\"hidden\" name =\"amount\" value=\"" + amount + "\">"
-                            + "<input type =\"hidden\" name =\"delivery_date\" value=\"" + delivery_datetime + "\">"
                             + "<a href=\"javascript:document.getElementById('cancelOrderForm').submit()\" class='continue'>Cancel Order</a></form>";
                 }
-                
-//
-//                out.print("<br>id orderDate,(delivery date, time),amount, button");
-//                String displayStr = "<div><form method='POST' action='edtiExistingOrder'>"
-//                        + "<input type =\"hidden\" name =\"client_id\" value=\""
-//                        + client_id + "\">"
-//                        + "<input type =\"hidden\" name =\"order_id\" value=\""
-//                        + order_id + "\">"
-//                        + "<input type =\"hidden\" name =\"ststus\" value=\""
-//                        + ststus + "\">"
-//                        + orderDate
-//                        + "$" + amount;
-
                 out.print("<div class='orderCard card-1'>\n"
                         + "                    <div id=\"left\">\n"
                         + "                        <p class=\"info\">Order ID : " + order_id + "</p>\n"
@@ -136,14 +122,6 @@ public class orderList extends SimpleTagSupport {
                         + cancelBtn
                         + "                    </div>\n"
                         + "                </div>");
-//
-//                if (option.equals("delivery")) {
-//                    displayStr += address
-//                            + "<input type =\"date\" name =\"delivery_date\" value=\""
-//                            + datetime[0]
-//                            + "\">" + "<input type =\"time\" name =\"delivery_time\" value=\""
-//                            + datetime[1] + "\">";
-//                }
 
             }
 

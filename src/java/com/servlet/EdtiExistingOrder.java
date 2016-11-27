@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author shukyan
  */
 @WebServlet(name = "edtiExistingOrder", urlPatterns = {"/edtiExistingOrder"})
-public class edtiExistingOrder extends HttpServlet {
+public class EdtiExistingOrder extends HttpServlet {
 
     private OrderDB orderDB;
     private ClientDB clientDB;
@@ -38,14 +38,23 @@ public class edtiExistingOrder extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        String datetime = request.getParameter("delivery_date")
+        String datetime ="";
+        if(request.getParameter("delivery_date")==null||request.getParameter("delivery_time")==null){
+        datetime  ="1999-01-01 01:01:01";
+        }
+        else{
+            datetime = request.getParameter("delivery_date")
                 + " " + request.getParameter("delivery_time") + ":00";
-        String status = request.getParameter("ststus");;
+        }
+        String status = request.getParameter("status");
+        System.out.println("status"+status);
+        System.out.println("datetime "+datetime);
+        System.out.println("ID"+request.getParameter("order_id"));
         int order_id = Integer.parseInt(request.getParameter("order_id"));
         int client_id = Integer.parseInt(request.getParameter("client_id"));
         if (action.equals("CancelOrder")) {
-            double amount = Double.parseDouble("amount");
-            orderDB.updateStatus(order_id, datetime, "cancelled");
+            double amount = Double.parseDouble(request.getParameter("amount"));
+            orderDB.updateStatus(order_id, datetime, status);
             clientDB.depositClient(client_id, (amount-500));
         } else if (action.equals("updateOrder")) {
             orderDB.updateStatus(order_id, datetime, status);
