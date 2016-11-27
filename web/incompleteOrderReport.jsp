@@ -20,7 +20,7 @@
         <div style="text-align: center; width: 80%; margin: 0px auto;">
             <h2>Incomplete Order</h2>
             <table style="margin: 30px;" >
-                <tr><th>Client Name</th><th>Delivery_Datetime</th><th>Order_Datetime</th><th>Address</th><th>Option</th><th>Status</th></tr>
+                <tr><th>Client Name</th><th>Delivery_Datetime</th><th>Order_Datetime</th><th>Address</th><th>Option</th><th>Status</th><th></th></tr>
                         <%
                             for (Order order : orders) {
                                 out.print("<tr><td>" + order.getClient().getName() + "</td><td>"

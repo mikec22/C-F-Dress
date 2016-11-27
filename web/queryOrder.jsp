@@ -20,14 +20,14 @@
     <body>
         <jsp:include page="managerMenu.jsp"/>
         <div style="text-align: center; width: 80%; margin: 0px auto;">
-            
+
             <form style="margin: 30px" method="get" action="queryOrder">
                 <input type="hidden" name="action" value="queryOrder" />
                 <label for="inputBox">Client Name: </label> <input type="text" name="client_name" id="inputBox" placeholder="Name"/>
                 <button type="submit">Search</button>
             </form><br>
             <table style="margin: 30px;" >
-                <tr><th>Client Name</th><th>Delivery_Datetime</th><th>Order_Datetime</th><th>Address</th><th>Option</th><th>Status</th></tr>
+                <tr><th>Client Name</th><th>Delivery_Datetime</th><th>Order_Datetime</th><th>Address</th><th>Option</th><th>Status</th><th></th></tr>
                         <%
                             if (queryOrders != null) {
                                 out.println("<h1>Result:</h1>");

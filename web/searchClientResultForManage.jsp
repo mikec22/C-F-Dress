@@ -20,7 +20,7 @@
         <div style="text-align: center; width: 80%; margin: 0px auto;">
             <table style="margin: 30px;" >
                 <tr><th>LoginID</th><th>Name</th><th>Gender</th><th>Date Of Birth</th>
-                    <th>Email</th><th>Phone</th></tr>
+                    <th>Email</th><th>Phone</th><th> </th></tr>
                         <%                        for (Client client : clients) {
                                 out.println("<tr><td>" + client.getLogin_id() + "</td><td>"
                                         + client.getName() + "</td><td>"

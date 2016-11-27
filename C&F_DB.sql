@@ -41,7 +41,7 @@ CREATE TABLE `client` (
   PRIMARY KEY (`client_id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `login_id_UNIQUE` (`login_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,7 +50,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (1,'Chris','123','Chris Wong','M','1993-01-02','abc@vtc.edu.hk','12345678','hhh',1139,1,6704.00,0.00),(2,'Peter','123','Peter Chan','M','1994-02-01','edf@vdc.edu.hk','23456789','777',1000,0,100.00,0.00),(3,'Joe','123','Joe Lam','M','1993-04-03','joe@vtc.edu.hk','12345678','20 Tsing Yi Road\r\nTsing Yi Island\r\nNew Territories',10217,1,994992.99,0.00),(4,'Dick','123','Dick Hui','M','1994-01-01','dick@gmail.com','12312333','asd',1000,1,0.00,0.00),(5,'JSON','123','JSON Lam','M','1997-07-01','json@vtc.edu.hk','87634321','abc',1000,0,0.00,0.00),(7,'Mary','123','Mary Chan','M','1803-04-04','mary@gmail.com','12312312','123',1000,0,0.00,0.00),(10,'Apple','123','Apple Wong','M','2016-11-10','123@123.com','12345678','Test',1000,0,0.00,0.00),(11,'Ben','123','Ben Wong','M','1988-04-04','ben@vtc.edu.hk','23456766','123',1000,0,0.00,0.00),(12,'usa','123','Chan Tai Man','M','1995-11-11','usa@vtc.edu.hk','67891234','123',1000,1,103.50,0.00);
+INSERT INTO `client` VALUES (1,'Chris','123','從前有隻豬，佢叫syw。有一日，佢死左。','F','1995-09-03','abc@vtc.edu.hk','12345678','hhh',3024,1,962299.00,0.00),(2,'Peter','123','Peter Chan','M','1994-02-01','edf@vdc.edu.hk','23456789','777',1000,1,-499.00,500.00),(3,'Joe','123','Joe Lam','M','1993-04-03','joe@vtc.edu.hk','12345678','20 Tsing Yi Road\r\nTsing Yi Island\r\nNew Territories',977699,1,992463.99,0.00),(4,'Dick','123','Dick Hui','M','1994-01-01','dick@gmail.com','12312333','asd',1000,1,0.00,0.00),(5,'JSON','123','JSON Lam','M','1997-07-01','json@vtc.edu.hk','87634321','abc',1000,0,0.00,0.00),(7,'Mary','123','Mary Chan','M','1803-04-04','mary@gmail.com','12312312','123',1000,0,0.00,0.00),(10,'Apple','123','Apple Wong','M','2016-11-10','123@123.com','12345678','Test',1000,0,0.00,0.00),(11,'Ben','123','Ben Wong','M','1988-04-04','ben@vtc.edu.hk','23456766','123',1000,0,0.00,0.00),(12,'usa','123','Chan Tai Man','M','1995-11-11','usa@vtc.edu.hk','67891234','123',1000,1,103.50,0.00),(13,'syw','123','SYW','F','1995-09-03','syw@syw.com','99999999','PIGPIGPIG',1000,0,0.00,0.00);
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -111,7 +111,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (1,1,'1999-01-01 01:01:01','2016-11-26 20:28:39','self pick-up','self','processing',0),(2,3,'2016-11-30 01:00:00','2016-11-26 20:50:53','20 Tsing Yi Road\r\nTsing Yi Island\r\nNew Territories','delivery','processing',0),(3,3,'1999-01-01 01:01:01','2016-11-26 22:28:54','self pick-up','self','processing',0),(4,3,'1999-01-01 01:01:01','2016-11-26 23:04:01','self pick-up','self','processing',0);
+INSERT INTO `order` VALUES (1,1,'2019-02-02 15:00:00','2016-11-26 20:28:39','self pick-up','self','processing',0),(2,3,'2016-11-30 01:00:00','2016-11-26 20:50:53','20 Tsing Yi Road\r\nTsing Yi Island\r\nNew Territories','delivery','processing',0),(3,3,'1999-01-01 01:01:01','2016-11-26 22:28:54','self pick-up','self','processing',0),(4,3,'1999-01-01 01:01:01','2016-11-26 23:04:01','self pick-up','self','processing',0),(5,2,'1999-01-01 01:01:01','2016-11-27 02:08:17','self pick-up','self','processing',0),(6,3,'1999-01-01 01:01:01','2016-11-27 02:27:02','self pick-up','self','processing',0),(7,3,'1999-01-01 01:01:01','2016-11-27 02:28:32','self pick-up','self','processing',0),(8,3,'1999-01-01 01:01:01','2016-11-27 02:29:28','self pick-up','self','processing',0),(9,3,'1999-01-01 01:01:01','2016-11-27 02:37:06','self pick-up','self','processing',0),(10,3,'1999-01-01 01:01:01','2016-11-27 02:39:14','self pick-up','self','processing',0),(11,3,'1999-01-01 01:01:01','2016-11-27 02:40:50','self pick-up','self','processing',0),(12,3,'1999-01-01 01:01:01','2016-11-27 02:52:25','self pick-up','self','processing',0),(13,3,'1999-01-01 01:01:01','2016-11-27 02:55:50','self pick-up','self','processing',0),(14,3,'1999-01-01 01:01:01','2016-11-27 02:56:09','self pick-up','self','processing',0),(15,1,'2017-01-01 12:59:00','2016-11-27 03:43:55','hhh','delivery','processing',0),(16,3,'1999-01-01 01:01:01','2016-11-27 18:37:28','self pick-up','self','processing',0),(17,3,'1999-01-01 01:01:01','2016-11-27 18:42:13','self pick-up','self','processing',0),(18,3,'1999-01-01 01:01:01','2016-11-27 18:42:44','self pick-up','self','processing',0);
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,7 +142,7 @@ CREATE TABLE `order_line` (
 
 LOCK TABLES `order_line` WRITE;
 /*!40000 ALTER TABLE `order_line` DISABLE KEYS */;
-INSERT INTO `order_line` VALUES (1,13,2796.00,2,0,0.00),(2,3,330.00,1,0,0.00),(3,3,660.00,2,0,330.00),(4,2,450.00,1,0,450.00),(4,12,3897.00,3,0,1299.00);
+INSERT INTO `order_line` VALUES (1,13,2796.00,2,0,0.00),(2,3,330.00,1,0,0.00),(3,3,660.00,2,0,330.00),(4,2,450.00,1,0,450.00),(4,12,3897.00,3,0,1299.00),(5,16,1499.00,1,0,1499.00),(6,3,330.00,1,0,330.00),(8,12,1299.00,1,0,1299.00),(9,2,450.00,1,0,450.00),(12,2,450.00,1,0,450.00),(15,21,37700.00,100,0,377.00),(16,31,0.00,1,0,0.00),(16,32,0.00,1,0,0.00),(16,33,0.00,1,0,0.00),(16,34,0.00,1,0,0.00),(16,35,0.00,1,0,0.00),(17,32,0.00,1,4900,0.00),(17,33,0.00,1,1500,0.00),(18,35,0.00,1,2600,0.00);
 /*!40000 ALTER TABLE `order_line` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,8 +159,9 @@ CREATE TABLE `staff` (
   `password` varchar(20) NOT NULL,
   `name` varchar(20) NOT NULL,
   `gender` varchar(1) NOT NULL,
-  PRIMARY KEY (`staff_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`staff_id`),
+  UNIQUE KEY `login_id_UNIQUE` (`login_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -169,7 +170,7 @@ CREATE TABLE `staff` (
 
 LOCK TABLES `staff` WRITE;
 /*!40000 ALTER TABLE `staff` DISABLE KEYS */;
-INSERT INTO `staff` VALUES (1,'MaryAdmin','123','Mary Chan','F');
+INSERT INTO `staff` VALUES (1,'MaryAdmin','123','Mary Chan','F'),(2,'admin','123','Peter Wong','M');
 /*!40000 ALTER TABLE `staff` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -182,4 +183,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-26 23:18:27
+-- Dump completed on 2016-11-27 21:17:21
