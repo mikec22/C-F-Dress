@@ -108,7 +108,7 @@ public class ItemDB implements Serializable {
                     + "WHERE name LIKE ? "
                     + "OR category LIKE ? "
                     + "OR price LIKE ? "
-                    + "OR designer LIKE ?";
+                    + "OR designer LIKE ? ";
             PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, "%" + keyword + "%");
             pStmnt.setString(2, "%" + keyword + "%");
@@ -129,6 +129,75 @@ public class ItemDB implements Serializable {
                 ex = ex.getNextException();
             }
         }
+        return items;
+    }
+    
+    public Vector<Item> querychangeOrderItemByKeyword(String keyword, String sortby,String order) {
+        Vector<Item> items = new Vector();
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM item "
+                    + "WHERE name LIKE ? "
+                    + "OR category LIKE ? "
+                    + "OR price LIKE ? "
+                    + "OR designer LIKE ? "
+                    + "ORDER BY "+ sortby + "\n"
+                    + " "+ order +" ";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, "%" + keyword + "%");
+            pStmnt.setString(2, "%" + keyword + "%");
+            pStmnt.setString(3, "%" + keyword + "%");
+            pStmnt.setString(4, "%" + keyword + "%");
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                Item item = new Item(rs.getInt(1), rs.getString(2), rs.getString(3),
+                        rs.getString(4), rs.getDouble(5), rs.getString(6), rs.getString(7));
+                items.add(item);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        System.out.print(items.size());
+        return items;
+    }
+    
+    public Vector<Item> querychangeOrderSellItemByKeyword(String keyword, String sortby,String order) {
+        Vector<Item> items = new Vector();
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM item "
+                    + "WHERE category != 'gifts' "
+                    + "AND ( name LIKE ? \n"
+                    + "OR designer LIKE ? \n"
+                    + "OR price LIKE ? ) \n"
+                    + "ORDER BY "+sortby+" \n"
+                    + order;
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, "%" + keyword + "%");
+            pStmnt.setString(2, "%" + keyword + "%");
+            pStmnt.setString(3, "%" + keyword + "%");
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                Item item = new Item(rs.getInt(1), rs.getString(2), rs.getString(3),
+                        rs.getString(4), rs.getDouble(5), rs.getString(6), rs.getString(7));
+                items.add(item);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        System.out.print(items.size());
         return items;
     }
 
@@ -162,6 +231,43 @@ public class ItemDB implements Serializable {
                 ex = ex.getNextException();
             }
         }
+        System.out.print(items.size());
+        return items;
+    }
+
+    public Vector<Item> querychangeOrderItemByKeyword(String keyword, String category, String sortby, String order) {
+        Vector<Item> items = new Vector();
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM item WHERE category = ? \n"
+                    + "AND ( name LIKE ? \n"
+                    + "OR designer LIKE ? \n"
+                    + "OR price LIKE ? ) \n"
+                    + "ORDER BY "+ sortby +"\n"
+                    + order;
+            
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, category);
+            pStmnt.setString(2, "%" + keyword + "%");
+            pStmnt.setString(3, "%" + keyword + "%");
+            pStmnt.setString(4, "%" + keyword + "%");
+            
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                Item item = new Item(rs.getInt(1), rs.getString(2), rs.getString(3),
+                        rs.getString(4), rs.getDouble(5), rs.getString(6), rs.getString(7));
+                items.add(item);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        System.out.print(items.size());
         return items;
     }
 

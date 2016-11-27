@@ -17,6 +17,8 @@
 <jsp:useBean id="cart" scope="session" class="com.bean.Order"/>
 <nav class="stroke">
     <div class='atext'> Hi, <%=client.getName()%>
+        <p style="font-size: 10px">HK$ <%=client.getBalance()%></p>
+        <p style="font-size: 10px">BP: <%=client.getBonus_point()%></p>
         <a href='login?action=logout'>Log out</a>
         <a href='shoppingCart?action=showCart'>Cart (<%=cart.getOrder_lines().size()%>)</a></div>
         
