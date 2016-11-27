@@ -1,0 +1,139 @@
+/*Media query*/
+@media only screen and (max-width: 900px) {
+    label span {
+        display: none;
+    }
+
+    .tab_container {
+        width: 98%;
+    }
+}
+
+/*Content Animation*/
+@keyframes fadeInScale {
+    0% {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.no_wrap {
+    text-align:center;
+    color: #0ce;
+}
+.link {
+    text-align:center;
+}
+.totalRow {
+    padding: .5em;
+}
+
+.info {
+    text-align: left;
+    font-family: "Montserrat", sans-serif;
+    font-size: .95em;
+    text-transform: uppercase;
+    color: #777;
+    margin: 20px;
+    margin-left: 30px;
+}
+
+.price {
+    padding: 0 0 0 1em;
+    text-align: left;
+    margin: 20px;
+    margin-left: 30px;
+    font-family: "Montserrat", sans-serif;
+    font-size: .95em;
+    text-transform: uppercase;
+    color: #777;
+}
+
+.final {
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+.price .value{
+    letter-spacing: -.025em;
+    font-weight: 500;
+    font-size: 1em;
+    width: 35%;
+}
+
+.status {
+    text-align: left;
+    font-size: 20px;
+    margin: 10px;
+    margin-left: 30px;
+    color: #aaa;
+    font-variant: nlckanji; 
+    text-transform: uppercase;
+}
+
+#left { 
+    position: absolute; left: 0; top: 0; width: 50%; 
+
+}
+#right { 
+    position: absolute; right: 0; top: 0; width: 50%; 
+
+}
+
+ a.continue:link,  a.continue:visited {
+    text-decoration: none;
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: -.015em;
+    font-size: .75em;
+    padding: 1em;
+    color: #fff;
+    background: #82ca9c;
+    font-weight: bold;
+    border-radius: 50px;
+    float: right;
+    text-align: right;
+    -webkit-transition: all 0.25s linear;
+    -moz-transition: all 0.25s linear;
+    -ms-transition: all 0.25s linear;
+    -o-transition: all 0.25s linear;
+    transition: all 0.25s linear;
+}
+
+ a.continue:after {
+    content: "\276f";
+    padding: .5em;
+    position: relative;
+    right: 0;
+    -webkit-transition: all 0.15s linear;
+    -moz-transition: all 0.15s linear;
+    -ms-transition: all 0.15s linear;
+    -o-transition: all 0.15s linear;
+    transition: all 0.15s linear;
+}
+
+ a.continue:hover,  a.continue:focus, a.continue:active {
+    background: #f69679;
+}
+
+a.continue:hover:after, a.continue:focus:after, a.continue:active:after {
+    right: -10px;
+}
+
+a.btn.continue {
+        width: 100%;
+        text-align: center;
+}
+
+img {
+    height: auto; 
+    width: auto;
+    max-height: 100px;
+    max-width: 100px;
+    margin: 50px;
+    margin-top: 10px;
+}

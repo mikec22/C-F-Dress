@@ -30,23 +30,6 @@
 
             <section id="content1" class="tab-content">
                 <h3>Last 10 order records</h3>
-                
-<!--                <div class='orderCard card-1'>
-                    <div id="left">
-                        <p class="info">Order ID : 1 </p>
-                        <p class="info">Order Time :  </p>
-                        <p class="info">Delivery Option :  </p>
-                        <p class="info">Delivery Time :  </p>
-                        <p class="info">Delivery Address :  </p>
-                    </div>
-                    <div id="right" class="totalRow">
-                        <p class="price">Total item : <span class="value">1231</span></p>
-                        <p class="price">Bonus Points : </p>
-                        <p class="price">Total Price : </p>
-                        <p class="price">Status : </p>
-                        <a href="<%=request.getContextPath()%>" class="continue">More Details</a>
-                    </div>
-                </div>-->
                 <com:existingOrderList type="showOrderHistory" orderList="<%=orderHistory%>"/>
             </section>
 

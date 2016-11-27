@@ -65,9 +65,6 @@ public class orderList extends SimpleTagSupport {
         JspWriter out = getJspContext().getOut();
 
         try {
-            out.print("*Only over HKD10000 order can cancel the order within 24 hours after\n"
-                    + "ordered and at least 24 hours before delivery");
-
             for (Order order : orderList) {
                 java.sql.Timestamp orderDate = order.getOrder_datetime();
                 java.sql.Timestamp delivery_datetime = order.getDelivery_datetime();
@@ -78,34 +75,75 @@ public class orderList extends SimpleTagSupport {
                 String address = order.getAddress();
                 long order_date = orderDate.getTime();
                 String ststus = order.getStatus();
+                String delivery = "<p class=\"info\">Delivery Option : Self-pick up  </p>\n";
                 long delivery_Datetime = delivery_datetime.getTime();
                 int client_id = order.getClient().getClient_id();
-                out.print("<br>id orderDate,(delivery date, time),amount, button");
-                String displayStr = "<div><form method='POST' action='edtiExistingOrder'>"
-                        + "<input type =\"hidden\" name =\"client_id\" value=\""
-                        + client_id + "\">"
-                        + "<input type =\"hidden\" name =\"order_id\" value=\""
-                        + order_id + "\">"
-                        + "<input type =\"hidden\" name =\"ststus\" value=\""
-                        + ststus + "\">"
-                        + orderDate
-                        + "$" + amount;
-                if (option.equals("delivery")) {
-                    displayStr += address
-                            + "<input type =\"date\" name =\"delivery_date\" value=\""
-                            + datetime[0]
-                            + "\">" + "<input type =\"time\" name =\"delivery_time\" value=\""
-                            + datetime[1] + "\">";
+                int totalItem = 0;
+                String updateBtn = "";
+                String cancelBtn = "";
+                for (OrderLine orderLine : order.getOrder_lines()) {
+                    totalItem += orderLine.getQuantity();
                 }
+
+                if (option.equalsIgnoreCase("delivery")) {
+                    delivery = "<p class=\"info\">Delivery Time :  " + delivery_datetime + "</p>\n"
+                            + "<p class=\"info\">Delivery Address : " + address + " </p>\n";
+                    updateBtn = "<form id='updateOrderForm' method='post' action='edtiExistingOrder'>"
+                            + "<input type='hidden' name='action' value='updateOrder'>"
+                            + "<input type =\"hidden\" name =\"client_id\" value=\"" + client_id + "\">"
+                            + "<input type =\"hidden\" name =\"order_id\" value=\"" + order_id + "\">"
+                            + "<input type =\"hidden\" name =\"ststus\" value=\"" + ststus + "\">"
+                            + "<input type =\"hidden\" name =\"amount\" value=\"" + amount + "\">"
+                            + "<input type =\"date\" name =\"delivery_date\" value=\"" + datetime[0] + "\">"
+                            + "<input type =\"time\" name =\"delivery_time\" value=\"" + datetime[1] + "\">"
+                            + "<a href=\"javascript:document.getElementById('updateOrderForm').submit()\" class='continue'>Update Order</a></form>";
+                }
+                
                 if (allowCancel(order_date, delivery_Datetime, amount, option)) {
-                    displayStr += "<input type =\"hidden\" name =\"amount\" value=\""
-                            + amount + "\">"
-                            + "<input type='submit' name='action' value='CancelOrder'>";
+                    cancelBtn = "<form id='cancelOrderForm' method='post' action='edtiExistingOrder'>"
+                            + "<input type='hidden' name='action' value='CancelOrder'>"
+                            + "<input type =\"hidden\" name =\"client_id\" value=\"" + client_id + "\">"
+                            + "<input type =\"hidden\" name =\"order_id\" value=\"" + order_id + "\">"
+                            + "<input type =\"hidden\" name =\"ststus\" value=\"" + ststus + "\">"
+                            + "<input type =\"hidden\" name =\"amount\" value=\"" + amount + "\">"
+                            + "<input type =\"hidden\" name =\"delivery_date\" value=\"" + delivery_datetime + "\">"
+                            + "<a href=\"javascript:document.getElementById('cancelOrderForm').submit()\" class='continue'>Cancel Order</a></form>";
                 }
-                if (option.equals("delivery")) {
-                    displayStr += "<input type='submit' name='action' value='updateOrder'></form></div>";
-                }
-                out.print(displayStr);
+                
+//
+//                out.print("<br>id orderDate,(delivery date, time),amount, button");
+//                String displayStr = "<div><form method='POST' action='edtiExistingOrder'>"
+//                        + "<input type =\"hidden\" name =\"client_id\" value=\""
+//                        + client_id + "\">"
+//                        + "<input type =\"hidden\" name =\"order_id\" value=\""
+//                        + order_id + "\">"
+//                        + "<input type =\"hidden\" name =\"ststus\" value=\""
+//                        + ststus + "\">"
+//                        + orderDate
+//                        + "$" + amount;
+
+                out.print("<div class='orderCard card-1'>\n"
+                        + "                    <div id=\"left\">\n"
+                        + "                        <p class=\"info\">Order ID : " + order_id + "</p>\n"
+                        + "                        <p class=\"info\">Order Time : " + orderDate + " </p>\n"
+                        + delivery
+                        + "                    </div>\n"
+                        + "                    <div id=\"right\" class=\"totalRow\">\n"
+                        + "                        <p class=\"price\">Total item : <span class=\"value\">" + totalItem + "</span></p>\n"
+                        + "                        <p class=\"price\">Bonus Points : " + order.getUseBonusPoints() + "</p>\n"
+                        + "                        <p class=\"price\">Total Price : HK$" + amount + "</p>\n"
+                        + updateBtn
+                        + cancelBtn
+                        + "                    </div>\n"
+                        + "                </div>");
+//
+//                if (option.equals("delivery")) {
+//                    displayStr += address
+//                            + "<input type =\"date\" name =\"delivery_date\" value=\""
+//                            + datetime[0]
+//                            + "\">" + "<input type =\"time\" name =\"delivery_time\" value=\""
+//                            + datetime[1] + "\">";
+//                }
 
             }
 
@@ -136,14 +174,9 @@ public class orderList extends SimpleTagSupport {
                     }
                     long delivery_Datetime = delivery_datetime.getTime();
                     if (option.equalsIgnoreCase("delivery")) {
-                        if (order.getDelay_day() > 0) {
-                            delivery = "<p class=\"info\">Delivery Time :  " + delivery_datetime + "</p>\n"
-                                    + "<p class=\"info\">Delivery Address : " + address + " </p>"
-                                    + "<p class=\"info\">Delay Day : " + order.getDelay_day() + " </p>";
-                        } else {
-                            delivery = "<p class=\"info\">Delivery Time :  " + delivery_datetime + "</p>\n"
-                                    + "<p class=\"info\">Delivery Address : " + address + " </p>\n";
-                        }
+                        delivery = "<p class=\"info\">Delivery Time :  " + delivery_datetime + "</p>\n"
+                                + "<p class=\"info\">Delivery Address : " + address + " </p>\n";
+
                     }
                     out.print("<div class='orderCard card-1'>\n"
                             + "                    <div id=\"left\">\n"
@@ -154,7 +187,7 @@ public class orderList extends SimpleTagSupport {
                             + "                    <div id=\"right\" class=\"totalRow\">\n"
                             + "                        <p class=\"price\">Total item : <span class=\"value\">" + totalItem + "</span></p>\n"
                             + "                        <p class=\"price\">Bonus Points : " + order.getUseBonusPoints() + "</p>\n"
-                            + "                        <p class=\"price\">Total Price : " + amount + "</p>\n"
+                            + "                        <p class=\"price\">Total Price : HK$" + amount + "</p>\n"
                             + "                        <p class=\"price\">Status : " + status + "</p>\n"
                             + "                        <form name=\"getDetails\" mothod=\"post\" action=\"history\">"
                             + "                        <input type='hidden' name='action' value='getOrderDetails'>"

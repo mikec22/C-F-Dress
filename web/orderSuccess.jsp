@@ -16,7 +16,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Order Successful</title>
         <link rel="stylesheet" href="css/cart.css">
-        <script src="jquery-3.1.1.min.js"></script>
+        <script src="js/jquery-3.1.1.min.js"></script>
         <script>
             $('a.remove').click(function () {
                 event.preventDefault();

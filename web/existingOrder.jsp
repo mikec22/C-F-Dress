@@ -11,13 +11,19 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="css/existingOrder.css">
+        <link rel="stylesheet" href="css/card.css">
     </head>
     <body>
         <div id="menu">
             <jsp:include page="clientMenu.jsp" />
         </div>
-        <jsp:useBean class="java.util.Vector<Order>" scope="request" id="existingOrder" />
-        <com:existingOrderList type="showExistingOrders" orderList="<%=existingOrder%>"/>
+        <div id="content">
+            <h1>Only over HKD10000 order can cancel the order within 24 hours after ordered and at least 24 hours before delivery</h1>
+            <jsp:useBean class="java.util.Vector<Order>" scope="request" id="existingOrder" />
+            <com:existingOrderList type="showExistingOrders" orderList="<%=existingOrder%>"/>
+        </div>
 
+        <script src="js/jquery-3.1.1.min.js"></script>
     </body>
 </html>

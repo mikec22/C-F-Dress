@@ -68,7 +68,7 @@ public class HandleOrderController extends HttpServlet {
             }
         }
     }
-    
+
     private boolean isAuthenticated(HttpServletRequest request) {
         boolean result = false;
         HttpSession session = request.getSession();
@@ -86,7 +86,7 @@ public class HandleOrderController extends HttpServlet {
         String targetURL = "/login.jsp";
         request.getRequestDispatcher(targetURL).forward(request, response);
     }
-    
+
     private String isVaild(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -106,7 +106,7 @@ public class HandleOrderController extends HttpServlet {
             msg = "Balance not enough ";
         } else if ((dp >= client_dp)) {
             msg = "Bonus Points not enough ";
-        }else {
+        } else {
             msg = "OK";
         }
         return msg;
@@ -114,18 +114,18 @@ public class HandleOrderController extends HttpServlet {
 
     private void chooseDeliveryPption(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String msg = isVaild(request,response);
-        if(msg.equalsIgnoreCase("OK")){
+        String msg = isVaild(request, response);
+        if (msg.equalsIgnoreCase("OK")) {
             request.getRequestDispatcher("/placeOrder.jsp").forward(request, response);
-        }else{
-            request.setAttribute("msg",msg);
+        } else {
+            request.setAttribute("msg", msg);
             request.getRequestDispatcher("/shoppingCart.jsp").forward(request, response);
         }
     }
 
     private void toPlaceOrder(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
         String msg = "";
         Client client = (Client) session.getAttribute("clientInfo");
@@ -148,21 +148,28 @@ public class HandleOrderController extends HttpServlet {
         String address = client.getAddress();
         String option = request.getParameter("delivery_method");
         if (option.equals("delivery")) {
-            datetime = request.getParameter("delivery_date")
-                    + " " + request.getParameter("delivery_time") + ":00";
-            java.sql.Timestamp delivery_datetime = java.sql.Timestamp.valueOf(datetime);
-            java.util.Date today = c.getTime();
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date delivery_date;
-            try {
-                delivery_date = df.parse(request.getParameter("delivery_date"));
-                a = delivery_date.compareTo(Calendar.getInstance().getTime());
-                isVaild = delivery_date.compareTo(Calendar.getInstance().getTime()) == 1;
-                
-            } catch (ParseException ex) {
-                Logger.getLogger(HandleOrderController.class.getName()).log(Level.SEVERE, null, ex);
-            }
 
+            if (request.getParameter("delivery_date") == null || request.getParameter("delivery_date").equalsIgnoreCase("")
+                    || request.getParameter("delivery_time") == null || request.getParameter("delivery_time").equalsIgnoreCase("")) {
+                msg = "Please select delivery date and time";
+                request.setAttribute("msg", msg);
+                getServletContext().getRequestDispatcher("/placeOrder.jsp").forward(request, response);
+            } else {
+                datetime = request.getParameter("delivery_date")
+                        + " " + request.getParameter("delivery_time") + ":00";
+                java.sql.Timestamp delivery_datetime = java.sql.Timestamp.valueOf(datetime);
+                java.util.Date today = c.getTime();
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date delivery_date;
+                try {
+                    delivery_date = df.parse(request.getParameter("delivery_date"));
+                    a = delivery_date.compareTo(Calendar.getInstance().getTime());
+                    isVaild = delivery_date.compareTo(Calendar.getInstance().getTime()) == 1;
+
+                } catch (ParseException ex) {
+                    Logger.getLogger(HandleOrderController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         } else if (option.equals("self")) {
             address = "self pick-up";
             isVaild = true;
@@ -189,24 +196,22 @@ public class HandleOrderController extends HttpServlet {
             Vector<OrderLine> order_line = order.getOrder_lines();
             boolean add = orderDB.addOrder(client_id, datetime, address, option, status, order_line);
             if (add) {
-                msg = "add Order success";
                 Order orderResult = orderDB.getLastOrder();
                 int bonus_point = client.getBonus_point();
                 if (amount > 2000) {
                     bonus_point += (int) (amount * 0.05);
                 }
-                
+
                 balance -= amount;
                 bonus_point -= dp;
                 client.setBalance(balance);
                 client.setBonus_point(bonus_point);
                 if (clientDB.updateClientBalanceBonusPoints(client)) {
-                    msg = "success";
                     client = clientDB.getClient(client.getClient_id());
                     session.setAttribute("clientInfo", client);
                     session.removeAttribute("cart");
                     request.setAttribute("orderResult", orderResult);
-                    request.setAttribute("status","result");
+                    request.setAttribute("status", "result");
                     getServletContext().getRequestDispatcher("/orderSuccess.jsp").forward(request, response);
                 } else {
                     msg = "fail";
@@ -215,7 +220,7 @@ public class HandleOrderController extends HttpServlet {
                 msg = "fail";
             }
         }
-        
+
         System.out.print(request.getParameter("delivery_date"));
         System.out.print(msg);
         System.out.print(a);
