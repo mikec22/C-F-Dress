@@ -205,6 +205,7 @@ public class HandleOrderController extends HttpServlet {
                     session.setAttribute("clientInfo", client);
                     session.removeAttribute("cart");
                     request.setAttribute("orderResult", orderResult);
+                    request.setAttribute("status","result");
                     getServletContext().getRequestDispatcher("/orderSuccess.jsp").forward(request, response);
                 } else {
                     msg = "fail";

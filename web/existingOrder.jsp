@@ -17,7 +17,7 @@
             <jsp:include page="clientMenu.jsp" />
         </div>
         <jsp:useBean class="java.util.Vector<Order>" scope="request" id="existingOrder" />
-        <com:existingOrderList existingOrders="<%=existingOrder%>"/>
+        <com:existingOrderList type="showExistingOrders" orderList="<%=existingOrder%>"/>
 
     </body>
 </html>

@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="msg" scope="request" class="java.lang.String"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,9 +13,11 @@
         <title>Register Result</title>
     </head>
     <body>
-        <%
-            String msg = (String) request.getAttribute("msg");
-            out.println("<h1>" + msg + "</h1>");
-        %>
+        <div id="menu">
+            <jsp:include page="menu.jsp" />
+        </div>
+        <div>
+            <h1 style="text-align: center"><%=msg%></h1>
+        </div>
     </body>
 </html>

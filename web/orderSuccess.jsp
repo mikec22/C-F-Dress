@@ -9,6 +9,8 @@
 <%@taglib uri="/WEB-INF/tlds/com-taglib.tld" prefix="com"%>
 <jsp:useBean id="orderResult" scope="request" class="com.bean.Order"/>
 <jsp:useBean id="clientInfo" scope="session" class="com.bean.Client"/>
+<jsp:useBean id="status" scope="request" class="java.lang.String"/>
+status
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,15 +30,27 @@
             })
         </script> 
     </head>
+    <%
+        String tilte = "Order Successful";
+        String ContinueShopping = "Continue Shopping";
+        if (request.getAttribute("status") != null) {
+            if (!request.getAttribute("status").equals("")) {
+                if (request.getAttribute("status").equals("details")) {
+                    ContinueShopping ="";
+                    tilte = "Order Details";
+                }
+            }
+        }
+    %>
     <body>
         <div id="menu">
             <jsp:include page="clientMenu.jsp" />
         </div>
         <div>
             <div class="wrap cf">
-                <h2>Order Successful</h2>
+                <h2><%=tilte%></h2>
                 <h4>Order ID : <%=orderResult.getOrder_id()%></h4>
-                <h4>Order time : <%=orderResult.getOrder_datetime() %></h4>
+                <h4>Order time : <%=orderResult.getOrder_datetime()%></h4>
                 <h4>Your current balance : <%=clientInfo.getBalance()%></h4>
                 <h4>Your current bonus point : <%=clientInfo.getBonus_point()%></h4>
                 <%
@@ -49,11 +63,11 @@
                 %>
                 <div class="heading cf">
                     <!--                    <h1 style="text-align: center">Order Successful</h1>-->
-                    <a href="<%=request.getContextPath()%>" class="continue">Continue Shopping</a>
+                    <a href="<%=request.getContextPath()%>" class="continue"><%=ContinueShopping%></a>
                 </div>
                 <div class="cart">
                     <ul class="cartWrap">    
-                        <com:CartItemListTag status="result" orderLines="<%=orderResult.getOrder_lines()%>"/>
+                        <com:CartItemListTag status="<%=status%>" orderLines="<%=orderResult.getOrder_lines()%>"/>
                     </ul>
                 </div>
                 <div class="subtotal cf" >

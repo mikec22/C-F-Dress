@@ -48,7 +48,7 @@ public class RegistrationController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if ("register".equals(action)) {
+        if ("doRegister".equals(action)) {
             doRegisteration(request, response);
         } else if (action.equalsIgnoreCase("fillForm")) {
             request.getRequestDispatcher("/signup.jsp").forward(request, response);
@@ -68,7 +68,9 @@ public class RegistrationController extends HttpServlet {
         while (eParams.hasMoreElements()) {
             String strParam = (String) eParams.nextElement();
             String data;
-            if (request.getParameter(strParam) == null) {
+            if (request.getParameter(strParam) == null || request.getParameter(strParam).equalsIgnoreCase("")) {
+                request.setAttribute("msg", "Please fill the form");
+                getServletContext().getRequestDispatcher("/signup.jsp").forward(request, response);
                 data = "";
             } else {
                 data = request.getParameter(strParam);
@@ -86,18 +88,17 @@ public class RegistrationController extends HttpServlet {
         //boolean isExist = db.isExistClient(login_id, email);
         if (!clientData.get(5).equals(clientData.get(6))) {
             request.setAttribute("msg", "Password not match");
+            getServletContext().getRequestDispatcher("/signup.jsp").forward(request, response);
         } else {
             client = new Client(login_id, name, gender, email, password, phone, dob, address);
             if (db.addClient(client)) {
                 request.setAttribute("msg", "Your registeration successful!");
+                getServletContext().getRequestDispatcher("/RegisterResult.jsp").forward(request, response);
             } else {
                 request.setAttribute("msg", "The account already existed!");
+                getServletContext().getRequestDispatcher("/signup.jsp").forward(request, response);
             }
         }
-        targetURL = "/RegisterResult.jsp";
-        RequestDispatcher rd = getServletContext().getRequestDispatcher(targetURL);
-        rd.forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

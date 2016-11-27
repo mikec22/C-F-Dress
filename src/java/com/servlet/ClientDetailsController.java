@@ -65,7 +65,7 @@ public class ClientDetailsController extends HttpServlet {
             out.println("No such action!!!");
 //            String referer = request.getHeader("Referer");
 //            response.sendRedirect(referer);
-            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);;
+            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }
 
     }

@@ -15,7 +15,7 @@ import java.util.Vector;
  */
 public class Order implements Serializable {
 
-    private int order_id;
+    private int order_id,delay_day;
     private Client client;
     private Timestamp delivery_datetime, order_datetime;
     private String address, option, status;
@@ -34,6 +34,26 @@ public class Order implements Serializable {
         this.option = option;
         this.status = status;
         this.order_lines = order_line;
+    }
+    
+    public Order(int order_id, Client client, Timestamp delivery_datetime, Timestamp order_datetime, String address, String option, String status, Vector<OrderLine> order_line,int delay_day) {
+        this.order_id = order_id;
+        this.client = client;
+        this.delivery_datetime = delivery_datetime;
+        this.order_datetime = order_datetime;
+        this.address = address;
+        this.option = option;
+        this.status = status;
+        this.order_lines = order_line;
+        this.delay_day = delay_day;
+    }
+
+    public int getDelay_day() {
+        return delay_day;
+    }
+
+    public void setDelay_day(int delay_day) {
+        this.delay_day = delay_day;
     }
 
     public Vector<OrderLine> getOrder_lines() {

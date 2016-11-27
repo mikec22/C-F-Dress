@@ -27,7 +27,7 @@
     <attribute>
       <name>itemList</name>
       <rtexprvalue>true</rtexprvalue>
-      <type>java.unit.Vector</type>
+      <type>java.util.Vector</type>
     </attribute>
     <attribute>
       <name>user</name>
@@ -52,7 +52,7 @@
     <attribute>
       <name>orderLines</name>
       <rtexprvalue>true</rtexprvalue>
-      <type>java.unit.Vector</type>
+      <type>java.util.Vector</type>
     </attribute>
     <attribute>
       <name>status</name>
@@ -76,7 +76,22 @@
     <tag-class>com.tag.orderList</tag-class>
     <body-content>empty</body-content>
     <attribute>
-      <name>existingOrders</name>
+      <name>orderList</name>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.util.Vector</type>
+    </attribute>
+    <attribute>
+      <name>type</name>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+    </attribute>
+  </tag>
+  <tag>
+    <name>BonusPointHistory</name>
+    <tag-class>com.tag.BonusPointHistory</tag-class>
+    <body-content>scriptless</body-content>
+    <attribute>
+      <name>bpList</name>
       <rtexprvalue>true</rtexprvalue>
       <type>java.util.Vector</type>
     </attribute>

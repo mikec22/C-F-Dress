@@ -74,7 +74,7 @@ public class OrderDB implements Serializable {
                             + ol.getItem().getItem_id() + ","
                             + "0" + ","
                             + ol.getQuantity() + ","
-                            + ol.getPrice() + ","
+                            + ol.getBonusPoint() + ","
                             + "0"
                             + ")");
                 } else {
@@ -144,7 +144,7 @@ public class OrderDB implements Serializable {
                 ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
                 Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
                         rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), this.getOrderLines(rs.getInt(1)));
+                        rs.getString(7), this.getOrderLines(rs.getInt(1)),rs.getInt("delay_day"));
                 order.setOrder_lines(getOrderLines(order));
                 orders.add(order);
             }
@@ -175,7 +175,7 @@ public class OrderDB implements Serializable {
                 ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
                 Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
                         rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), this.getOrderLines(rs.getInt(1)));
+                        rs.getString(7), this.getOrderLines(rs.getInt(1)),rs.getInt("delay_day"));
                 orders.add(order);
             }
             pStmnt.close();
@@ -236,7 +236,7 @@ public class OrderDB implements Serializable {
                 ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
                 order = new Order(order_id, clientDB.getClient(rs.getInt(2)),
                         rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), getOrderLines(order_id));
+                        rs.getString(7), getOrderLines(order_id),rs.getInt("delay_day"));
             }
             pStmnt.close();
             cnnct.close();
@@ -261,7 +261,7 @@ public class OrderDB implements Serializable {
                 ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
                 order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)), rs.getTimestamp(3),
                         rs.getTimestamp(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), getOrderLines(rs.getInt(1)));
+                        rs.getString(7), getOrderLines(rs.getInt(1)),rs.getInt("delay_day"));
             }
             pStmnt.close();
             cnnct.close();
@@ -272,6 +272,78 @@ public class OrderDB implements Serializable {
             }
         }
         return order;
+    }
+
+    public Vector<Order> getLastTenOrders(int client_id) {
+        Vector<Order> orders = null;
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM CF_DB.`order` WHERE client_id = ? ORDER BY order_id DESC LIMIT 10;";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, client_id);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                orders = new Vector();
+                ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
+                Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
+                        rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
+                        rs.getString(7), getOrderLines(rs.getInt(1)),rs.getInt("delay_day"));
+                orders.add(order);
+                while (rs.next()) {
+                    clientDB = new ClientDB(dburl, dbUser, dbPassword);
+                    order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
+                            rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
+                            rs.getString(7), getOrderLines(rs.getInt(1)),rs.getInt("delay_day"));
+                    orders.add(order);
+                }
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return orders;
+    }
+
+    public Vector<OrderLine> getGiftsOrderLines(int client_id) {
+        Vector<OrderLine> orderLines = new Vector();
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement = "SELECT `order_line`.* , `order`.client_id FROM `order_line`, `order` \n"
+                    + "WHERE `order_line`.`order_id` = `order`.`order_id` \n"
+                    + "AND `order`.`client_id` = ? \n"
+                    + "AND `order_line`.`bonus_point` > 0 \n"
+                    + "AND `order_line`.`total_price` <= 0 \n"
+                    + "ORDER BY `order_line`.order_id DESC;";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, client_id);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                ItemDB itemDB = new ItemDB(dburl, dbUser, dbPassword);
+                OrderLine orderLine;
+                if (itemDB.getItem(rs.getInt(2)).getCategory().equals("gifts")) {
+                    orderLine = new OrderLine(getOrder(rs.getInt(1)),
+                            itemDB.getItem(rs.getInt("item_id")), rs.getInt(5), rs.getInt(4));
+                } else {
+                    orderLine = new OrderLine(getOrder(rs.getInt(1)),
+                            itemDB.getItem(rs.getInt("item_id")), rs.getDouble(3), rs.getInt(4));
+                }
+                orderLines.add(orderLine);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return orderLines;
     }
 
     public Vector<OrderLine> getOrderLines(int order_id) {
@@ -326,7 +398,7 @@ public class OrderDB implements Serializable {
                     clientDB = new ClientDB(dburl, dbUser, dbPassword);
                     order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
                             rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
-                            rs.getString(7), getOrderLines(rs.getInt(1)));
+                            rs.getString(7), getOrderLines(rs.getInt(1)),rs.getInt("delay_day"));
                     orders.add(order);
                 }
             }
@@ -365,7 +437,7 @@ public class OrderDB implements Serializable {
         return isSuccess;
     }
 
-    public Vector<Order> queryIncompleteOrder(){
+        public Vector<Order> queryIncompleteOrder(){
         Vector<Order> orders = null;
         try {
             Connection cnnct = getConnection();
@@ -397,7 +469,6 @@ public class OrderDB implements Serializable {
                 ex = ex.getNextException();
             }
         }
-        return orders;
-        
+        return orders;        
     } 
 }
