@@ -10,7 +10,6 @@
 <jsp:useBean id="orderResult" scope="request" class="com.bean.Order"/>
 <jsp:useBean id="clientInfo" scope="session" class="com.bean.Client"/>
 <jsp:useBean id="status" scope="request" class="java.lang.String"/>
-status
 <!DOCTYPE html>
 <html>
     <head>

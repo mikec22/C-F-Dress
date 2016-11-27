@@ -97,7 +97,7 @@ public class ItemDetails extends SimpleTagSupport {
 "                    <input type=\"submit\" class=\"btn\" value=\"Add To Cart\">\n" +
 "                </form>";
             
-            out.print("<div class='left'><div class'left-content'>"
+            out.print("<div class='left'><div>"
                     + img
                     + designer
                     + "</div></div>");

@@ -134,8 +134,7 @@ public class OrderDB implements Serializable {
         Vector<Order> orders = new Vector();
         try {
             Connection cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM order "
-                    + "WHERE client_id = ?";
+            String preQueryStatement = "SELECT * FROM `order` WHERE `client_id` = ?;";
             PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setInt(1, client_id);
             ResultSet rs = null;

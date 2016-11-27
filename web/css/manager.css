@@ -1,9 +1,17 @@
+#content {
+    width: 100%;
+    position: relative;
+    margin: 0 auto; 
+}
+
 body{
     text-align: center;
 }
 
 table{
     margin: 20px;
+    align-content: center;
+    margin: 0 auto;
 }
 
 

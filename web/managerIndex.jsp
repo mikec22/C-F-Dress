@@ -17,6 +17,6 @@
     </head>
     <body>
         <jsp:include page="managerMenu.jsp"/>
-        <h3>Hello, <%= managerInfo.getName() %> </h3>
+        <h1 style="text-align: center; margin: 200px;">Hello, <%= managerInfo.getName() %> </h1>
     </body>
 </html>

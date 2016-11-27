@@ -51,7 +51,7 @@
                     <input type="hidden" name="action" value="doRegister"/>
                     <div class="signupForm">
                         <input type="text" name="login_id" placeholder="Your Login Id" required value="<%=login%>">
-                        <input type="text" name="name" placeholder="Your Preferred Name" value="<%=name%>">
+                        <input type="text" name="name" placeholder="Your Preferred Name" required value="<%=name%>">
                     </div>
                     <div id="radiogp">
                         <h4>
@@ -61,7 +61,7 @@
                     </div>
                     <div class="signupForm">
                         <input type="email" name="email" placeholder="Email" value="<%=email%>">
-                        <input type="password" name="password" class="half" placeholder="Password">
+                        <input type="password" name="password" class="half" placeholder="Password" required>
                         <input type="password" name="cpassword" class="half confirmpass" placeholder="Confirm Password" required >
                         <input type="tel" minlength="8" maxlength="8" name="phone" placeholder="Phone Number" required value="<%=phone%>">
                     </div>

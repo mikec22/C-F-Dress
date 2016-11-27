@@ -132,7 +132,7 @@ public class HandleOrderController extends HttpServlet {
         client = clientDB.getClient(client.getClient_id());
         session.setAttribute("clientInfo", client);
         int client_id = client.getClient_id();
-
+        int a = -1;
         Calendar c = Calendar.getInstance();
 
 // set the calendar to start of today
@@ -156,8 +156,9 @@ public class HandleOrderController extends HttpServlet {
             java.util.Date delivery_date;
             try {
                 delivery_date = df.parse(request.getParameter("delivery_date"));
-                isVaild = delivery_date.compareTo(today) == 1;
-
+                a = delivery_date.compareTo(Calendar.getInstance().getTime());
+                isVaild = delivery_date.compareTo(Calendar.getInstance().getTime()) == 1;
+                
             } catch (ParseException ex) {
                 Logger.getLogger(HandleOrderController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -213,8 +214,11 @@ public class HandleOrderController extends HttpServlet {
             } else {
                 msg = "fail";
             }
-            System.out.print(msg);
         }
+        
+        System.out.print(request.getParameter("delivery_date"));
+        System.out.print(msg);
+        System.out.print(a);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

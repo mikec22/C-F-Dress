@@ -11,11 +11,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>C&F Dress</title>
+        <link rel="stylesheet" href="css/table.css">
+        <link rel="stylesheet" href="css/manager.css">
     </head>
     <body>
         <jsp:include page="managerMenu.jsp"/>
         <jsp:useBean id="clients" scope="request" class="java.util.Vector<Client>"/>
-        <table border="1">
+        <div id="content">
             <tr><th>LoginID</th><th>Name</th><th>Gender</th><th>Date Of Birth</th>
                 <th>Email</th><th>Phone</th></tr>
                     <%
@@ -33,6 +35,7 @@
                         }
                     %>
         </table>
-        
+
+        </div>        
     </body>
 </html>

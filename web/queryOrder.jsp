@@ -7,8 +7,7 @@
 <%@include file="checkIsManagerLogin.jsp" %>
 <%@page import="java.util.Vector, com.bean.Order"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-    Vector<Vector<Order>> queryOrders = (Vector<Vector<Order>>) request.getAttribute("queryOrders");
+<%    Vector<Vector<Order>> queryOrders = (Vector<Vector<Order>>) request.getAttribute("queryOrders");
     Vector<Order> orders = (Vector<Order>) request.getAttribute("orders");
 %>
 <!DOCTYPE html>
@@ -16,11 +15,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Query Order</title>
+        <link rel="stylesheet" href="css/table.css">
     </head>
     <body>
         <jsp:include page="managerMenu.jsp"/>
         <div style="text-align: center;margin: auto; width: 80%;">
-            <form method="get" action="queryOrder">
+            <form style="margin: 30px" method="get" action="queryOrder">
                 <input type="hidden" name="action" value="queryOrder" />
                 <label for="inputBox">Client Name: </label> <input type="text" name="client_name" id="inputBox" placeholder="Name"/>
                 <button type="submit">Search</button>
