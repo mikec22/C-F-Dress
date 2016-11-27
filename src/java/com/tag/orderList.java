@@ -79,8 +79,11 @@ public class orderList extends SimpleTagSupport {
                 long order_date = orderDate.getTime();
                 String ststus = order.getStatus();
                 long delivery_Datetime = delivery_datetime.getTime();
+                int client_id = order.getClient().getClient_id();
                 out.print("<br>id orderDate,(delivery date, time),amount, button");
                 String displayStr = "<div><form method='POST' action='edtiExistingOrder'>"
+                        + "<input type =\"hidden\" name =\"client_id\" value=\""
+                        + client_id + "\">"
                         + "<input type =\"hidden\" name =\"order_id\" value=\""
                         + order_id + "\">"
                         + "<input type =\"hidden\" name =\"ststus\" value=\""
@@ -95,7 +98,9 @@ public class orderList extends SimpleTagSupport {
                             + datetime[1] + "\">";
                 }
                 if (allowCancel(order_date, delivery_Datetime, amount, option)) {
-                    displayStr += "<input type='submit' name='action' value='CancelOrder'>";
+                    displayStr += "<input type =\"hidden\" name =\"amount\" value=\""
+                            + amount + "\">"
+                            + "<input type='submit' name='action' value='CancelOrder'>";
                 }
                 if (option.equals("delivery")) {
                     displayStr += "<input type='submit' name='action' value='updateOrder'></form></div>";
@@ -154,7 +159,7 @@ public class orderList extends SimpleTagSupport {
                             + "                        <form name=\"getDetails\" mothod=\"post\" action=\"history\">"
                             + "                        <input type='hidden' name='action' value='getOrderDetails'>"
                             + "                        <input type='hidden' name='id' value='" + order.getOrder_id() + "'></form>"
-                            + "<a href=\"history?action=getOrderDetails&id="+ order.getOrder_id() +"\" class='continue'>More Details</a>"
+                            + "<a href=\"history?action=getOrderDetails&id=" + order.getOrder_id() + "\" class='continue'>More Details</a>"
                             + "                    </div>\n"
                             + "                </div>");
                 }
