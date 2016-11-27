@@ -1,9 +1,10 @@
 <%-- 
     Document   : queryOrder
-    Created on : Nov 25, 2016, 9:20:46 AM
+    Created on : Nov 24, 2016, 9:20:46 AM
     Author     : Mike
 --%>
 
+<%@include file="checkIsManagerLogin.jsp" %>
 <%@page import="java.util.Vector, com.bean.Order"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
@@ -28,6 +29,7 @@
                 <tr><th>Client Name</th><th>Delivery_Datetime</th><th>Order_Datetime</th><th>Address</th><th>Option</th><th>Status</th></tr>
                         <%
                             if (queryOrders != null) {
+                                out.println("<h1>Result:</h1>");
                                 for (Vector<Order> qOrders : queryOrders) {
                                     for (Order order : qOrders) {
                                         out.print("<tr><td>" + order.getClient().getName() + "</td><td>"

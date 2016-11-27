@@ -4,6 +4,7 @@
     Author     : Mike
 --%>
 
+<%@include file="checkIsManagerLogin.jsp" %>
 <%@page import="com.bean.Client"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

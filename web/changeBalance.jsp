@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:include page="managerMenu.jsp"/>
+<%@include file="checkIsManagerLogin.jsp" %>
 <jsp:useBean id="client" scope="request" class="com.bean.Client"/>
 <jsp:useBean id="msg" scope="request" class="java.lang.String"/>
 
@@ -15,7 +15,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
-    <body>
+    <body><jsp:include page="managerMenu.jsp"/>
         <h3>Client info</h3>
         <table>
             <tr><td>LoginID</td><td><%=client.getLogin_id()%></td></tr>

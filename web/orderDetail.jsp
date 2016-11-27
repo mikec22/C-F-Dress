@@ -1,5 +1,5 @@
 
-
+<%@include file="checkIsManagerLogin.jsp" %>
 <%@page import="java.util.Vector, com.bean.OrderLine,java.sql.Timestamp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="order" scope="request" class="com.bean.Order"/>
@@ -14,6 +14,7 @@
     </head>
     <body>
         <jsp:include page="managerMenu.jsp"/>
+        <h2>Details:</h2>
         <table>
             <tr><td>Client Name:</td><td><%= order.getClient().getName()%></td></tr>
             <tr><td>Delivery_Datetime:</td><td><%=order.getDelivery_datetime().toLocalDateTime().toString().replace('T', ' ')%></td></tr>

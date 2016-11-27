@@ -24,10 +24,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "QueryOrder", urlPatterns = {"/queryOrder"})
 public class QueryOrder extends HttpServlet {
-    
+
     private OrderDB orderDB;
     private ClientDB clientDB;
-    
+
     @Override
     public void init() throws ServletException {
         super.init();
@@ -52,13 +52,12 @@ public class QueryOrder extends HttpServlet {
         String action = request.getParameter("action");
         if (action.equalsIgnoreCase("queryOrder")) {
             String client_name = request.getParameter("client_name");
-            
             if (client_name == null || client_name.equals("")) {
                 request.setAttribute("orders", orderDB.getAllOrders());
                 getServletContext().getRequestDispatcher("/queryOrder.jsp").forward(request, response);
             } else {
                 PrintWriter out = response.getWriter();
-                out.print("<h1>"+client_name+"</h1>");
+                out.print("<h1>" + client_name + "</h1>");
                 Vector<Client> clients = clientDB.queryClientByName(client_name);
                 Vector<Vector<Order>> orders = new Vector();
                 for (Client client : clients) {
@@ -72,6 +71,9 @@ public class QueryOrder extends HttpServlet {
             int order_id = Integer.parseInt(request.getParameter("order_id"));
             request.setAttribute("order", orderDB.getOrder(order_id));
             getServletContext().getRequestDispatcher("/orderDetail.jsp").forward(request, response);
+        } else if (action.equalsIgnoreCase("incompleteOrder")) {
+            request.setAttribute("orders", orderDB.queryIncompleteOrder());
+            getServletContext().getRequestDispatcher("/incompleteOrderReport.jsp").forward(request, response);
         }
     }
 

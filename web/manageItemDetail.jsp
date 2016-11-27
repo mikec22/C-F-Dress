@@ -3,6 +3,8 @@
     Created on : Nov 24, 2016, 3:46:43 PM
     Author     : Mike
 --%>
+
+<%@include file="checkIsManagerLogin.jsp" %>
 <jsp:useBean id="item" scope="request" class="com.bean.Item"/>
 <jsp:useBean id="title" scope="request" class="java.lang.String"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

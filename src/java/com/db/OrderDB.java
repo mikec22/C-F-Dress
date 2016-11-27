@@ -234,7 +234,7 @@ public class OrderDB implements Serializable {
             rs = pStmnt.executeQuery();
             if (rs.next()) {
                 ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
-                order = new Order(order_id, clientDB.getClient(rs.getInt(2)), 
+                order = new Order(order_id, clientDB.getClient(rs.getInt(2)),
                         rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
                         rs.getString(7), getOrderLines(order_id));
             }
@@ -248,7 +248,7 @@ public class OrderDB implements Serializable {
         }
         return order;
     }
-    
+
     public Order getLastOrder() {
         Order order = null;
         try {
@@ -318,13 +318,13 @@ public class OrderDB implements Serializable {
             if (rs.next()) {
                 orders = new Vector();
                 ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
-                Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)), 
+                Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
                         rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
                         rs.getString(7), getOrderLines(rs.getInt(1)));
                 orders.add(order);
                 while (rs.next()) {
                     clientDB = new ClientDB(dburl, dbUser, dbPassword);
-                    order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)), 
+                    order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
                             rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
                             rs.getString(7), getOrderLines(rs.getInt(1)));
                     orders.add(order);
@@ -340,8 +340,8 @@ public class OrderDB implements Serializable {
         }
         return orders;
     }
-    
-        public boolean updateStatus(int order_id,String delivery_datetime ,String status) {
+
+    public boolean updateStatus(int order_id, String delivery_datetime, String status) {
         boolean isSuccess = false;
         try {
             Connection cnnct = getConnection();
@@ -364,4 +364,40 @@ public class OrderDB implements Serializable {
         }
         return isSuccess;
     }
+
+    public Vector<Order> queryIncompleteOrder(){
+        Vector<Order> orders = null;
+        try {
+            Connection cnnct = getConnection();
+            String preQueryStatement ="SELECT * FROM CF_DB.`order` "
+                    + "WHERE status != 'picked-up' "
+                    + "AND option = 'self';";
+            PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                orders = new Vector();
+                ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
+                Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
+                        rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
+                        rs.getString(7), getOrderLines(rs.getInt(1)));
+                orders.add(order);
+                while (rs.next()) {
+                    clientDB = new ClientDB(dburl, dbUser, dbPassword);
+                    order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
+                            rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
+                            rs.getString(7), getOrderLines(rs.getInt(1)));
+                    orders.add(order);
+                }
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        return orders;
+        
+    } 
 }

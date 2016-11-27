@@ -17,7 +17,7 @@
         <li><a href="<%=request.getContextPath() + "/queryOrder?action=queryOrder" %>">Order status</a></li>
         <li><a href="<%=request.getContextPath()+"/verifyClient" %>">Verify client</a></li>
         <li><a href="<%=request.getContextPath()+"/managerClientCredit" %>">Approving credit</a></li>
-        <li><a href="">Report</a></li>
+        <li><a href="<%=request.getContextPath()+"/queryOrder?action=incompleteOrder" %>">Incomplete Orders Report</a></li>
         <li><a href="<%=request.getContextPath()%>/ManagerLogin?action=logout">Logout</a></li>
     </ul>
 </nav>
