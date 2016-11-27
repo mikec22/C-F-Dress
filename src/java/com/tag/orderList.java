@@ -42,7 +42,7 @@ public class orderList extends SimpleTagSupport {
     public boolean allowCancel(long order_date, long delivery_datetime, double amount, String option) {
         Calendar c = Calendar.getInstance();
         long current = c.getTimeInMillis();
-        if ((current - order_date) > 86400000 && amount > 10000) {
+        if ((current - order_date) < 86400000 && amount > 10000) {
             if (option.equals("self")) {
                 return true;
             } else if (option.equals("delivery") && (delivery_datetime - current) > 86400000) {

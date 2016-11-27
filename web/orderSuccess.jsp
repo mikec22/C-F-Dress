@@ -50,7 +50,7 @@
                 <h2><%=tilte%></h2>
                 <h4>Order ID : <%=orderResult.getOrder_id()%></h4>
                 <h4>Order time : <%=orderResult.getOrder_datetime()%></h4>
-                <h4>Your current balance : <%=clientInfo.getBalance()%></h4>
+                <h4>Your current balance : HK$ <%=clientInfo.getBalance()%></h4>
                 <h4>Your current bonus point : <%=clientInfo.getBonus_point()%></h4>
                 <%
                     if (orderResult.getOption().equals("delivery")) {
