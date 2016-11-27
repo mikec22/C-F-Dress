@@ -151,10 +151,10 @@ public class orderList extends SimpleTagSupport {
                             + "                        <p class=\"price\">Bonus Points : " + order.getUseBonusPoints() + "</p>\n"
                             + "                        <p class=\"price\">Total Price : " + amount + "</p>\n"
                             + "                        <p class=\"price\">Status : " + status + "</p>\n"
-                            + "                        <form name='getDetails' mothod='post' action='history'>"
+                            + "                        <form name=\"getDetails\" mothod=\"post\" action=\"history\">"
                             + "                        <input type='hidden' name='action' value='getOrderDetails'>"
-                            + "                        <input type='hidden' name='id' value='" + order.getOrder_id() + "'>"
-                            + "<a href='javascript:document.getDetails.submit()' class=\"continue\">More Details</a></form>\n"
+                            + "                        <input type='hidden' name='id' value='" + order.getOrder_id() + "'></form>"
+                            + "<a href=\"history?action=getOrderDetails&id="+ order.getOrder_id() +"\" class='continue'>More Details</a>"
                             + "                    </div>\n"
                             + "                </div>");
                 }

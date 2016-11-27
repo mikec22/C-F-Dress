@@ -441,9 +441,9 @@ public class OrderDB implements Serializable {
         Vector<Order> orders = null;
         try {
             Connection cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM CF_DB.`order` "
-                    + "WHERE status != 'picked-up' "
-                    + "AND option = 'self';";
+            String preQueryStatement = "SELECT * FROM `order` \n"
+                    + "WHERE `option` = 'self' \n"
+                    + "AND `status` != 'picked-up';";
             PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
             ResultSet rs = pStmnt.executeQuery();
             if (rs.next()) {
@@ -451,13 +451,13 @@ public class OrderDB implements Serializable {
                 ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
                 Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
                         rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), getOrderLines(rs.getInt(1)));
+                        rs.getString(7), getOrderLines(rs.getInt(1)), rs.getInt("delay_day"));
                 orders.add(order);
                 while (rs.next()) {
                     clientDB = new ClientDB(dburl, dbUser, dbPassword);
                     order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
                             rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
-                            rs.getString(7), getOrderLines(rs.getInt(1)));
+                            rs.getString(7), getOrderLines(rs.getInt(1)), rs.getInt("delay_day"));
                     orders.add(order);
                 }
             }
