@@ -5,6 +5,7 @@
  */
 package com.servlet;
 
+import com.db.ClientDB;
 import com.db.OrderDB;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,7 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "edtiExistingOrder", urlPatterns = {"/edtiExistingOrder"})
 public class edtiExistingOrder extends HttpServlet {
 
-    private OrderDB db;
+    private OrderDB orderDB;
+    private ClientDB clientDB;
 
     @Override
     public void init() throws ServletException {
@@ -29,7 +31,8 @@ public class edtiExistingOrder extends HttpServlet {
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         String dbUser = this.getServletContext().getInitParameter("dbUser");
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
-        db = new OrderDB(dbUrl, dbUser, dbPassword);
+        orderDB = new OrderDB(dbUrl, dbUser, dbPassword);
+        clientDB = new ClientDB(dbUrl, dbUser, dbPassword);
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -39,11 +42,13 @@ public class edtiExistingOrder extends HttpServlet {
                 + " " + request.getParameter("delivery_time") + ":00";
         String status = request.getParameter("ststus");;
         int order_id = Integer.parseInt(request.getParameter("order_id"));
+        int client_id = Integer.parseInt(request.getParameter("client_id"));
         if (action.equals("CancelOrder")) {
-            db.updateStatus(order_id, datetime, "cancelled");
-
+            double amount = Double.parseDouble("amount");
+            orderDB.updateStatus(order_id, datetime, "cancelled");
+            clientDB.depositClient(client_id, (amount-500));
         } else if (action.equals("updateOrder")) {
-            db.updateStatus(order_id, datetime, status);
+            orderDB.updateStatus(order_id, datetime, status);
         } else {
             PrintWriter out = response.getWriter();
             out.println("No action done!!!");
