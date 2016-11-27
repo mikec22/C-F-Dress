@@ -24,23 +24,6 @@
         <div class="content">
             <jsp:useBean id="clientInfo" scope="session" class="com.bean.Client"/>
             <com:clientDetailsTag client="<%=clientInfo%>"/>
-            <!--            <div id="pricing">
-                            <div class="price_card bravo">
-                                <div class="header">
-                                    <span class="price">Your Name</span>
-                                    <span class="name">Gender</span>
-                                </div>
-                                <ul class="features">
-                                    <li>Email<br></li>
-                                    <li>Date of Birthday<br></li>
-                                    <li>Telephone Number<br></li>
-                                    <li>Delivery Address<br></li>
-                                    <li>Bonus<br></li>
-                                    <li>Balance<br></li>
-                                    <li><button>Edit</button></li>
-                                </ul>
-                            </div>
-                        </div>-->
         </div>
     </body>
 </html>

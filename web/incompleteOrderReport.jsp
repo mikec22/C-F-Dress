@@ -13,12 +13,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Order Report</title>
+        <link rel="stylesheet" href="css/table.css">
     </head>
     <body>
         <jsp:include page="managerMenu.jsp"/>
-        <div style="text-align: center;margin: auto; width: 80%;">
+        <div style="text-align: center; width: 80%; margin: 0px auto;">
             <h2>Incomplete Order</h2>
-            <table border="1" style="text-align: center;">
+            <table style="margin: 30px;" >
                 <tr><th>Client Name</th><th>Delivery_Datetime</th><th>Order_Datetime</th><th>Address</th><th>Option</th><th>Status</th></tr>
                         <%
                             for (Order order : orders) {

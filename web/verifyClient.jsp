@@ -13,13 +13,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>CF Dress</title>
         <link rel="stylesheet" href="css/table.css">
-        <link rel="stylesheet" href="css/manager.css">
     </head>
     <body>
         <jsp:include page="managerMenu.jsp"/>
-        <h3>Client info</h3>
-        <div id="context">
-            <table>
+        
+        <div style="text-align: center; width: 50%; margin: 0px auto;">
+            <h3>Client info</h3>
+            <table style="margin: 30px;" >
                 <tr><td>LoginID</td><td><%=client.getLogin_id()%></td></tr>
                 <tr><td>Name</td><td><%=client.getName()%></td></tr>
                 <tr><td>Gender</td><td><%=client.getGender()%></td></tr>
