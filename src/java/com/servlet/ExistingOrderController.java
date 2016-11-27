@@ -83,6 +83,12 @@ public class ExistingOrderController extends HttpServlet {
         int order_id = Integer.parseInt(request.getParameter("order_id"));
         int client_id = Integer.parseInt(request.getParameter("client_id"));
         double amount = Double.parseDouble(request.getParameter("amount"));
+        if(amount>2000){
+            Client client = clientDB.getClient(client_id);
+            client.setBonus_point(client.getBonus_point()-(int)(amount*0.05));
+            clientDB.updateClientBalanceBonusPoints(client);
+        }
+        
         orderDB.updateStatus(order_id, datetime, status);
         clientDB.depositClient(client_id, (amount - 500));
 
