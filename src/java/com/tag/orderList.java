@@ -100,7 +100,7 @@ public class orderList extends SimpleTagSupport {
                 }
                 
                 if (allowCancel(order_date, delivery_Datetime, amount, option)) {
-                    cancelBtn = "<form id='cancelOrderForm' method='post' action='edtiExistingOrder'>"
+                    cancelBtn = "<br><form id='cancelOrderForm' method='post' action='edtiExistingOrder'>"
                             + "<input type='hidden' name='action' value='CancelOrder'>"
                             + "<input type =\"hidden\" name =\"client_id\" value=\"" + client_id + "\">"
                             + "<input type =\"hidden\" name =\"order_id\" value=\"" + order_id + "\">"
@@ -131,7 +131,7 @@ public class orderList extends SimpleTagSupport {
                         + "                    <div id=\"right\" class=\"totalRow\">\n"
                         + "                        <p class=\"price\">Total item : <span class=\"value\">" + totalItem + "</span></p>\n"
                         + "                        <p class=\"price\">Bonus Points : " + order.getUseBonusPoints() + "</p>\n"
-                        + "                        <p class=\"price\">Total Price : HK$" + amount + "</p>\n"
+                        + "                        <p class=\"price\">Total Price : HK$ " + amount + "</p>\n"
                         + updateBtn
                         + cancelBtn
                         + "                    </div>\n"
