@@ -144,7 +144,7 @@ public class OrderDB implements Serializable {
                 ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
                 Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
                         rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), this.getOrderLines(rs.getInt(1)),rs.getInt("delay_day"));
+                        rs.getString(7), this.getOrderLines(rs.getInt(1)), rs.getInt("delay_day"));
                 order.setOrder_lines(getOrderLines(order));
                 orders.add(order);
             }
@@ -175,7 +175,7 @@ public class OrderDB implements Serializable {
                 ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
                 Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
                         rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), this.getOrderLines(rs.getInt(1)),rs.getInt("delay_day"));
+                        rs.getString(7), this.getOrderLines(rs.getInt(1)), rs.getInt("delay_day"));
                 orders.add(order);
             }
             pStmnt.close();
@@ -236,7 +236,7 @@ public class OrderDB implements Serializable {
                 ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
                 order = new Order(order_id, clientDB.getClient(rs.getInt(2)),
                         rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), getOrderLines(order_id),rs.getInt("delay_day"));
+                        rs.getString(7), getOrderLines(order_id), rs.getInt("delay_day"));
             }
             pStmnt.close();
             cnnct.close();
@@ -261,7 +261,7 @@ public class OrderDB implements Serializable {
                 ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
                 order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)), rs.getTimestamp(3),
                         rs.getTimestamp(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), getOrderLines(rs.getInt(1)),rs.getInt("delay_day"));
+                        rs.getString(7), getOrderLines(rs.getInt(1)), rs.getInt("delay_day"));
             }
             pStmnt.close();
             cnnct.close();
@@ -288,13 +288,13 @@ public class OrderDB implements Serializable {
                 ClientDB clientDB = new ClientDB(dburl, dbUser, dbPassword);
                 Order order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
                         rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), getOrderLines(rs.getInt(1)),rs.getInt("delay_day"));
+                        rs.getString(7), getOrderLines(rs.getInt(1)), rs.getInt("delay_day"));
                 orders.add(order);
                 while (rs.next()) {
                     clientDB = new ClientDB(dburl, dbUser, dbPassword);
                     order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
                             rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
-                            rs.getString(7), getOrderLines(rs.getInt(1)),rs.getInt("delay_day"));
+                            rs.getString(7), getOrderLines(rs.getInt(1)), rs.getInt("delay_day"));
                     orders.add(order);
                 }
             }
@@ -398,7 +398,7 @@ public class OrderDB implements Serializable {
                     clientDB = new ClientDB(dburl, dbUser, dbPassword);
                     order = new Order(rs.getInt(1), clientDB.getClient(rs.getInt(2)),
                             rs.getTimestamp(3), rs.getTimestamp(4), rs.getString(5), rs.getString(6),
-                            rs.getString(7), getOrderLines(rs.getInt(1)),rs.getInt("delay_day"));
+                            rs.getString(7), getOrderLines(rs.getInt(1)), rs.getInt("delay_day"));
                     orders.add(order);
                 }
             }
@@ -437,11 +437,11 @@ public class OrderDB implements Serializable {
         return isSuccess;
     }
 
-        public Vector<Order> queryIncompleteOrder(){
+    public Vector<Order> queryIncompleteOrder() {
         Vector<Order> orders = null;
         try {
             Connection cnnct = getConnection();
-            String preQueryStatement ="SELECT * FROM CF_DB.`order` "
+            String preQueryStatement = "SELECT * FROM CF_DB.`order` "
                     + "WHERE status != 'picked-up' "
                     + "AND option = 'self';";
             PreparedStatement pStmnt = cnnct.prepareStatement(preQueryStatement);
@@ -469,6 +469,6 @@ public class OrderDB implements Serializable {
                 ex = ex.getNextException();
             }
         }
-        return orders;        
-    } 
+        return orders;
+    }
 }
