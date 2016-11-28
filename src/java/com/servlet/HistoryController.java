@@ -50,6 +50,10 @@ public class HistoryController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        Client client = (Client) session.getAttribute("clientInfo");
+        client = clientDB.getClient(client.getClient_id());
+        session.setAttribute("clientInfo", client);
         String action = request.getParameter("action");
         if (!isAuthenticated(request)) {
             doLogin(request, response);

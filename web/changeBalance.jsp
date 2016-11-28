@@ -14,10 +14,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="css/table.css">
     </head>
-    <body><jsp:include page="managerMenu.jsp"/>
+    <body>
+        <jsp:include page="managerMenu.jsp"/>
+        <div style="text-align: center; width: 40%; margin: 0px auto;">
+            
+        
         <h3>Client info</h3>
-        <table>
+        <table style="margin: 30px;" >
             <tr><td>LoginID</td><td><%=client.getLogin_id()%></td></tr>
             <tr><td>Name</td><td><%=client.getName()%></td></tr>
             <tr><td>Gender</td><td><%=client.getGender()%></td></tr>
@@ -37,5 +42,6 @@
             <button type="submit"/>Submit</button>
         <h5><%= msg%></h5>
     </form>
+    </div>
 </body>
 </html>

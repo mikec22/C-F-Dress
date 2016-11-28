@@ -12,8 +12,11 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <div id="menu">
+            <jsp:include page="menu.jsp" />
+        </div>
         <p>Incorrect Account or Password</p>
-        <p>
+        <p style="text-align: center;">
             <%
                 String userPath = (String) request.getAttribute("userPath");
             %>

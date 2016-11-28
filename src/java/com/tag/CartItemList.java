@@ -18,7 +18,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 public class CartItemList extends SimpleTagSupport {
 
     private Vector<OrderLine> orderLines;
-    
+
     private String status = "cart";
 
     public String getStatus() {
@@ -28,8 +28,6 @@ public class CartItemList extends SimpleTagSupport {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-    
 
     public Vector<OrderLine> getOrderLines() {
         return orderLines;
@@ -53,30 +51,30 @@ public class CartItemList extends SimpleTagSupport {
                     int quantity = ol.getQuantity();
                     double subtotal = quantity * unitPrice;
                     String total = "<p>HK$" + subtotal + "</p>\n";
-                    String updateForm = "<form name='updateForm' action='CartItemController' method='post'><p> <input type=\"number\" min='1' name='quantity' value='" + quantity + "' class=\"qty\" /> "
+                    String updateForm = "<form id='updateForm' name='updateForm' action='CartItemController' method='post'><p> <input type=\"number\" min='1' max='15' name='quantity' value='" + quantity + "' class=\"qty\" /> "
                             + "x HK$" + unitPrice + "</p>\n"
                             + ""
                             + "<input type='hidden' name='action' value='update'/>\n"
                             + "<input type='hidden' name='id' value='" + ol.getItem().getItem_id() + "'/>\n"
-                            + "<a href=\"javascript:document.updateForm.submit()\" class=\"update\"> UPDATE  </a>\n"
+                            + "<a href=\"javascript:document.getElementById('updateForm').submit()\" class=\"update\"> UPDATE  </a>\n"
                             + "</form>";
-                    String deleteBtn = "<form name='deleteItemForm' action='CartItemController' method='post'>" +
-"                            <input type='hidden' name='action' value='delete'/>" +
-"                            <input type='hidden' name='id' value='" + ol.getItem().getItem_id() + "'/>" +
-"                            <a href=\"javascript:document.deleteItemForm.submit()\" class='remove'>X</a></form>" + 
-                             "";
-                    if(ol.getItem().getCategory().equals("gifts")){
+                    String deleteBtn = "<form id='deleteItemForm' name='deleteItemForm' action='CartItemController' method='post'>"
+                            + "                            <input type='hidden' name='action' value='delete'/>"
+                            + "                            <input type='hidden' name='id' value='" + ol.getItem().getItem_id() + "'/>"
+                            + "                            <a href=\"javascript:document.getElementById('deleteItemForm').submit()\" class='remove'>X</a></form>"
+                            + "";
+                    if (ol.getItem().getCategory().equals("gifts")) {
                         total = "<p>" + subtotal + " BP</p>\n";
                         updateForm = "";
                     }
-                    if(status.equals("result")){
+                    if (status.equals("result")) {
                         updateForm = "";
                         deleteBtn = "";
-                    }else if (status.equalsIgnoreCase("details")){
+                    } else if (status.equalsIgnoreCase("details")) {
                         updateForm = "";
                         deleteBtn = "";
                     }
-                    
+
                     out.print("<div class=\"heading cf\"><li class=\"items odd\">\n"
                             + "                        <div class=\"infoWrap\"> \n"
                             + "                            <div class=\"cartSection\">\n"

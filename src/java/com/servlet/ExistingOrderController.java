@@ -43,7 +43,10 @@ public class ExistingOrderController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-
+        HttpSession session = request.getSession();
+        Client client = (Client) session.getAttribute("clientInfo");
+        client = clientDB.getClient(client.getClient_id());
+        session.setAttribute("clientInfo", client);
         if (action.equals("showExistingOrder")) {
             showExistingOrder(request, response);
         } else if (action.equals("CancelOrder")) {

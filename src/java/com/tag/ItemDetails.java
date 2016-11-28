@@ -93,7 +93,7 @@ public class ItemDetails extends SimpleTagSupport {
 "                    <div class='qty'><label for=\"quantity\">Quantity : </label>\n" +
 "                    <input type='hidden' name='action' value='addToCart'>"
                     + "<input type='hidden' name='itemId' value='"+ item.getItem_id() +"'>"
-                    + "<input type='number' min='1' size='5' id='numberinput' name='quantity' value='1' /></div>\n" +
+                    + "<input type='number' min='1' max='15' size='5' id='numberinput' name='quantity' value='1' /></div>\n" +
 "                    <input type=\"submit\" class=\"btn\" value=\"Add To Cart\">\n" +
 "                </form>";
             

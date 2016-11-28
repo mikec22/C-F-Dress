@@ -161,6 +161,7 @@ public class HandleOrderController extends HttpServlet {
                 java.util.Date today = c.getTime();
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 java.util.Date delivery_date;
+                address = request.getParameter("delivery_address");
                 try {
                     delivery_date = df.parse(request.getParameter("delivery_date"));
                     a = delivery_date.compareTo(Calendar.getInstance().getTime());

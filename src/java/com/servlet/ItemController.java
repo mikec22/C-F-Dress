@@ -5,7 +5,9 @@
  */
 package com.servlet;
 
+import com.bean.Client;
 import com.bean.Item;
+import com.db.ClientDB;
 import com.db.ItemDB;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,6 +28,7 @@ import javax.servlet.http.HttpSession;
 public class ItemController extends HttpServlet {
 
     private ItemDB itemDB;
+    private ClientDB clientDB;
 
     @Override
     public void init() {
@@ -33,10 +36,12 @@ public class ItemController extends HttpServlet {
         String dbUser = this.getServletContext().getInitParameter("dbUser");
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         itemDB = new ItemDB(dburl, dbUser, dbPassword);
+        clientDB = new ClientDB(dburl, dbUser, dbPassword);
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         String action = request.getParameter("action");
         action = action == null ? "" : action;
         if (action.equalsIgnoreCase("manageList")) {
@@ -106,6 +111,11 @@ public class ItemController extends HttpServlet {
     private void showItemList(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        Client client = (Client) session.getAttribute("clientInfo");
+        if (client != null) {
+            client = clientDB.getClient(client.getClient_id());
+            session.setAttribute("clientInfo", client);
+        }
         Vector<Item> itemList;
         String keyword = request.getParameter("keyword");
         String category = request.getParameter("category");
@@ -177,6 +187,11 @@ public class ItemController extends HttpServlet {
     private void changeOrder(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        Client client = (Client) session.getAttribute("clientInfo");
+        if (client != null) {
+            client = clientDB.getClient(client.getClient_id());
+            session.setAttribute("clientInfo", client);
+        }
         Vector<Item> itemList;
         String keyword = request.getParameter("keyword");
         String category = request.getParameter("category");

@@ -47,9 +47,9 @@
                         <li class="totalRow final"><span class="label">Total</span><span class="value">HK$<%=cart.getTotalPrice()%></span></li>
                             <%
                                 if (cart.getOrder_lines().size() != 0) {
-                                    out.print("<form name=\"submitForm\" method=\"post\" action=\"HandleOrderController\">");
+                                    out.print("<form id='submitForm' name=\"submitForm\" method=\"post\" action=\"HandleOrderController\">");
                                     out.print("<input type=\"hidden\" name=\"action\" value=\"chooseOption\" />");
-                                    out.print("<li class=\"totalRow\"><a href=\"javascript:document.submitForm.submit()\" class=\"btn continue\">Checkout</a></li></form>");
+                                    out.print("<li class=\"totalRow\"><a href=\"javascript:document.getElementById('submitForm').submit()\" class=\"btn continue\">Checkout</a></li></form>");
                                 }
                             %>
                     </ul>
