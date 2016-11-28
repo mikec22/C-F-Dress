@@ -6,6 +6,7 @@
 <%@page import="com.bean.Order"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="/WEB-INF/tlds/com-taglib" prefix="com"%>
+<%@include file="checkIsClientLogin.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>

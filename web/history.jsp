@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="/WEB-INF/tlds/com-taglib" prefix="com"%>
+<%@include file="checkIsClientLogin.jsp" %>
 <jsp:useBean class="java.util.Vector" scope="request" id="orderHistory" />
 <jsp:useBean class="java.util.Vector" scope="request" id="bonusPointsHistory" />
 <!DOCTYPE html>

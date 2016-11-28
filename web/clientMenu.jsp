@@ -6,6 +6,7 @@
 
 <%@page import="com.bean.Client"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="checkIsClientLogin.jsp" %>
 <%
     Client client = (Client) session.getAttribute("clientInfo");
     if(client == null ){

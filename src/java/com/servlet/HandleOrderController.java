@@ -65,6 +65,8 @@ public class HandleOrderController extends HttpServlet {
                 chooseDeliveryPption(request, response);
             } else if (action.equals("placeOrder")) {
                 toPlaceOrder(request, response);
+            }else{
+                response.sendRedirect(request.getContextPath() + "/shoppingCart");
             }
         }
     }
@@ -221,7 +223,8 @@ public class HandleOrderController extends HttpServlet {
                 msg = "fail";
             }
         }
-
+        request.setAttribute("msg", msg);
+        getServletContext().getRequestDispatcher("/placeOrder.jsp").forward(request, response);
         System.out.print(request.getParameter("delivery_date"));
         System.out.print(msg);
         System.out.print(a);

@@ -53,6 +53,8 @@ public class ExistingOrderController extends HttpServlet {
             CancelOrder(request, response);
         } else if (action.equals("updateOrder")) {
             editOrder(request, response);
+        }else {
+            response.sendRedirect(request.getContextPath() + "/existingOrder.jsp");
         }
 
     }

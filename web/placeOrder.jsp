@@ -5,6 +5,7 @@
 --%>
 <%@page import="java.util.Vector,com.bean.OrderLine"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="checkIsClientLogin.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
